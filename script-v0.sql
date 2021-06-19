@@ -1,4 +1,4 @@
-CREATE TABLE `Utilisateur` (
+CREATE TABLE `user` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`username` varchar(255) NOT NULL UNIQUE,
 	`email` varchar(255) NOT NULL UNIQUE,
@@ -14,13 +14,13 @@ CREATE TABLE `Utilisateur` (
 	PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `Role` (
+CREATE TABLE `role` (
 	`id` INT NOT NULL,
 	`role_name` varchar(255) NOT NULL,
 	`user_id` INT NOT NULL
 );
 
-CREATE TABLE `Decaissement` (
+CREATE TABLE `decaissement` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`date_demande` DATETIME NOT NULL UNIQUE,
 	`montant` DECIMAL NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE `Decaissement` (
 	PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `Transaction` (
+CREATE TABLE `transaction` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`date_transaction` DATETIME NOT NULL,
 	`montant` DECIMAL NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE `Transaction` (
 	PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `Grade` (
+CREATE TABLE `grade` (
 	`user_id` INT NOT NULL,
 	`role_id` INT NOT NULL,
 	`niveau` varchar(255) NOT NULL,
@@ -58,15 +58,15 @@ CREATE TABLE `profil` (
 	`bio` TEXT NOT NULL
 );
 
-ALTER TABLE `Role` ADD CONSTRAINT `Role_fk0` FOREIGN KEY (`user_id`) REFERENCES `Utilisateur`(`id`);
+ALTER TABLE `role` ADD CONSTRAINT `role_fk0` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`);
 
-ALTER TABLE `Decaissement` ADD CONSTRAINT `Decaissement_fk0` FOREIGN KEY (`user_id`) REFERENCES `Utilisateur`(`id`);
+ALTER TABLE `decaissement` ADD CONSTRAINT `decaissement_fk0` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`);
 
-ALTER TABLE `Transaction` ADD CONSTRAINT `Transaction_fk0` FOREIGN KEY (`decaissment_id`) REFERENCES `Decaissement`(`id`);
+ALTER TABLE `transaction` ADD CONSTRAINT `transaction_fk0` FOREIGN KEY (`decaissment_id`) REFERENCES `decaissement`(`id`);
 
-ALTER TABLE `Grade` ADD CONSTRAINT `Grade_fk0` FOREIGN KEY (`user_id`) REFERENCES `Utilisateur`(`id`);
+ALTER TABLE `grade` ADD CONSTRAINT `grade_fk0` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`);
 
-ALTER TABLE `Grade` ADD CONSTRAINT `Grade_fk1` FOREIGN KEY (`role_id`) REFERENCES `Role`(`id`);
+-- Error MySQL
+-- ALTER TABLE `grade` ADD CONSTRAINT `grade_fk1` FOREIGN KEY (`role_id`) REFERENCES `role`(`id`);
 
-ALTER TABLE `profil` ADD CONSTRAINT `profil_fk0` FOREIGN KEY (`user_id`) REFERENCES `Utilisateur`(`id`);
-
+ALTER TABLE `profil` ADD CONSTRAINT `profil_fk0` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`);
