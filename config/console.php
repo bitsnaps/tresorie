@@ -6,7 +6,7 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic-console',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log','user'],
     'controllerNamespace' => 'app\commands',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -25,7 +25,21 @@ $config = [
                 ],
             ],
         ],
+        'mailer' => [
+            'class' => yii\swiftmailer\Mailer::class,
+            // send all mails to a file by default. You have to set
+            // 'useFileTransport' to false and configure a transport
+            // for the mailer to send real emails.
+            'useFileTransport' => true,
+        ],
         'db' => $db,
+        'authManager'  => [
+            'class'        => 'yii\rbac\DbManager',
+            //            'defaultRoles' => ['guest'],
+        ],
+    ],
+    'modules' => [
+        'user' =>  Da\User\Module::class,
     ],
     'params' => $params,
     /*

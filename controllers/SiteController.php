@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use Da\User\Filter\PasswordAgeEnforceFilter;
 
 class SiteController extends Controller
 {
@@ -34,6 +35,9 @@ class SiteController extends Controller
                 'actions' => [
                     'logout' => ['post'],
                 ],
+            ],
+            'enforcePasswordAge' => [
+                'class' => PasswordAgeEnforceFilter::className(),
             ],
         ];
     }
