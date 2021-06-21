@@ -61,7 +61,8 @@
         "freesoftwarefactory/yii2-select3": "1.0007",
         "2amigos/yii2-multi-select-widget": "*",
         "imagine/imagine": "^1.2",
-        "vova07/yii2-fileapi-widget": "*"
+        "vova07/yii2-fileapi-widget": "*",
+        "2amigos/yii2-usuario": "~1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
@@ -69,18 +70,16 @@
         "yiisoft/yii2-faker": "~2.0.0",
         "yiisoft/yii2-shell": "~2.0.0",
         "codeception/codeception": "^4.0",
-        "codeception/verify": "~0.4.0 || ~1.1.0",
+        "codeception/verify": "~0.5.0 || ~1.1.0",
         "codeception/specify": "~0.4.6",
         "symfony/browser-kit": ">=2.7 <=4.2.4",
         "codeception/module-filesystem": "^1.0.0",
+        "codeception/module-yii2": "^1.0.0",
         "codeception/module-asserts": "^1.0.0",
-        "symfony/dotenv": "^3.4",
-        "codeception/module-yii2": "dev-master",
-        "codeception/module-db": "dev-master",
-        "codeception/module-webdriver": "dev-master",
         "hoa/console": "3.x-dev",
         "codeception/module-datafactory": "dev-master",
-        "insolita/yii2-migration-generator": "~3.1"
+        "insolita/yii2-migration-generator": "~3.1",
+        "codeception/module-webdriver": "dev-master"
     },
     "config": {
         "process-timeout": 1800,

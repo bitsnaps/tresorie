@@ -11,6 +11,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use Da\User\Filter\PasswordAgeEnforceFilter;
 
+
 class SiteController extends Controller
 {
     /**
@@ -73,22 +74,10 @@ class SiteController extends Controller
      *
      * @return Response|string
      */
-    public function actionLogin()
+  /*  public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
+        return $this->redirect('index.php?r=user%2Fsecurity%2Flogin');
+    }*/
 
     /**
      * Logout action.
