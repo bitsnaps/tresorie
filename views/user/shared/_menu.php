@@ -30,7 +30,7 @@ use yii\bootstrap\Nav;
             ],
             [
                 'label' => Yii::t('usuario', 'Palier'),
-                'url' => ['/admin/create-pallier'],
+                'url' => ['/admin/palliers'],
             ],
             [
                 'label' => Yii::t('usuario', 'Permissions'),
@@ -44,19 +44,23 @@ use yii\bootstrap\Nav;
                 'label' => Yii::t('usuario', 'Créer'),
                 'items' => [
                     [
-                        'label' => Yii::t('usuario', 'New user'),
+                        'label' => Yii::t('usuario', 'Nouvelle utilisateur'),
                         'url' => ['/user/admin/create'],
                     ],
                     [
-                        'label' => Yii::t('usuario', 'New role'),
+                        'label' => Yii::t('usuario', 'Nouveau role'),
                         'url' => ['/user/role/create'],
                     ],
                     [
-                        'label' => Yii::t('usuario', 'New permission'),
+                        'label' => Yii::t('usuario', 'Nouveau pallier'),
+                        'url' => ['/admin/create-pallier'],
+                    ],
+                    [
+                        'label' => Yii::t('usuario', 'Nouvelle permission'),
                         'url' => ['/user/permission/create'],
                     ],
                     [
-                        'label' => Yii::t('usuario', 'New rule'),
+                        'label' => Yii::t('usuario', 'Nouvelle regle'),
                         'url' => ['/user/rule/create'],
                     ],
                 ],

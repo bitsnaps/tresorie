@@ -18,7 +18,7 @@ use yii\helpers\Html;
  * @var \Da\User\Model\User $user
  */
 
-$this->title = Yii::t('usuario', 'Create a user account');
+$this->title = Yii::t('usuario', 'Cree un palier');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('usuario', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -50,16 +50,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                         'items' => [
                                             [
-                                                'label' => Yii::t('usuario', 'Création Pallier'),
-                                                'url' => ['/user/admin/create'],
-                                            ],
-                                            [
                                                 'label' => Yii::t('usuario', 'Lister tous les pallier'),
-                                                'options' => [
+                                                'url' => ['/admin/palliers'],
+                                               /* 'options' => [
                                                     'class' => 'disabled',
                                                     'onclick' => 'return false;',
+                                                ],*/
+                                            ],
+                                            [
+                                                'label' => Yii::t('usuario', 'Création Pallier'),
+                                                'url' => ['admin/create-pallier'],
+                                                  'options' => [
+                                                  
+                                                   
                                                 ],
                                             ],
+
                                         ],
                                     ]
                                 ) ?>
@@ -74,10 +80,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                    
                                 </div>
                                 <?php $form = ActiveForm::begin(
+                               
                                     [
+                                        'action' => ['admin/save-pallier'],
+                                        'method' => 'post',
                                         'layout' => 'horizontal',
-                                        'enableAjaxValidation' => true,
-                                        'enableClientValidation' => false,
+                                        'enableAjaxValidation' => false,
+                                        'enableClientValidation' => true,
                                         'fieldConfig' => [
                                             'horizontalCssClasses' => [
                                                 'wrapper' => 'col-sm-9',
