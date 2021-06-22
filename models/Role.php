@@ -29,8 +29,8 @@ class Role extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'role_name', 'user_id'], 'required'],
-            [['id', 'user_id'], 'integer'],
+            [['role_name', 'user_id'], 'required'],
+            [['user_id'], 'integer'],
             [['role_name'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];

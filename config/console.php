@@ -40,6 +40,7 @@ $config = [
     ],
     'modules' => [
         'user' =>  Da\User\Module::class,
+        'administrators' => ['admin'],
     ],
     'params' => $params,
     /*

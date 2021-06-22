@@ -6,6 +6,7 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
+    'name' => 'Yalidine',
     'bootstrap' => ['log','user'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -40,7 +41,18 @@ $config = [
             ],
         ],
         'db' => $db,
-     
+        'user' => [
+            'identityClass' => 'app\models\User',
+            'enableAutoLogin' => true,
+            
+        ],
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@Da/User/resources/views' => '@app/views/user'
+                ]
+            ]
+        ]
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,
@@ -53,8 +65,9 @@ $config = [
     'modules' => [
         'user' => [
             'class' => \Da\User\Module::class,
+            //think how to create a component for that
             // ...other configs from here: [Configuration Options](installation/configuration-options.md), e.g.
-            // 'administrators' => ['admin'], // this is required for accessing administrative actions
+            'administrators' => ['admin','admin1'], // this is required for accessing administrative actions
             // 'generatePasswords' => true,
             // 'switchIdentitySessionKey' => 'myown_usuario_admin_user_key',
 
