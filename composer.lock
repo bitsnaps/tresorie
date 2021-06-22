@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3ad4a6836863b3b39ce259b76ffda5f2",
+    "content-hash": "19e053aac962429ab7ea11ac60bb9cc7",
     "packages": [
         {
             "name": "2amigos/2fa-library",
@@ -1127,23 +1127,22 @@
         },
         {
             "name": "dektrium/yii2-rbac",
-            "version": "dev-master",
+            "version": "1.0.0-alpha",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dektrium/yii2-rbac.git",
-                "reference": "9578ba62b2d0a3cdd5cea3356714ea23a1cabb6e"
+                "reference": "0943e66c450132b306584a37caefc2aa04258372"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dektrium/yii2-rbac/zipball/9578ba62b2d0a3cdd5cea3356714ea23a1cabb6e",
-                "reference": "9578ba62b2d0a3cdd5cea3356714ea23a1cabb6e",
+                "url": "https://api.github.com/repos/dektrium/yii2-rbac/zipball/0943e66c450132b306584a37caefc2aa04258372",
+                "reference": "0943e66c450132b306584a37caefc2aa04258372",
                 "shasum": ""
             },
             "require": {
                 "kartik-v/yii2-widget-select2": "^2.0",
                 "yiisoft/yii2": "^2.0.8"
             },
-            "default-branch": true,
             "type": "yii2-extension",
             "extra": {
                 "bootstrap": "dektrium\\rbac\\Bootstrap",
@@ -1181,7 +1180,7 @@
                 "issues": "https://github.com/dektrium/yii2-rbac/issues?state=open",
                 "source": "https://github.com/dektrium/yii2-rbac"
             },
-            "time": "2020-03-02T20:20:27+00:00"
+            "time": "2016-08-15T15:49:54+00:00"
         },
         {
             "name": "dektrium/yii2-user",
@@ -15377,6 +15376,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "dektrium/yii2-rbac": 20,
         "kartik-v/yii2-widget-select2": 20,
         "kartik-v/yii2-popover-x": 20,
         "kartik-v/yii2-money": 20,

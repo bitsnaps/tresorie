@@ -44,8 +44,8 @@ class Grade extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'user_id' => 'User ID',
-            'role_id' => 'Role ID',
+            'user_id' => 'Utilisateur',
+            'role_id' => 'Role',
             'niveau' => 'Niveau',
             'montant' => 'Montant',
         ];

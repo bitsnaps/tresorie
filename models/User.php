@@ -9,4 +9,21 @@ class User extends BaseUser
     {
         return '{{%user}}';
     }
+    public static function getCurrentUser() {
+        return \Yii::$app->user;
+    }
+    public static function userHasRole($role,$id)
+    {
+        $User = new self();  
+        return $User->getAuth()->hasRole($id, $role);
+    }
+    public static  function isAdmin()
+    {
+        //$User = new self();  
+      
+        return  User:: userHasRole('admin',User::getCurrentUser()->id);
+      
+    }
+
+
 }
