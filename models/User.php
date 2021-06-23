@@ -21,7 +21,24 @@ class User extends BaseUser
     {
         //$User = new self();  
         if(User:: userHasRole('admin',User::getCurrentUser()->id))
-            return  'admin';
+            return  true;
+            return  false;    
+      
+    }
+    public static  function isAprobateur()
+    {
+        //$User = new self();  
+        if(User:: userHasRole('Aprobateur',User::getCurrentUser()->id))
+            return  true;
+            return  false;    
+      
+    }
+    public static  function isResponsableDeStation()
+    {
+        //$User = new self();  
+        if(User:: userHasRole('responsableDeStation',User::getCurrentUser()->id))
+            return  true;
+            return  false;    
       
     }
 

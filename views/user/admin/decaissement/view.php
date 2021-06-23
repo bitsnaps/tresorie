@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Grade */
+/* @var $model app\models\Decaissement */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Grades'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Decaissements'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="grade-view">
+<div class="decaissement-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -30,10 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'user_id',
-            'role_id',
-            'niveau',
+            'date_demande',
             'montant',
+            'motif',
+            'piece_jointe',
+            'status',
+            'user_id',
         ],
     ]) ?>
 

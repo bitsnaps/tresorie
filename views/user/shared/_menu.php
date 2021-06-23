@@ -10,6 +10,7 @@
  */
 
 use yii\bootstrap\Nav;
+use app\models\User;
 
 ?>
 
@@ -23,19 +24,34 @@ use yii\bootstrap\Nav;
             [
                 'label' => Yii::t('usuario', 'Utilisateur'),
                 'url' => ['/user/admin/index'],
+                'visible' => User::isAdmin()
             ],
             [
                 'label' => Yii::t('usuario', 'rôles'),
                 'url' => ['/user/role/index'],
+                'visible' => User::isAdmin()
             ],
             [
                 'label' => Yii::t('usuario', 'Palier'),
                 'url' => ['/admin/palliers'],
+                'visible' => User::isAdmin()
             ],
             [
-                'label' => Yii::t('usuario', 'Décaissement'),
+                'label' => Yii::t('usuario', 'Tous les Décaissements'),
                 'url' => ['/admin/decaissement'],
+                'visible' => User::isAdmin()
             ],
+            [
+                'label' => Yii::t('usuario', 'Créer une demande'),
+                'url' => ['/responsable-de-station/create-demande'],
+                'visible' => User::isResponsableDeStation()
+            ],
+            [
+                'label' => Yii::t('usuario', 'Mes Décaissements'),
+                'url' => ['/responsable-de-station/decaissement'],
+                'visible' => User::isResponsableDeStation()
+            ],
+
           /*  [
                 'label' => Yii::t('usuario', 'Permissions'),
                 'url' => ['/user/permission/index'],
@@ -59,15 +75,16 @@ use yii\bootstrap\Nav;
                         'label' => Yii::t('usuario', 'Nouveau pallier'),
                         'url' => ['/admin/create-pallier'],
                     ],
-                    /*[
+                    [
                         'label' => Yii::t('usuario', 'Nouvelle permission'),
                         'url' => ['/user/permission/create'],
                     ],
                     [
                         'label' => Yii::t('usuario', 'Nouvelle regle'),
                         'url' => ['/user/rule/create'],
-                    ],*/
-                ],
+                    ],
+                ]
+                , 'visible' => User::isAdmin()
             ],
         ],
     ]

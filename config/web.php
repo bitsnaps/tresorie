@@ -73,13 +73,17 @@ $config = [
             'class' => \Da\User\Module::class,
             //think how to create a component for that
             // ...other configs from here: [Configuration Options](installation/configuration-options.md), e.g.
-            'administrators' => ['admin','admin1'], // this is required for accessing administrative actions
+            'administrators' => ['admin','admin1','hihi'], // this is required for accessing administrative actions
             // 'generatePasswords' => true,
             // 'switchIdentitySessionKey' => 'myown_usuario_admin_user_key',
+            'controllerMap' => [
+                'security' => 'app\controllers\user\UserController'
+            ]
 
         ]
         ],
     'params' => $params,
+    'defaultRoute' => 'user/security/login',
 ];
 
 if (YII_ENV_DEV) {

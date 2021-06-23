@@ -6,6 +6,7 @@ use yii\web\Controller;
 use Da\User\Filter\AccessRuleFilter;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use app\models\User;
 use app\models\Grade;
 use app\models\GradeSearch;
 use app\models\Decaissement;
@@ -15,7 +16,7 @@ use app\models\Role;
 
 // ...
 
-class AdminController extends BaseController
+class ResponsableDeStationController extends BaseController
 {
 
 
@@ -37,14 +38,11 @@ class AdminController extends BaseController
                     'class' => AccessRuleFilter::class,
                 ],
                 'rules' => [
+
                     [
+                       
                         'allow' => true,
-                        'roles' => ['admin'],
-                    ],
-                    [
-                        'actions' => ['view', 'search','decaissement'],
-                        'allow' => true,
-                        'roles' => ['Aprobateur','admin'],
+                        'roles' => ['responsableDeStation'],
                     ],
                 ],
             ],
@@ -58,7 +56,7 @@ class AdminController extends BaseController
     public function actionDecaissement(){
     
         $searchModel = $this->make(DecaissementSearch::class);
-        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchMyDemande(\Yii::$app->request->queryParams,User::getCurrentUser()->id);
 
         return $this->render(
             '/user/admin/decaissement/allDecaissement',
@@ -68,6 +66,7 @@ class AdminController extends BaseController
             ]
         );
     }
+    
 
     /**
      * This methode confirm decaissement aproved by an admin or an approbateur
@@ -146,11 +145,11 @@ class AdminController extends BaseController
      *
      * @return void
      */
-    public function actionCreatePallier(){
+    public function actionCreateDemande(){
     
-        $grade = $this->make(Grade::class, [], ['scenario' => 'create']);
+        $decaissement = $this->make(Decaissement::class, [], ['scenario' => 'create']);
 
-        return $this->render('/user/admin/pallier/createpallier', ['grade' => $grade]);
+        return $this->render('/user/admin/decaissement/createdecaissement', ['decaissement' => $decaissement]);
     }
     /**
      * This Methode is responsible on saving a pallier

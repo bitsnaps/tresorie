@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Grade */
+/* @var $model app\models\Decaissement */
 
-$this->title = Yii::t('app', 'Create Grade');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Grades'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Create Decaissement');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Decaissements'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="grade-create">
+<div class="decaissement-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
