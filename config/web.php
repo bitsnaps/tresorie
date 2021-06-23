@@ -13,6 +13,11 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'formatter' => [
+            'class' => 'yii\i18n\formatter',
+            'thousandSeparator' => ',',
+            'decimalSeparator' => '.',
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'MWTD7G85H86HY66AC79WWFT5DD3QRW622W52D4H496FJWGB9WYHLLVRD2JTFB7RM',
@@ -52,7 +57,8 @@ $config = [
                     '@Da/User/resources/views' => '@app/views/user'
                 ]
             ]
-        ]
+                ],
+
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,

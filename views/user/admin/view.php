@@ -1,31 +1,37 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
-use yii\widgets\Pjax;
+use yii\widgets\DetailView;
 use app\models\User;
 use app\models\Role;
 use kartik\money\MaskMoney;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\GradeSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $model app\models\Grade */
 
-$this->title = Yii::t('app', 'Tous les palliers');
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Grades'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+\yii\web\YiiAsset::register($this);
 ?>
-<?php $this->beginContent('@app/views/user/shared/admin_layout_pallier.php') ?>
-<div class="grade-index">
+<div class="grade-view">
 
+    <h1><?= Html::encode($this->title) ?></h1>
 
+    <p>
+        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                'method' => 'post',
+            ],
+        ]) ?>
+    </p>
 
-    <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'summary'=>'', 
-        'columns' => [
             [
                 'attribute' => 'user_id',
                 'label' => 'Utilisateur',
@@ -49,21 +55,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'niveau',
             [
                 'attribute' => 'montant',
-                'format' => 'raw',
+         
                 'label' => 'Montant',
                
                 'value' => function ($model) {
                     
-                    return $model->montant.' DA';
+                    return   $model->montant.' DA';
                 },
             ],
-          
-          
-            ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
-
-    <?php Pjax::end(); ?>
+    ]) ?>
 
 </div>
-<?php $this->endContent() ?>

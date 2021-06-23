@@ -20,8 +20,8 @@ class User extends BaseUser
     public static  function isAdmin()
     {
         //$User = new self();  
-      
-        return  User:: userHasRole('admin',User::getCurrentUser()->id);
+        if(User:: userHasRole('admin',User::getCurrentUser()->id))
+            return  'admin';
       
     }
 

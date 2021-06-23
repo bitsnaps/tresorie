@@ -20,7 +20,7 @@ use mootensai\behaviors\UUIDBehavior;
  */
 class Grade extends \yii\db\ActiveRecord
 {
-    use \mootensai\relation\RelationTrait;
+   // use \mootensai\relation\RelationTrait;
 
     /**
      * @inheritdoc
@@ -32,8 +32,8 @@ class Grade extends \yii\db\ActiveRecord
             [['user_id', 'role_id'], 'integer'],
             [['montant'], 'number'],
             [['niveau'], 'string', 'max' => 255],
-            [['lock'], 'default', 'value' => '0'],
-            [['lock'], 'mootensai\components\OptimisticLockValidator']
+         //   [['lock'], 'default', 'value' => '0'],
+         //   [['lock'], 'mootensai\components\OptimisticLockValidator']
         ];
     }
     
@@ -52,9 +52,9 @@ class Grade extends \yii\db\ActiveRecord
      * return string name of field are used to stored optimistic lock 
      * 
      */
-    public function optimisticLock() {
+   /* public function optimisticLock() {
         return 'lock';
-    }
+    }*/
 
     /**
      * @inheritdoc
