@@ -43,6 +43,7 @@ AppAsset::register($this);
            // ['label' => 'Home', 'url' => ['/user/security/login']],
            // ['label' => 'About', 'url' => ['/site/about']],
            // ['label' => 'Contact', 'url' => ['/site/contact']],
+           ['label' => 'Décaissement', 'url' => ['/user/admin'], 'visible' => User::isAdmin()],
            ['label' => 'Admin', 'url' => ['/user/admin'], 'visible' => User::isAdmin()],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/user/security/login']]

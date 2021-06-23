@@ -48,7 +48,7 @@ class AdminController extends BaseController
         $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
         return $this->render(
-            '/user/admin/allPalliers',
+            '/user/admin/pallier/allPalliers',
             [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
@@ -59,7 +59,7 @@ class AdminController extends BaseController
     
         $grade = $this->make(Grade::class, [], ['scenario' => 'create']);
 
-        return $this->render('/user/admin/createpallier', ['grade' => $grade]);
+        return $this->render('/user/admin/pallier/createpallier', ['grade' => $grade]);
     }
     public function actionSavePallier(){
     
@@ -89,7 +89,7 @@ class AdminController extends BaseController
             }
             \Yii::$app->session->setFlash('Pallier cree avec success');
 
-            return $this->render('/user/admin/createpallier', ['grade' => $grade]);
+            return $this->render('/user/admin/pallier/createpallier', ['grade' => $grade]);
         }
 
        
@@ -102,7 +102,7 @@ class AdminController extends BaseController
      */
     public function actionView($id)
     {
-        return $this->render('/user/admin/view', [
+        return $this->render('/user/admin/pallier/view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -119,10 +119,10 @@ class AdminController extends BaseController
         $model = $this->findModel($id);
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/user/admin/view', 'id' => $model->id]);
+            return $this->redirect(['/user/admin/pallier/view', 'id' => $model->id]);
         }
 
-        return $this->render('/user/admin/update', [
+        return $this->render('/user/admin/pallier/update', [
             'model' => $model,
         ]);
     }
@@ -138,7 +138,7 @@ class AdminController extends BaseController
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['/admin/palliers']);
+        return $this->redirect(['/admin/pallier/palliers']);
     }
 
     /**
