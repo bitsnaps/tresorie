@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use app\models\User;
 /* @var $this yii\web\View */
 /* @var $model app\models\Decaissement */
 
@@ -29,13 +29,84 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            [
+                'attribute' => 'user_id',
+                'format' => 'raw',
+                'label' => 'Utilisateur',
+
+                'value' => function ($model) {
+
+                    return $model->user->username;
+                },
+            ],
             'date_demande',
-            'montant',
+            [
+                'attribute' => 'montant',
+                'format' => 'raw',
+                'label' => 'Montant',
+
+                'value' => function ($model) {
+
+                    return $model->montant . ' DA';
+                },
+            ],
             'motif',
-            'piece_jointe',
-            'status',
-            'user_id',
+           // 'piece_jointe',
+           [
+            'label' => Yii::t('usuario', 'état demande'),
+            'value' => function ($model) {
+                if ($model->status_user == '1') {
+                    return Html::a(
+                        Yii::t('usuario', 'Confirm'),
+                        ['confirm', 'id' => $model->id],
+                        [
+                            'class' => 'btn btn-xs btn-success btn-block disabled',
+                            'data-method' => 'post',
+                            'data-confirm' => Yii::t('usuario', 'Are you sure you want to confirm this user?'),
+                        ]
+                    );
+                } else
+                    return Html::a(
+                        Yii::t('usuario', 'Pending'),
+                        ['confirm', 'id' => $model->id],
+                        [
+                            'class' => 'btn btn-xs btn-warning btn-block disabled',
+                            'data-method' => 'post',
+                            'data-confirm' => Yii::t('usuario', 'Are you sure you want to confirm this user?'),
+                        ]
+                    );
+            },
+            'format' => 'html',
+            'visible' => true,
+        ],
+        [
+            'label' => Yii::t('usuario', 'Suivi admin'),
+            'value' => function ($model) {
+                if ($model->status_admin == '2') {
+                    return Html::a(
+                        Yii::t('usuario', 'Confirm'),
+                        ['confirm', 'id' => $model->id],
+                        [
+                            'class' => 'btn btn-xs btn-success btn-block disabled',
+                            'data-method' => 'post',
+                            'data-confirm' => Yii::t('usuario', 'Are you sure you want to confirm this user?'),
+                        ]
+                    );
+                } else
+                    return Html::a(
+                        Yii::t('usuario', 'Pending'),
+                        ['confirm', 'id' => $model->id],
+                        [
+                            'class' => 'btn btn-xs btn-warning btn-block disabled',
+                            'data-method' => 'post',
+                            'data-confirm' => Yii::t('usuario', 'Are you sure you want to confirm this user?'),
+                        ]
+                    );
+            },
+            'format' => 'html',
+            'visible' => User::isResponsableDeStation(),
+        ],
+            
         ],
     ]) ?>
 

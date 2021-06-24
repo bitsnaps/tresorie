@@ -32,8 +32,8 @@ class Decaissement extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['date_demande', 'montant', 'motif', 'piece_jointe', 'status_user', 'status_admin', 'user_id'], 'required'],
-            [['date_demande'], 'safe'],
+            [['date_demande', 'montant', 'motif', 'piece_jointe'], 'required'],
+            [['date_demande','status_user', 'status_admin', 'user_id'], 'safe'],
             [['montant'], 'number'],
             [['status_user', 'status_admin', 'user_id'], 'integer'],
             [['motif', 'piece_jointe'], 'string', 'max' => 255],
@@ -98,8 +98,7 @@ class Decaissement extends \yii\db\ActiveRecord
 /**
      * @inheritdoc
      * @return array mixed
-     */ 
-  
+     */  
     /**
      * @inheritdoc
      * @return \app\models\DecaissementQuery the active query used by this AR class.

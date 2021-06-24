@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'items' => [
                                             [
                                                 'label' => Yii::t('usuario', 'Lister tous les decassement'),
-                                                'url' => ['/admin/palliers'],
+                                                'url' => ['/responsable-de-station/decaissement'],
                                                /* 'options' => [
                                                     'class' => 'disabled',
                                                     'onclick' => 'return false;',
@@ -74,10 +74,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="col-md-9">
                         <div class="panel panel-default">
                             <div class="panel-body">
+                          <!--// yii\widgets\Pjax::begin(['id' => 'new_country']) -->
                                 <?php $form = ActiveForm::begin(
                                
                                     [
-                                        'action' => ['admin/save-pallier'],
+                                     //   'action' => ['create-demande'],
+                                        'id' => 'formDecaissement',
                                         'method' => 'post',
                                         'layout' => 'horizontal',
                                         'enableAjaxValidation' => false,
@@ -87,6 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'wrapper' => 'col-sm-9',
                                             ],
                                         ],
+                                       // 'options' => ['data-pjax' => true ]
                                     ]
                                 ); ?>
 
@@ -96,12 +99,21 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <div class="col-lg-offset-3 col-lg-9">
                                         <?= Html::submitButton(
                                             Yii::t('usuario', 'Save'),
-                                            ['class' => 'btn btn-block btn-success']
+                                           
+                                            [
+                                            'id'=>'SaveDecaissement',
+                                            'class' => 'btn btn-block btn-success',
+                                            'data-method' => 'post',
+                                            'data-confirm' => Yii::t('usuario', 'Are you sure you want to confirm this user?'),
+                                        ],
+                                        ['create-demande', 'id' => $decaissement->id],
+                                      
                                         ) ?>
                                     </div>
                                 </div>
 
                                 <?php ActiveForm::end(); ?>
+                                <!--// yii\widgets\Pjax::end() -->
                             </div>
                         </div>
                     </div>
@@ -111,3 +123,30 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 
+
+
+
+
+<?php
+$script = <<< JS
+$('#SaveDecaissement').on('click', function(e){
+   
+    $.ajax({
+       url: 'index.php?r=responsable-de-station/create-demande',
+       type: 'post',
+       data: {
+                 montant: $("#decaissement-montant-disp").val() , 
+                 motif:$("#decaissement-motif").val() ,
+                 piece_jointe:"ss",  
+               
+             },
+       success: function(data){
+            console.log(data);
+            const obj = JSON.parse(data);
+        $("#formDecaissement").attr("action", "index.php?r=responsable-de-station/create-demande&id="+obj.id);
+        
+    },
+  });
+});
+JS;
+$this->registerJS($script);

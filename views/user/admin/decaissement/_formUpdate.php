@@ -8,7 +8,7 @@ use kartik\money\MaskMoney;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-
+<?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, "montant")->widget(MaskMoney::classname(), [
             'name' => 'price',
@@ -25,9 +25,11 @@ use kartik\money\MaskMoney;
 
     <?= $form->field($model, 'piece_jointe')->fileInput() ?>
 
-  
+    <div class="form-group">
+        <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-success']) ?>
+    </div>
 
-    
+    <?php ActiveForm::end(); ?>
 
 
 

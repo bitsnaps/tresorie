@@ -7,12 +7,20 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'name' => 'Yalidine',
+    'defaultRoute' => 'user/security/login',
     'bootstrap' => ['log','user'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'assetManager' => [
+            'bundles' => [
+                'kartik\form\ActiveFormAsset' => [
+                    'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
+                ],
+            ],
+        ],
         'formatter' => [
             'class' => 'yii\i18n\formatter',
             'thousandSeparator' => ',',
@@ -83,7 +91,6 @@ $config = [
         ]
         ],
     'params' => $params,
-    'defaultRoute' => 'user/security/login',
 ];
 
 if (YII_ENV_DEV) {

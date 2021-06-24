@@ -42,5 +42,14 @@ class User extends BaseUser
       
     }
 
+    public static function decaissementAuthorirty($status_user){
+        echo $status_user.'ss';
+        if($status_user!=1)
+            return  true;
+        else 
+            return false;
+        
+    }
+
 
 }

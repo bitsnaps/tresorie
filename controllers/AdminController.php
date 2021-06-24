@@ -42,13 +42,59 @@ class AdminController extends BaseController
                         'roles' => ['admin'],
                     ],
                     [
-                        'actions' => ['view', 'search','decaissement'],
+                        'actions' => ['view', 'search','decaissement','view-decaissement','update-decaissement','delete-decaissement'],
                         'allow' => true,
-                        'roles' => ['Aprobateur','admin'],
+                        'roles' => ['Aprobateur','admin','responsableDeStation'],
                     ],
                 ],
             ],
         ];
+    }
+         /**
+     * Displays a single Grade model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionViewDecaissement($id)
+    {
+        return $this->render('/user/admin/decaissement/view', [
+            'model' => $this->findModelDecaissement($id),
+        ]);
+    }
+
+    /**
+     * Updates an existing Grade model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdateDecaissement($id)
+    {
+        $model = $this->findModelDecaissement($id);
+
+        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['/user/admin/decaissement/view', 'id' => $model->id]);
+        }
+
+        return $this->render('/user/admin/decaissement/update', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Deletes an existing Grade model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDeleteDecaissement($id)
+    {
+        $this->findModelDecaissement($id)->delete();
+
+        return $this->redirect(['/admin/decaissement']);
     }
         /**
      * This function return all palliers assigned by the admin
@@ -247,6 +293,14 @@ class AdminController extends BaseController
     protected function findModel($id)
     {
         if (($model = Grade::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+    protected function findModelDecaissement($id)
+    {
+        if (($model = Decaissement::findOne($id)) !== null) {
             return $model;
         }
 
