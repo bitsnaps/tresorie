@@ -17,7 +17,7 @@ class Decaissement extends BaseDecaissement
         return array_replace_recursive(parent::rules(),
 	    [
             [[ 'montant', 'motif', 'piece_jointe',], 'required'],
-            [['status_user', 'status_admin','date_demande'], 'safe'],
+            [['id','status_user', 'status_admin','date_demande'], 'safe'],
             [['montant'], 'number'],
             [['status_user', 'status_admin', 'user_id'], 'integer'],
             [['motif', 'piece_jointe'], 'string', 'max' => 255],

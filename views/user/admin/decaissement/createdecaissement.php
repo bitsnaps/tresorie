@@ -141,7 +141,7 @@ $('#SaveDecaissement').on('click', function(e){
                
              },
        success: function(data){
-            console.log(data);
+
             const obj = JSON.parse(data);
         $("#formDecaissement").attr("action", "index.php?r=responsable-de-station/create-demande&id="+obj.id);
         
