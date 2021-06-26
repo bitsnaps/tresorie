@@ -63,8 +63,8 @@ class Grade extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
-            'role_id' => 'Role ID',
+            'user_id' => 'Nom utilisateur',
+            'role_id' => 'role',
             'niveau' => 'Niveau',
             'montant' => 'Montant',
         ];

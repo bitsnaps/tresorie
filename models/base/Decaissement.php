@@ -36,7 +36,7 @@ class Decaissement extends \yii\db\ActiveRecord
            // [['date_demande','status_user', 'status_admin', 'user_id'], 'safe'],
             [['montant'], 'number'],
             [['status_user', 'status_admin', 'user_id'], 'integer'],
-            [['motif', 'piece_jointe'], 'string', 'max' => 255],
+           // [['motif', 'piece_jointe'], 'string', 'max' => 255],
             [['date_demande'], 'unique'],
          //   [['lock'], 'default', 'value' => '0'],
          //   [['lock'], 'mootensai\components\OptimisticLockValidator']

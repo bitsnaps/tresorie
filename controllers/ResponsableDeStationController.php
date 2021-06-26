@@ -154,32 +154,29 @@ class ResponsableDeStationController extends BaseController
     {
 
         $model = new Decaissement();
-        $model1 = new Decaissementhistorique();
+        $model1=new Decaissementhistorique();
         //Dans le cas apres il a confirmer 
-        if ($model->load(\Yii::$app->request->post()) and $model->validate()) {
+        if ($model->load(\Yii::$app->request->post())) {
             $model =  Decaissement::find()->where(['id' => $id])->one();
             $model1 =  Decaissementhistorique::find()->where(['id' => $id])->one();
 
             $model->status_user = 1;
             $model1->status_user = 1;
             if ($model->update() and $model1->update()) {
-                $decaissement_id = $model->id;
-                $decaissement_montant = $model->montant;
-                $decaissement_motif = $model->motif;
-                $username = $model->user->username;
+                $decaissement_id=$model->id;
+                $decaissement_montant=$model->montant;
+                $decaissement_motif=$model->motif;
+                $username= $model->user ->username;
                 $user = \app\models\User::find()->where(['id' => User::getCurrentUser()->id])->one();
 
-                AccountNotification::create(AccountNotification::KEY_DEMAMDE_DECAISEMENT, ['user' => $user, 'decaissement_id' => $decaissement_id, 'decaissement_motif' => $decaissement_motif, 'decaissement_montant' => $decaissement_montant, 'username' => $username])->send();
+                AccountNotification::create(AccountNotification::KEY_DEMAMDE_DECAISEMENT, ['user' =>$user,'decaissement_id'=>$decaissement_id,'decaissement_motif'=>$decaissement_motif,'decaissement_montant'=>$decaissement_montant,'username'=>$username])->send();
                 echo json_encode(['status' => 'Success', 'message' => 'Demande valider']);
             } else {
                 print_r($model->errors);
 
                 echo json_encode(['status' => 'Error', 'message' => 'Demande no valide']);
             }
-        } else {
-            return $this->render('/user/admin/decaissement/createdecaissement', ['decaissement' => $model]);
         }
-
         //Ajax
         if (\Yii::$app->request->isAjax) {
             $data = \Yii::$app->request->post();
@@ -190,7 +187,7 @@ class ResponsableDeStationController extends BaseController
             $model->motif = $data['motif'];
             $model->piece_jointe = $data['piece_jointe'];
             $model->user_id = User::getCurrentUser()->id;
-            //Decaissement historique
+//Decaissement historique
 
             $model1->date_demande = $now->format('Y-m-d H:i:s');;
             $model1->montant = $data['montant'];
@@ -199,21 +196,22 @@ class ResponsableDeStationController extends BaseController
             $model1->user_id = User::getCurrentUser()->id;
 
             if ($model->save()) {
-
-                $model1->id = $model->id;
+             
+                $model1->id= $model->id;
                 if ($model1->save()) {
-                } else {
+                    
+                }else{
                     print_r($model1->errors);
                     echo json_encode(['status' => 'Error', 'message' => 'Demande no valide']);
                 }
 
-                $decaissement_id = $model->id;
-                $decaissement_montant = $model->montant;
-                $decaissement_motif = $model->motif;
-                $username = $model->user->username;
+                $decaissement_id=$model->id;
+                $decaissement_montant=$model->montant;
+                $decaissement_motif=$model->motif;
+                $username= $model->user ->username;
                 $user = \app\models\User::find()->where(['id' => User::getCurrentUser()->id])->one();
                 echo json_encode(['status' => 'Success', 'message' => 'Demande valide', 'id' => $model->id]);
-                AccountNotification::create(AccountNotification::KEY_DEMAMDE_DECAISEMENT, ['user' => $user, 'decaissement_id' => $decaissement_id, 'decaissement_motif' => $decaissement_motif, 'decaissement_montant' => $decaissement_montant, 'username' => $username])->send();
+                AccountNotification::create(AccountNotification::KEY_DEMAMDE_DECAISEMENT, ['user' =>$user,'decaissement_id'=>$decaissement_id,'decaissement_motif'=>$decaissement_motif,'decaissement_montant'=>$decaissement_montant,'username'=>$username])->send();
                 die();
             } else {
                 print_r($model->errors);

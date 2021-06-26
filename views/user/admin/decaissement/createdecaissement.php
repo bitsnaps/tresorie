@@ -104,7 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'id'=>'SaveDecaissement',
                                             'class' => 'btn btn-block btn-success',
                                             'data-method' => 'post',
-                                            'data-confirm' => Yii::t('usuario', 'Are you sure you want to confirm this user?'),
+                                            'data-confirm' => Yii::t('usuario', 'etes vous sure de confirmer cette demande?'),
                                         ],
                                         ['create-demande', 'id' => $decaissement->id],
                                       
