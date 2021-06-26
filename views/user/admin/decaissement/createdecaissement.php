@@ -78,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <?php $form = ActiveForm::begin(
                                
                                     [
-                                     //   'action' => ['create-demande'],
+                                        'action' => ['create-demande'],
                                         'id' => 'formDecaissement',
                                         'method' => 'post',
                                         'layout' => 'horizontal',

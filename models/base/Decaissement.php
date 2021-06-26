@@ -33,7 +33,7 @@ class Decaissement extends \yii\db\ActiveRecord
     {
         return [
             [['date_demande', 'montant', 'motif', 'piece_jointe'], 'required'],
-            [['date_demande','status_user', 'status_admin', 'user_id'], 'safe'],
+           // [['date_demande','status_user', 'status_admin', 'user_id'], 'safe'],
             [['montant'], 'number'],
             [['status_user', 'status_admin', 'user_id'], 'integer'],
             [['motif', 'piece_jointe'], 'string', 'max' => 255],
