@@ -10,6 +10,7 @@
  */
 
 use yii\bootstrap\Nav;
+use app\models\User;
 
 ?>
 
@@ -23,23 +24,42 @@ use yii\bootstrap\Nav;
             [
                 'label' => Yii::t('usuario', 'Utilisateur'),
                 'url' => ['/user/admin/index'],
+                'visible' => User::isAdmin()
             ],
             [
                 'label' => Yii::t('usuario', 'rôles'),
                 'url' => ['/user/role/index'],
+                'visible' => User::isAdmin()
             ],
             [
                 'label' => Yii::t('usuario', 'Palier'),
                 'url' => ['/admin/palliers'],
+                'visible' => User::isAdmin()
             ],
             [
+                'label' => Yii::t('usuario', 'Tous les Décaissements'),
+                'url' => ['/admin/decaissement'],
+                'visible' => User::isAdmin()
+            ],
+            [
+                'label' => Yii::t('usuario', 'Créer une demande'),
+                'url' => ['/responsable-de-station/create-demande'],
+                'visible' => User::isResponsableDeStation()
+            ],
+            [
+                'label' => Yii::t('usuario', 'Mes Décaissements'),
+                'url' => ['/responsable-de-station/decaissement'],
+                'visible' => User::isResponsableDeStation()
+            ],
+
+          /*  [
                 'label' => Yii::t('usuario', 'Permissions'),
                 'url' => ['/user/permission/index'],
             ],
             [
                 'label' => Yii::t('usuario', 'Règles'),
                 'url' => ['/user/rule/index'],
-            ],
+            ],*/
             [
                 'label' => Yii::t('usuario', 'Créer'),
                 'items' => [
@@ -63,7 +83,8 @@ use yii\bootstrap\Nav;
                         'label' => Yii::t('usuario', 'Nouvelle regle'),
                         'url' => ['/user/rule/create'],
                     ],
-                ],
+                ]
+                , 'visible' => User::isAdmin()
             ],
         ],
     ]

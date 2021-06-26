@@ -1,11 +1,13 @@
 <?php
 // ...
 namespace app\controllers;
+
 use  Da\User\Controller\AdminController as BaseController;
 use yii\web\Controller;
 use Da\User\Filter\AccessRuleFilter;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use app\models\User;
 use app\models\Grade;
 use app\models\GradeSearch;
 use app\models\Decaissement;
@@ -15,7 +17,7 @@ use app\models\Role;
 
 // ...
 
-class AdminController extends BaseController
+class ResponsableDeStationController extends BaseController
 {
 
 
@@ -37,74 +39,26 @@ class AdminController extends BaseController
                     'class' => AccessRuleFilter::class,
                 ],
                 'rules' => [
+
                     [
+
                         'allow' => true,
-                        'roles' => ['admin'],
-                    ],
-                    [
-                        'actions' => ['view', 'search','decaissement','view-decaissement','update-decaissement','delete-decaissement'],
-                        'allow' => true,
-                        'roles' => ['Aprobateur','admin','responsableDeStation'],
+                        'roles' => ['responsableDeStation'],
                     ],
                 ],
             ],
         ];
     }
-         /**
-     * Displays a single Grade model.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionViewDecaissement($id)
-    {
-        return $this->render('/user/admin/decaissement/view', [
-            'model' => $this->findModelDecaissement($id),
-        ]);
-    }
-
     /**
-     * Updates an existing Grade model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdateDecaissement($id)
-    {
-        $model = $this->findModelDecaissement($id);
-
-        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/user/admin/decaissement/view', 'id' => $model->id]);
-        }
-
-        return $this->render('/user/admin/decaissement/update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing Grade model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDeleteDecaissement($id)
-    {
-        $this->findModelDecaissement($id)->delete();
-
-        return $this->redirect(['/admin/decaissement']);
-    }
-        /**
      * This function return all palliers assigned by the admin
      *
      * @return void
      */
-    public function actionDecaissement(){
-    
+    public function actionDecaissement()
+    {
+
         $searchModel = $this->make(DecaissementSearch::class);
-        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchMyDemande(\Yii::$app->request->queryParams, User::getCurrentUser()->id);
 
         return $this->render(
             '/user/admin/decaissement/allDecaissement',
@@ -115,28 +69,28 @@ class AdminController extends BaseController
         );
     }
 
+
     /**
      * This methode confirm decaissement aproved by an admin or an approbateur
      *
      * @return void
      */
-    public function actionConfirmDecaissement($id){
-        $model=Decaissement::findOne(['id'=>$id]);
-        
-        if($model->status_admin==0)
-             $model->status_admin=2;
+    public function actionConfirmDecaissement($id)
+    {
+        $model = Decaissement::findOne(['id' => $id]);
+
+        if ($model->status_admin == 0)
+            $model->status_admin = 2;
         else
-            $model->status_admin=0;
+            $model->status_admin = 0;
 
-        if($model->update()){
-
-        }else{
+        if ($model->update()) {
+        } else {
             print_r($model->errors);
             die();
         }
 
         return $this->redirect(['/admin/decaissement']);
-        
     }
 
     /**
@@ -144,18 +98,18 @@ class AdminController extends BaseController
      *
      * @return void
      */
-    public function actionBlockDecaissement($id){
-        $model=Decaissement::findOne(['id'=>$id]);
-        
-        if($model->status_admin==0 or $model->status_admin==2)
-            $model->status_admin=1;
+    public function actionBlockDecaissement($id)
+    {
+        $model = Decaissement::findOne(['id' => $id]);
+
+        if ($model->status_admin == 0 or $model->status_admin == 2)
+            $model->status_admin = 1;
         else
-            $model->status_admin=0;
-        
+            $model->status_admin = 0;
 
-        if($model->update()){
 
-        }else{
+        if ($model->update()) {
+        } else {
             print_r($model->errors);
             die();
         }
@@ -167,15 +121,16 @@ class AdminController extends BaseController
      * ALL Methodes Responsible On Palliers
      *
      * 
-     */  
+     */
 
     /**
      * This function return all palliers assigned by the admin
      *
      * @return void
      */
-    public function actionPalliers(){
-    
+    public function actionPalliers()
+    {
+
         $searchModel = $this->make(GradeSearch::class);
         $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
@@ -192,39 +147,72 @@ class AdminController extends BaseController
      *
      * @return void
      */
-    public function actionCreatePallier(){
-    
-        $grade = $this->make(Grade::class, [], ['scenario' => 'create']);
+    public function actionCreateDemande($id=null)
+    {
 
-        return $this->render('/user/admin/pallier/createpallier', ['grade' => $grade]);
+        $model = new Decaissement();
+        //Dans le cas apres il a confirmer 
+        if ($model->load(\Yii::$app->request->post())) {
+            $model =  Decaissement::find()->where(['id'=>$id])->one();
+            $model->status_user=1;
+            if ($model->update()) {
+                echo json_encode(['status' => 'Success', 'message' => 'Demande valider']);
+            } else {
+                print_r($model->errors);
+
+                echo json_encode(['status' => 'Error', 'message' => 'Demande no valide']);
+            }
+        }
+        if (\Yii::$app->request->isAjax) {
+            $data = \Yii::$app->request->post();
+            //data: { 'save_id' : fileid },
+            $now = new \DateTime();
+            $model->date_demande=$now->format('Y-m-d H:i:s');;
+            $model->montant=$data['montant'];
+            $model->motif=$data['motif'];
+            $model->piece_jointe=$data['piece_jointe'];
+            $model->user_id=User::getCurrentUser()->id;
+
+            if ($model->save()) {
+                echo json_encode(['status' => 'Success', 'message' => 'Demande valide','id'=>$model->id]);
+            } else {
+                print_r($model->errors);
+
+                echo json_encode(['status' => 'Error', 'message' => 'Demande no valide']);
+            }
+            
+        } else {
+            $decaissement = $this->make(Decaissement::class, [], ['scenario' => 'create']);
+
+            return $this->render('/user/admin/decaissement/createdecaissement', ['decaissement' => $decaissement]);
+        }
     }
     /**
      * This Methode is responsible on saving a pallier
      *
      * @return void
      */
-    public function actionSavePallier(){
-    
-        $model =new Grade();
-        $role =new Role();
-        $grade = $this->make(Grade::class, [], ['scenario' => 'create']);
-        if ($model->load(\Yii::$app->request->post()) ) {
-            //need to create role for the aprobateur or any other specifique user 
-            $role->role_name=$model->role_id;
-            $role->user_id=$model->user_id;
-  
-            if($role->save()){
+    public function actionSavePallier()
+    {
 
-            }else{
-               
+        $model = new Grade();
+        $role = new Role();
+        $grade = $this->make(Grade::class, [], ['scenario' => 'create']);
+        if ($model->load(\Yii::$app->request->post())) {
+            //need to create role for the aprobateur or any other specifique user 
+            $role->role_name = $model->role_id;
+            $role->user_id = $model->user_id;
+
+            if ($role->save()) {
+            } else {
+
                 print_r($role->errors);
                 die();
             }
             //saving the grade with it specifique pallier
-            $model->role_id= $role->id;
-            if($model->save()){
-
-            }else{
+            $model->role_id = $role->id;
+            if ($model->save()) {
+            } else {
                 print_r($model);
                 print_r($model->errors);
                 die();
@@ -233,10 +221,8 @@ class AdminController extends BaseController
 
             return $this->render('/user/admin/pallier/createpallier', ['grade' => $grade]);
         }
-
-       
     }
-     /**
+    /**
      * Displays a single Grade model.
      * @param integer $id
      * @return mixed
@@ -298,16 +284,4 @@ class AdminController extends BaseController
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
-    protected function findModelDecaissement($id)
-    {
-        if (($model = Decaissement::findOne($id)) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
-    }
-
-
-   
-    
 }

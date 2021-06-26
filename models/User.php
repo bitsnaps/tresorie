@@ -20,9 +20,35 @@ class User extends BaseUser
     public static  function isAdmin()
     {
         //$User = new self();  
+        if(User:: userHasRole('admin',User::getCurrentUser()->id))
+            return  true;
+            return  false;    
       
-        return  User:: userHasRole('admin',User::getCurrentUser()->id);
+    }
+    public static  function isAprobateur()
+    {
+        //$User = new self();  
+        if(User:: userHasRole('Aprobateur',User::getCurrentUser()->id))
+            return  true;
+            return  false;    
       
+    }
+    public static  function isResponsableDeStation()
+    {
+        //$User = new self();  
+        if(User:: userHasRole('responsableDeStation',User::getCurrentUser()->id))
+            return  true;
+            return  false;    
+      
+    }
+
+    public static function decaissementAuthorirty($status_user){
+        echo $status_user.'ss';
+        if($status_user!=1)
+            return  true;
+        else 
+            return false;
+        
     }
 
 

@@ -7,12 +7,25 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'name' => 'Yalidine',
+    'defaultRoute' => 'user/security/login',
     'bootstrap' => ['log','user'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'assetManager' => [
+            'bundles' => [
+                'kartik\form\ActiveFormAsset' => [
+                    'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
+                ],
+            ],
+        ],
+        'formatter' => [
+            'class' => 'yii\i18n\formatter',
+            'thousandSeparator' => ',',
+            'decimalSeparator' => '.',
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'MWTD7G85H86HY66AC79WWFT5DD3QRW622W52D4H496FJWGB9WYHLLVRD2JTFB7RM',
@@ -52,7 +65,8 @@ $config = [
                     '@Da/User/resources/views' => '@app/views/user'
                 ]
             ]
-        ]
+                ],
+
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,
@@ -67,9 +81,12 @@ $config = [
             'class' => \Da\User\Module::class,
             //think how to create a component for that
             // ...other configs from here: [Configuration Options](installation/configuration-options.md), e.g.
-            'administrators' => ['admin','admin1'], // this is required for accessing administrative actions
+            'administrators' => ['admin','admin1','hihi'], // this is required for accessing administrative actions
             // 'generatePasswords' => true,
             // 'switchIdentitySessionKey' => 'myown_usuario_admin_user_key',
+            'controllerMap' => [
+                'security' => 'app\controllers\user\UserController'
+            ]
 
         ]
         ],

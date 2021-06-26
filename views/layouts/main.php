@@ -43,7 +43,11 @@ AppAsset::register($this);
            // ['label' => 'Home', 'url' => ['/user/security/login']],
            // ['label' => 'About', 'url' => ['/site/about']],
            // ['label' => 'Contact', 'url' => ['/site/contact']],
-           ['label' => 'Admin', 'url' => ['/user/admin'], 'visible' => User::isAdmin()],
+           ['label' => 'Administrateur', 'url' => ['/user/admin'], 'visible' => User::isAdmin()],
+           ['label' => 'Tous Décaissements', 'url' => ['/admin/decaissement'], 'visible' => User::isAdmin()],
+           ['label' => 'Décaissement', 'url' => ['/admin/decaissement'], 'visible' => User::isAprobateur()],
+           ['label' => 'Demande Décaissement',  'url' => ['/responsable-de-station/create-demande'], 'visible' => User::isResponsableDeStation()],
+           ['label' => 'Mes demande Décaissement', 'url' => ['/responsable-de-station/decaissement'], 'visible' => User::isResponsableDeStation()],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/user/security/login']]
             ) : (
@@ -62,6 +66,7 @@ AppAsset::register($this);
     ?>
 
     <div class="container">
+   
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>

@@ -20,8 +20,8 @@ class Grade extends BaseGrade
             [['user_id', 'role_id'], 'integer'],
             [['montant'], 'number'],
             [['niveau'], 'string', 'max' => 255],
-            [['lock'], 'default', 'value' => '0'],
-            [['lock'], 'mootensai\components\OptimisticLockValidator']
+          //  [['lock'], 'default', 'value' => '0'],
+           // [['lock'], 'mootensai\components\OptimisticLockValidator']
         ]);
     }
 	
