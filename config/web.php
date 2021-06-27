@@ -7,6 +7,7 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'name' => 'Yalidine',
+    
     'defaultRoute' => 'user/security/login',
     'bootstrap' => ['log', 'user'],
     'aliases' => [
