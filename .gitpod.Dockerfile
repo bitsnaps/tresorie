@@ -5,6 +5,7 @@ USER gitpod
 RUN sudo apt-get update -q \
     && sudo apt-get install -y php-dev
 
+
 RUN wget http://xdebug.org/files/xdebug-2.9.1.tgz \
     && tar -xvzf xdebug-2.9.1.tgz \
     && cd xdebug-2.9.1 \

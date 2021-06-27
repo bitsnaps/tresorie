@@ -11,7 +11,6 @@ vscode:
   extensions:
     - ms-azuretools.vscode-docker@1.8.1:xuHtLS23Q5czFwYH7grcCQ==
 
-
 # start up tasks
 tasks:
   # init: Will be executed one time when creating a workspace, command: will be exected each time you open workspace
@@ -23,9 +22,9 @@ tasks:
       chmod +x ./tests/bin/yii
     command: |
       sudo service mysql restart
-      ./tests/bin/yii migrate --interactive=0
+      ./yii migrate --migrationNamespaces=Da\\User\\Migration --interactive=0
+      ./yii migrate --migrationPath=@yii/rbac/migrations --interactive=0
       ./yii migrate --interactive=0
-      ./vendor/bin/codecept build
-      ./tests/bin/yii serve
-  - command: gp await-port 8080 && ./vendor/bin/codecept run --coverage
-  # - command: gp await-port 8080 && gp preview $(gp url 8080)
+      ./yii serve
+  # - command: gp await-port 8080 && ./vendor/bin/codecept run --coverage
+  - command: gp await-port 8080 && gp preview $(gp url 8080)
