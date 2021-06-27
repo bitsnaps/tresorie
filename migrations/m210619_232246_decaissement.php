@@ -24,8 +24,8 @@ class m210619_232246_decaissement extends Migration
                 'montant'=> $this->decimal(10)->notNull(),
                 'motif'=> $this->string(255)->notNull(),
                 'piece_jointe'=> $this->string(255)->notNull(),
-                'status_user'=> $this->integer(11)->notNull(),
-                'status_admin'=> $this->integer(11)->notNull(),
+                'status_user'=> $this->integer(11)->notNull()->defaultValue(0),
+                'status_admin'=> $this->integer(11)->notNull()->defaultValue(0),
                 'user_id'=> $this->integer(11)->notNull(),
             ],$tableOptions
         );

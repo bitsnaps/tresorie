@@ -48,6 +48,7 @@ AppAsset::register($this);
            ['label' => 'Décaissement', 'url' => ['/admin/decaissement'], 'visible' => User::isAprobateur()],
            ['label' => 'Demande Décaissement',  'url' => ['/responsable-de-station/create-demande'], 'visible' => User::isResponsableDeStation()],
            ['label' => 'Mes demande Décaissement', 'url' => ['/responsable-de-station/decaissement'], 'visible' => User::isResponsableDeStation()],
+           app\widgets\Notifications::widget(),
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/user/security/login']]
             ) : (
@@ -62,6 +63,8 @@ AppAsset::register($this);
             )
         ],
     ]);
+
+
     NavBar::end();
     ?>
 

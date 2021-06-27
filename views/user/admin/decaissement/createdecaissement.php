@@ -78,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <?php $form = ActiveForm::begin(
                                
                                     [
-                                     //   'action' => ['create-demande'],
+                                        'action' => ['create-demande'],
                                         'id' => 'formDecaissement',
                                         'method' => 'post',
                                         'layout' => 'horizontal',
@@ -104,7 +104,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             'id'=>'SaveDecaissement',
                                             'class' => 'btn btn-block btn-success',
                                             'data-method' => 'post',
-                                            'data-confirm' => Yii::t('usuario', 'Are you sure you want to confirm this user?'),
+                                            'data-confirm' => Yii::t('usuario', 'etes vous sure de confirmer cette demande?'),
                                         ],
                                         ['create-demande', 'id' => $decaissement->id],
                                       
@@ -141,7 +141,7 @@ $('#SaveDecaissement').on('click', function(e){
                
              },
        success: function(data){
-            console.log(data);
+
             const obj = JSON.parse(data);
         $("#formDecaissement").attr("action", "index.php?r=responsable-de-station/create-demande&id="+obj.id);
         

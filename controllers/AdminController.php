@@ -102,8 +102,11 @@ class AdminController extends BaseController
      * @return void
      */
     public function actionDecaissement(){
-    
+        
+        //case admin
         $searchModel = $this->make(DecaissementSearch::class);
+        //case not admin
+
         $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
         return $this->render(

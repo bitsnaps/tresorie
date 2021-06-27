@@ -4,7 +4,7 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Decaissement;
+use app\models\base\Decaissement;
 
 /**
  * DecaissementSearch represents the model behind the search form of `app\models\Decaissement`.
@@ -41,13 +41,22 @@ class DecaissementSearch extends Decaissement
      */
     public function search($params)
     {
+        //Admin peut voir tous les decaissement
         $query = Decaissement::find();
-
-        // add conditions that should always apply here
-
+        //Decaissement pour Aprobateur filtrer celon son pallier
+        if(User::isAprobateur(User::getCurrentUser()->id)){
+            $grade=Grade::find(['user_id'=>User::getCurrentUser()->id])->one();
+            $query=Decaissement::find(['user_id'=>User::getCurrentUser()->id])
+          //      ->innerJoin('grade', 'grade.user_id = decaissement.user_id ')
+                ->where(['<=','decaissement.montant',$grade->montant])
+             ;
+        }
+       
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+      //  print_r($dataProvider );
+       // die();
 
         $this->load($params);
 

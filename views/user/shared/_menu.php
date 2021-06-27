@@ -75,14 +75,14 @@ use app\models\User;
                         'label' => Yii::t('usuario', 'Nouveau pallier'),
                         'url' => ['/admin/create-pallier'],
                     ],
-                    [
+                   /* [
                         'label' => Yii::t('usuario', 'Nouvelle permission'),
                         'url' => ['/user/permission/create'],
                     ],
                     [
                         'label' => Yii::t('usuario', 'Nouvelle regle'),
                         'url' => ['/user/rule/create'],
-                    ],
+                    ],*/
                 ]
                 , 'visible' => User::isAdmin()
             ],

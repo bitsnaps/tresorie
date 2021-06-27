@@ -7,8 +7,9 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'name' => 'Yalidine',
+    
     'defaultRoute' => 'user/security/login',
-    'bootstrap' => ['log','user'],
+    'bootstrap' => ['log', 'user'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -57,15 +58,16 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
-            
+
         ],
         'view' => [
             'theme' => [
                 'pathMap' => [
-                    '@Da/User/resources/views' => '@app/views/user'
+                    '@Da/User/resources/views' => '@app/views/user',
+                    '@webzop/notifications/views' => '@app/views/notification'
                 ]
             ]
-                ],
+        ],
 
         /*
         'urlManager' => [
@@ -81,15 +83,40 @@ $config = [
             'class' => \Da\User\Module::class,
             //think how to create a component for that
             // ...other configs from here: [Configuration Options](installation/configuration-options.md), e.g.
-            'administrators' => ['admin','admin1','hihi'], // this is required for accessing administrative actions
+            'administrators' => ['admin', 'admin1', 'hihi'], // this is required for accessing administrative actions
             // 'generatePasswords' => true,
             // 'switchIdentitySessionKey' => 'myown_usuario_admin_user_key',
             'controllerMap' => [
-                'security' => 'app\controllers\user\UserController'
+                'security' => 'app\controllers\user\UserController',
+                'role' => 'app\controllers\user\RoleController'
+
             ]
 
-        ]
         ],
+        //Notification
+        'notifications' => [
+            'class' => 'webzop\notifications\Module',
+            'channels' => [
+                'screen' => [
+                    'class' => 'app\controllers\channels\ScreenChannel',
+                ],
+                'email' => [
+                    'class' => 'webzop\notifications\channels\EmailChannel',
+                    'message' => [
+                        'from' => 'example@email.com'
+                    ],
+                ],
+            ],
+           
+            'controllerMap' => [
+                'default' => 'app\controllers\notification\NotificationController',
+                
+
+            ],
+
+        ],
+       
+    ],
     'params' => $params,
 ];
 

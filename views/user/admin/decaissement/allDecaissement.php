@@ -79,6 +79,33 @@ $this->params['breadcrumbs'][] = $this->title;
                 'visible' => true,
             ],
             [
+                'label' => Yii::t('usuario', 'Suivi admin'),
+                'value' => function ($model) {
+                    if ($model->status_admin == '2') {
+                        return Html::a(
+                            Yii::t('usuario', 'Confirm'),
+                            ['confirm', 'id' => $model->id],
+                            [
+                                'class' => 'btn btn-xs btn-success btn-block disabled',
+                                'data-method' => 'post',
+                                'data-confirm' => Yii::t('usuario', 'Are you sure you want to confirm this user?'),
+                            ]
+                        );
+                    } else
+                        return Html::a(
+                            Yii::t('usuario', 'Pending'),
+                            ['confirm', 'id' => $model->id],
+                            [
+                                'class' => 'btn btn-xs btn-warning btn-block disabled',
+                                'data-method' => 'post',
+                                'data-confirm' => Yii::t('usuario', 'Are you sure you want to confirm this user?'),
+                            ]
+                        );
+                },
+                'format' => 'html',
+                'visible' => User::isResponsableDeStation(),
+            ],
+            [
                 'header' => Yii::t('usuario', 'Confirmer la demande '),
                 'value' => function ($model) {
                     if ($model->status_admin == 2) {
@@ -98,7 +125,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         );
                 },
                 'format' => 'raw',
-                'visible' => User::isAdmin(),
+                'visible' =>  User::isAdmin() or User::isAprobateur(),
             ],
             [
                 'header' => Yii::t('usuario', 'Blocker la demande'),
@@ -126,7 +153,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         );
                 },
                 'format' => 'raw',
-                'visible' => User::isAdmin()
+                'visible' =>  User::isAdmin() or User::isAprobateur(),
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
@@ -193,7 +220,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         return false;
                     },
                     'view' => function ($url, $model) {
-                        if (User::decaissementAuthorirty($model->status_user))
+                     
                             return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['admin/view-decaissement', 'id' => $model->id],  [
                                 'class' => '',
                                 'data' => [
@@ -201,7 +228,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'method' => 'post',
                                 ],
                             ]);
-                        return false;
+                     
                     },
 
 
