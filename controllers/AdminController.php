@@ -217,7 +217,10 @@ class AdminController extends BaseController
             $role->user_id=$model->user_id;
   
             if($role->save()){
-
+                //AuthUpdate
+                $auth=\app\models\AuthAssignment::find()->where(['user_id'=>$model->user_id])->one();
+                $auth->item_name='Aprobateur';
+                $auth->update();
             }else{
                
                 print_r($role->errors);
@@ -232,7 +235,10 @@ class AdminController extends BaseController
                 print_r($model->errors);
                 die();
             }
-            \Yii::$app->session->setFlash('Pallier cree avec success');
+
+
+            \Yii::$app->session->setFlash('success','Pallier et Aprobateur crée avec success');
+
 
             return $this->render('/user/admin/pallier/createpallier', ['grade' => $grade]);
         }
