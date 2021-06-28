@@ -67,7 +67,16 @@ class User extends BaseUser
     }
     public static function authAssignementResponsableDeStationToConfirmedUser($user_id)
     {
-        $model = new AuthAssignment();
+        $model = new \app\models\AuthAssignment();
+        $model->item_name = 'responsableDeStation';
+        $model->user_id = $user_id;
+
+        if ($model->save()) {
+        } else {
+            print_r($model);
+            die();
+        }
+        $model = new \app\models\Role();
         $model->item_name = 'responsableDeStation';
         $model->user_id = $user_id;
 
@@ -82,6 +91,7 @@ class User extends BaseUser
         $model1 = \app\models\AuthItem::find()->where(['name' => 'responsableDeStation'])->one();
         if ($model1) {
             self::authAssignementResponsableDeStationToConfirmedUser($user_id);
+            //je cree l'utilisateur 
         } else {
             $model1 = new \app\models\AuthItem;
             $model1->name = 'responsableDeStation';
