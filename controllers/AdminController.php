@@ -235,10 +235,18 @@ class AdminController extends BaseController
                 print_r($model->errors);
                 die();
             }
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+            \Yii::$app->session->setFlash('success','Pallier et Aprobateur crée avec success');
+>>>>>>> Stashed changes
 
 
             \Yii::$app->session->setFlash('success','Pallier et Aprobateur crée avec success');
 
+=======
+            \Yii::$app->session->setFlash('success','Pallier et Aprobateur crée avec success');
+>>>>>>> Stashed changes
 
             return $this->render('/user/admin/pallier/createpallier', ['grade' => $grade]);
         }

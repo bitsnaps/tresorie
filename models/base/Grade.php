@@ -63,8 +63,18 @@ class Grade extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
             'user_id' => 'Nom utilisateur',
             'role_id' => 'role',
+=======
+            'user_id' => 'Nom d\'utilisateur',
+            'role_id' => 'Role',
+>>>>>>> Stashed changes
+=======
+            'user_id' => 'Nom d\'utilisateur',
+            'role_id' => 'Role',
+>>>>>>> Stashed changes
             'niveau' => 'Niveau',
             'montant' => 'Montant',
         ];
