@@ -23,20 +23,40 @@ class NotificationController extends BaseController
     {
        
         $userId = Yii::$app->getUser()->getId();
-        $query = (new Query())
+        if(\app\models\User::isAdmin(\app\models\User::getCurrentUser()->id)){
+            $query = (new Query())
             ->from('{{%notifications}}')
-            ->andWhere(['or', 'user_id = 13', 'user_id = :user_id'], [':user_id' => $userId]);
+            ->andWhere(['or', 'user_id = $userId', 'user_id = :user_id'], [':user_id' => $userId])
+            ->all();
 
+        }
+           
+        if(\app\models\User::isAprobateur(\app\models\User::getCurrentUser()->id)){
+            $query = (new Query())
+            ->from('{{%notifications}}')
+            ->innerJoin('decaissementhistorique', 'decaissementhistorique.id = notifications.decaissementhistorique_id')
+           ->innerJoin('grade', 'grade.user_id = decaissementhistorique.user_id ')
+            ->andWhere(['>=','grade.montant','decaissementhistorique.montant'])
+            ->all()
+          ;
+        }
+        print_r($query);
+        die();
         $pagination = new Pagination([
             'pageSize' => 20,
             'totalCount' => $query->count(),
         ]);
-
-        $list = $query
+      
+        $list=[];
+        if($query->count()>0){
+            $list = $query
             ->orderBy(['id' => SORT_DESC])
             ->offset($pagination->offset)
             ->limit($pagination->limit)
             ->all();
+        }
+        
+       
 
         $notifs = $this->prepareNotifications($list);
 
@@ -49,12 +69,26 @@ class NotificationController extends BaseController
     public function actionList()
     {
         $userId = Yii::$app->getUser()->getId();
+        if(\app\models\User::isAdmin(\app\models\User::getCurrentUser()->id))
         $list = (new Query())
             ->from('{{%notifications}}')
             ->andWhere(['or', 'user_id = 13', 'user_id = :user_id'], [':user_id' => $userId])
             ->orderBy(['id' => SORT_DESC])
             ->limit(10)
             ->all();
+        if(\app\models\User::isAprobateur(\app\models\User::getCurrentUser()->id)){
+            $list = (new Query())
+            ->from('{{%notifications}}')
+            ->innerJoin('decaissementhistorique', 'decaissementhistorique.id = notifications.decaissementhistorique_id')
+            ->innerJoin('grade', 'grade.user_id = decaissementhistorique.user_id ')
+            ->andWhere(['>=','grade.montant','decaissementhistorique.montant'])
+            ->orderBy(['id' => SORT_DESC])
+            ->limit(10)
+            ->all();
+        //    ->andWhere(['or', 'user_id = 0', 'user_id = :user_id'], [':user_id' => $userId])
+           
+           ;
+        }
         $notifs = $this->prepareNotifications($list);
         $this->ajaxResponse(['list' => $notifs]);
     }

@@ -249,7 +249,9 @@ class AdminController extends BaseController
                 print_r($model->errors);
                 die();
             }
+
             \Yii::$app->session->setFlash('success','Pallier et Aprobateur crée avec success');
+
 
             return $this->render('/user/admin/pallier/createpallier', ['grade' => $grade]);
         }else{
@@ -304,7 +306,7 @@ class AdminController extends BaseController
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['/admin/pallier/palliers']);
+        return $this->redirect(['/admin/palliers']);
     }
 
     /**

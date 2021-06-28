@@ -7,7 +7,7 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'name' => 'Yalidine',
-    
+    'language'=>'fr',
     'defaultRoute' => 'user/security/login',
     'bootstrap' => ['log', 'user'],
     'aliases' => [
@@ -24,7 +24,7 @@ $config = [
         ],
         'formatter' => [
             'class' => 'yii\i18n\formatter',
-            'thousandSeparator' => ',',
+            'thousandSeparator' => '',
             'decimalSeparator' => '.',
         ],
         'request' => [
@@ -88,6 +88,7 @@ $config = [
             // 'switchIdentitySessionKey' => 'myown_usuario_admin_user_key',
             'controllerMap' => [
                 'security' => 'app\controllers\user\UserController',
+                'admin' => 'app\controllers\user\AdminController',
                 'role' => 'app\controllers\user\RoleController'
 
             ]

@@ -1,54 +1,100 @@
-<?php 
+<?php
+
 namespace app\models;
 
 use Da\User\Model\User as BaseUser;
 
 class User extends BaseUser
 {
+        /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'username' => \Yii::t('usuario', 'Nom d\'utilisateur'),
+            'email' => \Yii::t('usuario', 'Email'),
+            'registration_ip' => \Yii::t('usuario', 'IP d\'enregistrement'),
+            'unconfirmed_email' => \Yii::t('usuario', 'Nouveau courriel'),
+            'password' => \Yii::t('usuario', 'Mot de passe'),
+            'created_at' => \Yii::t('usuario', 'Heure d\'inscription'),
+            'confirmed_at' => \Yii::t('usuario', 'Heure de confirmation'),
+            'last_login_at' => \Yii::t('usuario', 'Dernière connexion'),
+        ];
+    }
+
     public static function tableName()
     {
         return '{{%user}}';
     }
-    public static function getCurrentUser() {
+    public static function getCurrentUser()
+    {
         return \Yii::$app->user;
     }
-    public static function userHasRole($role,$id)
+    public static function userHasRole($role, $id)
     {
-        $User = new self();  
+        $User = new self();
         return $User->getAuth()->hasRole($id, $role);
     }
     public static  function isAdmin()
     {
         //$User = new self();  
-        if(User:: userHasRole('admin',User::getCurrentUser()->id))
+        if (User::userHasRole('admin', User::getCurrentUser()->id))
             return  true;
-            return  false;    
-      
+        return  false;
     }
     public static  function isAprobateur()
     {
         //$User = new self();  
-        if(User:: userHasRole('Aprobateur',User::getCurrentUser()->id))
+        if (User::userHasRole('Aprobateur', User::getCurrentUser()->id))
             return  true;
-            return  false;    
-      
+        return  false;
     }
     public static  function isResponsableDeStation()
     {
         //$User = new self();  
-        if(User:: userHasRole('responsableDeStation',User::getCurrentUser()->id))
+        if (User::userHasRole('responsableDeStation', User::getCurrentUser()->id))
             return  true;
-            return  false;    
-      
+        return  false;
     }
 
-    public static function decaissementAuthorirty($status_user){
-        if($status_user!=1)
+    public static function decaissementAuthorirty($status_user)
+    {
+        if ($status_user != 1)
             return  true;
-        else 
+        else
             return false;
-        
     }
+    public static function authAssignementResponsableDeStationToConfirmedUser($user_id)
+    {
+        $model = new AuthAssignment();
+        $model->item_name = 'responsableDeStation';
+        $model->user_id = $user_id;
 
+        if ($model->save()) {
+        } else {
+            print_r($model);
+            die();
+        }
+    }
+    public static function assignRoleToConfirmedUser($user_id)
+    {
+        $model1 = \app\models\AuthItem::find()->where(['name' => 'responsableDeStation'])->one();
+        if ($model1) {
+            self::authAssignementResponsableDeStationToConfirmedUser($user_id);
+        } else {
+            $model1 = new \app\models\AuthItem;
+            $model1->name = 'responsableDeStation';
+            $model1->type = 1;
 
+            if ($model1->save()) {
+                self::authAssignementResponsableDeStationToConfirmedUser($user_id);
+            } else {
+                print_r($model1);
+                die();
+            }
+            //Saving role for new confirmed user 
+
+        }
+    }
 }

@@ -22,7 +22,7 @@ use kartik\money\MaskMoney;
     ?>
     <?= $form->field($model, 'role_id')->dropDownList(
 
-    ArrayHelper::map(app\models\Role::find()->where(['id'=>$model->role_id])->all(), 'id', 'role_name'),
+    ArrayHelper::map(app\models\Role::find()->where(['role_name'=>'Aprobateur'])->all(), 'id', 'role_name'),
 
     ['prompt' => 'Sélectionner Le Role']);
     ?>

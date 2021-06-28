@@ -3,50 +3,35 @@
 use yii\db\Schema;
 use yii\db\Migration;
 
-class m210619_232252_Relations extends Migration
+class m210619_232249_role extends Migration
 {
 
     public function init()
     {
-       $this->db = 'db';
-       parent::init();
+        $this->db = 'db';
+        parent::init();
     }
 
     public function safeUp()
     {
-        $this->addForeignKey('fk1_decaissement_user_id',
-            '{{%decaissement}}','user_id',
-            '{{%user}}','id',
-            'CASCADE','CASCADE'
-         );
-        $this->addForeignKey('fk1_grade_user_id',
-            '{{%grade}}','user_id',
-            '{{%user}}','id',
-            'CASCADE','CASCADE'
-         );
-        $this->addForeignKey('fk1_profil_user_id',
-            '{{%profil}}','user_id',
-            '{{%user}}','id',
-            'CASCADE','CASCADE'
-         );
-        $this->addForeignKey('fk1_role_user_id',
-            '{{%role}}','user_id',
-            '{{%user}}','id',
-            'CASCADE','CASCADE'
-         );
-        $this->addForeignKey('fk_transaction_decaissment_id',
-            '{{%transaction}}','decaissment_id',
-            '{{%decaissement}}','id',
-            'CASCADE','CASCADE'
-         );
+        $tableOptions = 'ENGINE=InnoDB';
+
+        $this->createTable(
+            '{{%role}}',
+            [
+                'id'=> $this->primaryKey(11),
+                'role_name'=> $this->string(255)->notNull(),
+                'user_id'=> $this->integer(11)->notNull(),
+                
+            ],$tableOptions
+        );
+        $this->createIndex('role_fk0','{{%role}}',['user_id'],false);
+
     }
 
     public function safeDown()
     {
-        $this->dropForeignKey('fk1_decaissement_user_id', '{{%decaissement}}');
-        $this->dropForeignKey('fk1_grade_user_id', '{{%grade}}');
-        $this->dropForeignKey('fk1_profil_user_id', '{{%profil}}');
-        $this->dropForeignKey('fk1_role_user_id', '{{%role}}');
-        $this->dropForeignKey('fk1_transaction_decaissment_id', '{{%transaction}}');
+        $this->dropIndex('role_fk0', '{{%role}}');
+        $this->dropTable('{{%role}}');
     }
 }

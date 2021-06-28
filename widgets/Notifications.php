@@ -57,9 +57,12 @@ class Notifications extends \yii\base\Widget
      */
     public function run()
     {
-        echo $this->renderNavbarItem();
+        if(\app\models\User::isAdmin() or \app\models\User::isAprobateur() ){
+            echo $this->renderNavbarItem();
 
-        $this->registerAssets();
+            $this->registerAssets();
+        }
+       
     }
 
     /**

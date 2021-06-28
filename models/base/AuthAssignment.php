@@ -8,20 +8,15 @@ use yii\behaviors\BlameableBehavior;
 use mootensai\behaviors\UUIDBehavior;
 
 /**
- * This is the base model class for table "grade".
+ * This is the base model class for table "auth_assignment".
  *
- * @property integer $id
- * @property integer $user_id
- * @property integer $role_id
- * @property string $niveau
- * @property string $montant
- * @property integer $updated_at
+ * @property string $item_name
+ * @property string $user_id
  * @property integer $created_at
  *
- * @property \app\models\Role $role
- * @property \app\models\User $user
+ * @property \app\models\AuthItem $itemName
  */
-class Grade extends \yii\db\ActiveRecord
+class AuthAssignment extends \yii\db\ActiveRecord
 {
     use \mootensai\relation\RelationTrait;
 
@@ -31,12 +26,11 @@ class Grade extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'role_id', 'niveau', 'montant', 'updated_at', 'created_at'], 'required'],
-            [['user_id', 'role_id', 'updated_at', 'created_at'], 'integer'],
-            [['montant'], 'number'],
-            [['niveau'], 'string', 'max' => 255],
-           // [['lock'], 'default', 'value' => '0'],
-          //  [['lock'], 'mootensai\components\OptimisticLockValidator']
+            [['item_name', 'user_id'], 'required'],
+            [['created_at'], 'integer'],
+            [['item_name', 'user_id'], 'string', 'max' => 64],
+            [['lock'], 'default', 'value' => '0'],
+            [['lock'], 'mootensai\components\OptimisticLockValidator']
         ];
     }
     
@@ -45,7 +39,7 @@ class Grade extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'grade';
+        return 'auth_assignment';
     }
 
     /**
@@ -65,28 +59,21 @@ class Grade extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'item_name' => 'Item Name',
             'user_id' => 'User ID',
-            'role_id' => 'Role ID',
-            'niveau' => 'Niveau',
-            'montant' => 'Montant',
         ];
     }
     
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRole()
+    public function getItemName()
     {
-        return $this->hasOne(\app\models\Role::className(), ['id' => 'role_id'])->inverseOf('grades');
+        return $this->hasOne(\app\models\AuthItem::className(), ['name' => 'item_name'])->inverseOf('authAssignments');
     }
-        
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getUser()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'user_id'])->inverseOf('grades');
+        return $this->hasMany(\app\models\User::className(), ['id' => 'user_id']);
     }
     
 /**
@@ -101,17 +88,25 @@ class Grade extends \yii\db\ActiveRecord
                 'createdAtAttribute' => 'created_at',
                 'updatedAtAttribute' => 'updated_at',
                 'value' => new \yii\db\Expression('NOW()'),
-            ]
-         
+            ],
+            'blameable' => [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ],
+            'uuid' => [
+                'class' => UUIDBehavior::className(),
+                'column' => 'id',
+            ],
         ];
     }
 
     /**
      * @inheritdoc
-     * @return \app\models\GradeQuery the active query used by this AR class.
+     * @return \app\models\AuthAssignmentQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new \app\models\GradeQuery(get_called_class());
+        return new \app\models\AuthAssignmentQuery(get_called_class());
     }
 }

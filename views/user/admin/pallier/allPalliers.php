@@ -43,10 +43,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model) {
                     
                     $role=Role::find()->where(['id'=>$model->role_id])->all();
+                    if($role)
                         return $role[0]->role_name;
+                    else
+                        return '';
                 },
             ],
-            'niveau',
+          //  'niveau',
             [
                 'attribute' => 'montant',
                 'format' => 'raw',

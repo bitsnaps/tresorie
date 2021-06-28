@@ -58,15 +58,67 @@ class UserController extends BaseController
                     return $this->redirect(['/admin/decaissement']);
                 }
                 if(User::isResponsableDeStation()){
+                   
                     return $this->redirect(['/responsable-de-station/create-demande']);
+                }else{
+                    echo "ss";
+                    die();
                 }
-                
+               // die();
                 return $this->goBack();
             }
         }
 
         return $this->render(
             'login',
+            [
+                'model' => $form,
+                'module' => $this->module,
+            ]
+        );
+    }
+    public function actionConfirm()
+    {
+        if (!Yii::$app->user->getIsGuest()) {
+            return $this->goHome();
+        }
+
+        if (!Yii::$app->session->has('credentials')) {
+            return $this->redirect(['login']);
+        }
+
+        $credentials = Yii::$app->session->get('credentials');
+        /** @var LoginForm $form */
+        $form = $this->make(LoginForm::class);
+        $form->login = $credentials['login'];
+        $form->password = $credentials['pwd'];
+        $form->setScenario('2fa');
+
+        /** @var FormEvent $event */
+        $event = $this->make(FormEvent::class, [$form]);
+
+        if (Yii::$app->request->isAjax && $form->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            return ActiveForm::validate($form);
+        }
+
+        if ($form->load(Yii::$app->request->post())) {
+            $this->trigger(FormEvent::EVENT_BEFORE_LOGIN, $event);
+
+            if ($form->login()) {
+                Yii::$app->session->set('credentials', null);
+
+                $form->getUser()->updateAttributes(['last_login_at' => time()]);
+
+                $this->trigger(FormEvent::EVENT_AFTER_LOGIN, $event);
+                die();
+                return $this->goBack();
+            }
+        }
+
+        return $this->render(
+            'confirm',
             [
                 'model' => $form,
                 'module' => $this->module,

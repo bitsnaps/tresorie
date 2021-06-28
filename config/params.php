@@ -9,7 +9,7 @@ return [
         'prefix' => 'Dzd ',
         'suffix' => '',
         'affixesStay' => false,
-        'thousands' => ',',
+        'thousands' => '',
         'decimal' => '.',
         'precision' => 2, 
         'allowZero' => false,

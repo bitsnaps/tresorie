@@ -19,6 +19,7 @@ class m210619_232247_grade extends Migration
         $this->createTable(
             '{{%grade}}',
             [
+                'id'=> $this->primaryKey(11),
                 'user_id'=> $this->integer(11)->notNull(),
                 'role_id'=> $this->integer(11)->notNull(),
                 'niveau'=> $this->string(255)->notNull(),
@@ -27,6 +28,13 @@ class m210619_232247_grade extends Migration
                 'created_at'=> $this->integer(11)->notNull(),
             ],$tableOptions
         );
+
+        $this->addForeignKey('fk_grade_user_id',
+        '{{%grade}}','user_id',
+        '{{%user}}','id',
+        'CASCADE','CASCADE'
+     );
+        
         $this->createIndex('grade_fk0','{{%grade}}',['user_id'],false);
 
     }
