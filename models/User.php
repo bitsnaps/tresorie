@@ -77,7 +77,7 @@ class User extends BaseUser
             die();
         }
         $model = new \app\models\Role();
-        $model->item_name = 'responsableDeStation';
+        $model->role_name = 'responsableDeStation';
         $model->user_id = $user_id;
 
         if ($model->save()) {
