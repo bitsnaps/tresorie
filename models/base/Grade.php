@@ -15,12 +15,14 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $role_id
  * @property string $niveau
  * @property string $montant
+ * @property integer $updated_at
+ * @property integer $created_at
  *
  * @property \app\models\User $user
  */
 class Grade extends \yii\db\ActiveRecord
 {
-   // use \mootensai\relation\RelationTrait;
+    use \mootensai\relation\RelationTrait;
 
     /**
      * @inheritdoc
@@ -29,11 +31,11 @@ class Grade extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'role_id', 'niveau', 'montant'], 'required'],
-            [['user_id', 'role_id'], 'integer'],
+            [['user_id', 'role_id', 'updated_at', 'created_at'], 'integer'],
             [['montant'], 'number'],
             [['niveau'], 'string', 'max' => 255],
-         //   [['lock'], 'default', 'value' => '0'],
-         //   [['lock'], 'mootensai\components\OptimisticLockValidator']
+            //[['lock'], 'default', 'value' => '0'],
+           // [['lock'], 'mootensai\components\OptimisticLockValidator']
         ];
     }
     
@@ -52,9 +54,9 @@ class Grade extends \yii\db\ActiveRecord
      * return string name of field are used to stored optimistic lock 
      * 
      */
-   /* public function optimisticLock() {
+    public function optimisticLock() {
         return 'lock';
-    }*/
+    }
 
     /**
      * @inheritdoc
@@ -63,23 +65,8 @@ class Grade extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-            'user_id' => 'Nom utilisateur',
-            'role_id' => 'role',
-=======
             'user_id' => 'Nom d\'utilisateur',
             'role_id' => 'Role',
->>>>>>> Stashed changes
-=======
-            'user_id' => 'Nom d\'utilisateur',
-            'role_id' => 'Role',
->>>>>>> Stashed changes
-=======
-            'user_id' => 'Nom d\'utilisateur',
-            'role_id' => 'Role',
->>>>>>> Stashed changes
             'niveau' => 'Niveau',
             'montant' => 'Montant',
         ];
@@ -90,7 +77,7 @@ class Grade extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'user_id']);
+        return $this->hasOne(\app\models\User::className(), ['id' => 'user_id'])->inverseOf('grades');
     }
     
 /**
@@ -106,15 +93,7 @@ class Grade extends \yii\db\ActiveRecord
                 'updatedAtAttribute' => 'updated_at',
                 'value' => new \yii\db\Expression('NOW()'),
             ],
-            'blameable' => [
-                'class' => BlameableBehavior::className(),
-                'createdByAttribute' => 'created_by',
-                'updatedByAttribute' => 'updated_by',
-            ],
-            'uuid' => [
-                'class' => UUIDBehavior::className(),
-                'column' => 'id',
-            ],
+           
         ];
     }
 

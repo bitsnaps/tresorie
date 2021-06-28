@@ -2,7 +2,7 @@
 // ...
 namespace app\controllers;
 use  Da\User\Controller\AdminController as BaseController;
-use yii\web\Controller;
+use app\models\UserSearch;
 use Da\User\Filter\AccessRuleFilter;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -50,6 +50,19 @@ class AdminController extends BaseController
             ],
         ];
     }
+    public function actionIndex()
+    {
+        $searchModel = $this->make(UserSearch::class);
+        $dataProvider = $searchModel->search(\Yii::$app->request->get());
+
+        return $this->render(
+            'index',
+            [
+                'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
+            ]
+        );
+    }
          /**
      * Displays a single Grade model.
      * @param integer $id
@@ -58,6 +71,7 @@ class AdminController extends BaseController
      */
     public function actionViewDecaissement($id)
     {
+      
         return $this->render('/user/admin/decaissement/view', [
             'model' => $this->findModelDecaissement($id),
         ]);
@@ -211,7 +225,7 @@ class AdminController extends BaseController
         $model =new Grade();
         $role =new Role();
         $grade = $this->make(Grade::class, [], ['scenario' => 'create']);
-        if ($model->load(\Yii::$app->request->post()) ) {
+        if ($model->load(\Yii::$app->request->post())) {
             //need to create role for the aprobateur or any other specifique user 
             $role->role_name=$model->role_id;
             $role->user_id=$model->user_id;
@@ -235,23 +249,12 @@ class AdminController extends BaseController
                 print_r($model->errors);
                 die();
             }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-            \Yii::$app->session->setFlash('success','Pallier et Aprobateur crée avec success');
->>>>>>> Stashed changes
-
-
             \Yii::$app->session->setFlash('success','Pallier et Aprobateur crée avec success');
 
-=======
-            \Yii::$app->session->setFlash('success','Pallier et Aprobateur crée avec success');
->>>>>>> Stashed changes
-=======
-            \Yii::$app->session->setFlash('success','Pallier et Aprobateur crée avec success');
->>>>>>> Stashed changes
-
+            return $this->render('/user/admin/pallier/createpallier', ['grade' => $grade]);
+        }else{
+            
+             $errors = $model->errors;
             return $this->render('/user/admin/pallier/createpallier', ['grade' => $grade]);
         }
 
@@ -325,7 +328,7 @@ class AdminController extends BaseController
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new \NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 
 
