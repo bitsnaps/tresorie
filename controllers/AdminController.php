@@ -237,6 +237,7 @@ class AdminController extends BaseController
             }
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
             \Yii::$app->session->setFlash('success','Pallier et Aprobateur crée avec success');
 >>>>>>> Stashed changes
@@ -244,6 +245,9 @@ class AdminController extends BaseController
 
             \Yii::$app->session->setFlash('success','Pallier et Aprobateur crée avec success');
 
+=======
+            \Yii::$app->session->setFlash('success','Pallier et Aprobateur crée avec success');
+>>>>>>> Stashed changes
 =======
             \Yii::$app->session->setFlash('success','Pallier et Aprobateur crée avec success');
 >>>>>>> Stashed changes
