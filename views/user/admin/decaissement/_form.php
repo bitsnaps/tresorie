@@ -7,17 +7,12 @@ use kartik\money\MaskMoney;
 ?>
 
 
-
-    <?= $form->field($model, "montant")->widget(MaskMoney::classname(), [
-            'name' => 'price',
-            
-            'options' => [
-                'placeholder' => 'Modifier Montant...',
-                'style' => 'width:300 px'
-            ],
-  
-
-                                        ]); ?>
+    <?= $form->field($model, 'montant')->textInput(['type' => 'number',   'min'=>0, 'options' => [
+        'placeholder' => 'Entrer  Montant...',
+        'style' => 'width:300 px',
+     
+    ]]) ?>
+    
 
     <?= $form->field($model, 'motif')->textArea() ?>
 

@@ -34,12 +34,8 @@ ArrayHelper::map(app\models\Role::find()->where(['role_name'=>'Aprobateur'])->al
 ['prompt' => 'Sélectionner Le Role']);
 ?>
 <?= $form->field($grade, 'niveau')->textInput(['maxlength' => 255]) ?>
-<?= $form->field($grade, "montant")->widget(MaskMoney::classname(), [
-        'name' => 'price',
-        'value' => null,
-        'options' => [
-            'placeholder' => 'Modifier Montant...',
-            'style' => 'width:300 px'
-        ],
-
-                                        ]); ?>
+<?= $form->field($grade, 'montant')->textInput(['type' => 'number','min'=>0, 'options' => [
+        'placeholder' => 'Entrer  Montant...',
+        'min'=>0,
+        'style' => 'width:300 px'
+    ]]) ?>

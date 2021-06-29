@@ -4,7 +4,7 @@ namespace app\controllers;
 use Yii;
 use webzop\notifications\Notification;
 
-class AccountNotification extends Notification
+class AccountNotifications extends Notification
 {
     const KEY_NEW_ACCOUNT = 'new_account';
 

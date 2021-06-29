@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'class' => 'btn btn-xs btn-success btn-block disabled',
                                 'data-method' => 'post',
-                                'data-confirm' => Yii::t('usuario', 'Are you sure you want to confirm this user?'),
+                                'data-confirm' => Yii::t('usuario', 'Voulez-vous vraiment confirmer cet demande ?'),
                             ]
                         );
                     } else
@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'class' => 'btn btn-xs btn-warning btn-block disabled',
                                 'data-method' => 'post',
-                                'data-confirm' => Yii::t('usuario', 'Are you sure you want to confirm this user?'),
+                                'data-confirm' => Yii::t('usuario', 'Voulez-vous vraiment confirmer cet demande ?'),
                             ]
                         );
                 },
@@ -94,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'class' => 'btn btn-xs btn-success btn-block',
                                 'data-method' => 'post',
-                                'data-confirm' => Yii::t('usuario', 'Are you sure you want to confirm this user?'),
+                                'data-confirm' => Yii::t('usuario', 'Voulez-vous vraiment confirmer cet demande ?'),
                             ]
                         );
                 },
@@ -111,7 +111,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'class' => 'btn btn-xs btn-success btn-block',
                                 'data-method' => 'post',
-                                'data-confirm' => Yii::t('usuario', 'Are you sure you want to unblock this user?'),
+                                'data-confirm' => Yii::t('usuario', 'Voulez-vous vraiment deblocker cet demande ?'),
                             ]
                         );
                     }
@@ -122,7 +122,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'class' => 'btn btn-xs btn-danger btn-block',
                                 'data-method' => 'post',
-                                'data-confirm' => Yii::t('usuario', 'Are you sure you want to block this user?'),
+                                'data-confirm' => Yii::t('usuario', 'Voulez-vous vraiment blocker cet demande ?'),
                             ]
                         );
                 },

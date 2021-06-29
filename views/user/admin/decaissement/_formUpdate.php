@@ -10,27 +10,19 @@ use kartik\money\MaskMoney;
 
 <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, "montant")->widget(MaskMoney::classname(), [
-            'name' => 'price',
-            
-            'options' => [
-                'placeholder' => 'Modifier Montant...',
-                'style' => 'width:300 px'
-            ],
-  
 
-                                        ]); ?>
+<?= $form->field($model, 'montant')->textInput(['type' => 'number','min'=>0, 'options' => [
+    'placeholder' => 'Modifier Montant.',
+    'style' => 'width:300 px',
+    'min'=>0,
+]]) ?>
 
-    <?= $form->field($model, 'motif')->textArea() ?>
+<?= $form->field($model, 'motif')->textArea() ?>
 
-    <?= $form->field($model, 'piece_jointe')->fileInput() ?>
+<?= $form->field($model, 'piece_jointe')->fileInput() ?>
 
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-success']) ?>
-    </div>
+<div class="form-group">
+    <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-success']) ?>
+</div>
 
-    <?php ActiveForm::end(); ?>
-
-
-
-
+<?php ActiveForm::end(); ?>

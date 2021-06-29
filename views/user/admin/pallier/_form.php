@@ -27,15 +27,11 @@ use kartik\money\MaskMoney;
     ['prompt' => 'Sélectionner Le Role']);
     ?>
     <?= $form->field($model, 'niveau')->textInput(['maxlength' => 255]) ?>
-    <?= $form->field($model, "montant")->widget(MaskMoney::classname(), [
-        'name' => 'price',
-        'value' => null,
-        'options' => [
-            'placeholder' => 'Modifier Montant...',
-            'style' => 'width:300 px'
-        ],
-
-                                        ]); ?>
+    <?= $form->field($model, 'montant')->textInput(['type' => 'number','min'=>0, 'options' => [
+        'placeholder' => 'Entrer  Montant...',
+        'min'=>0,
+        'style' => 'width:300 px'
+    ]]) ?>
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>

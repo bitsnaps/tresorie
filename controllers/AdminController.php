@@ -42,7 +42,7 @@ class AdminController extends BaseController
                         'roles' => ['admin'],
                     ],
                     [
-                        'actions' => ['view', 'search','decaissement','view-decaissement','update-decaissement','delete-decaissement'],
+                        'actions' => ['view', 'search','decaissement','view-decaissement','update-decaissement','delete-decaissement','confirm-decaissement','block-decaissement'],
                         'allow' => true,
                         'roles' => ['Aprobateur','admin','responsableDeStation'],
                     ],
