@@ -123,7 +123,7 @@ class ResponsableDeStationController extends BaseController
     /**
      * ALL Methodes Responsible On Palliers
      *
-     * 
+     *
      */
 
     /**
@@ -174,10 +174,10 @@ class ResponsableDeStationController extends BaseController
             $model1->user_id = User::getCurrentUser()->id;
 
             if ($model->save()) {
-             
+
                 $model1->id= $model->id;
                 if ($model1->save()) {
-                    
+
                 }else{
                     print_r($model1->errors);
                     echo json_encode(['status' => 'Error', 'message' => 'Demande no valide']);
@@ -196,7 +196,7 @@ class ResponsableDeStationController extends BaseController
                 echo json_encode(['status' => 'Error', 'message' => 'Demande no valide']);
             }
         }
-        //Dans le cas apres il a confirmer 
+        //Dans le cas apres il a confirmer
         if ($model->load(\Yii::$app->request->post()) and $model->validate()) {
             $model =  Decaissement::find()->where(['id' => $id])->one();
             $model1 =  Decaissementhistorique::find()->where(['id' => $id])->one();
@@ -211,11 +211,11 @@ class ResponsableDeStationController extends BaseController
                 $user = \app\models\User::find()->where(['id' => User::getCurrentUser()->id])->one();
 
                 AccountNotification::create(AccountNotification::KEY_DEMAMDE_DECAISEMENT, ['user' =>$user,'decaissement_id'=>$decaissement_id,'decaissement_motif'=>$decaissement_motif,'decaissement_montant'=>$decaissement_montant,'username'=>$username])->send();
-                echo json_encode(['status' => 'Success', 'message' => 'Demande valider']);
+                echo json_encode(['status' => 'Success', 'message' => 'Demande validée']);
             } else {
                 print_r($model->errors);
 
-                echo json_encode(['status' => 'Error', 'message' => 'Demande no valide']);
+                echo json_encode(['status' => 'Error', 'message' => 'Demande non valide']);
             }
         }else{
             $decaissement = $this->make(Decaissement::class, [], ['scenario' => 'create']);
@@ -225,10 +225,10 @@ class ResponsableDeStationController extends BaseController
         $decaissement = $this->make(Decaissement::class, [], ['scenario' => 'create']);
 
         return $this->render('/user/admin/decaissement/createdecaissement', ['decaissement' => $decaissement]);
-        
 
 
-       
+
+
     }
     /**
      * This Methode is responsible on saving a pallier
@@ -242,7 +242,7 @@ class ResponsableDeStationController extends BaseController
         $role = new Role();
         $grade = $this->make(Grade::class, [], ['scenario' => 'create']);
         if ($model->load(\Yii::$app->request->post())) {
-            //need to create role for the aprobateur or any other specifique user 
+            //need to create role for the aprobateur or any other specifique user
             $role->role_name = $model->role_id;
             $role->user_id = $model->user_id;
 

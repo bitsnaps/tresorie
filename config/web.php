@@ -23,7 +23,7 @@ $config = [
             ],
         ],
         'formatter' => [
-            'class' => 'yii\i18n\formatter',
+            'class' => yii\i18n\Formatter::class,
             'thousandSeparator' => '',
             'decimalSeparator' => '.',
         ],
@@ -108,15 +108,15 @@ $config = [
                     ],
                 ],
             ],
-           
+
             'controllerMap' => [
                 'default' => 'app\controllers\notification\NotificationController',
-                
+
 
             ],
 
         ],
-       
+
     ],
     'params' => $params,
 ];
