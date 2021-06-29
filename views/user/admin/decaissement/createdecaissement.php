@@ -24,12 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="clearfix"></div>
-<?= $this->render(
-    '/user/shared/_alert',
-    [
-        'module' => Yii::$app->getModule('user'),
-    ]
-) ?>
+
 
 <div class="row">
     <div class="col-md-12">
@@ -127,26 +122,3 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-<?php
-$script = <<< JS
-$('#SaveDecaissement').on('click', function(e){
-   
-    $.ajax({
-       url: 'index.php?r=responsable-de-station/create-demande',
-       type: 'post',
-       data: {
-                 montant: $("#decaissement-montant-disp").val() , 
-                 motif:$("#decaissement-motif").val() ,
-                 piece_jointe:"ss",  
-               
-             },
-       success: function(data){
-
-            const obj = JSON.parse(data);
-        $("#formDecaissement").attr("action", "index.php?r=responsable-de-station/create-demande&id="+obj.id);
-        
-    },
-  });
-});
-JS;
-$this->registerJS($script);

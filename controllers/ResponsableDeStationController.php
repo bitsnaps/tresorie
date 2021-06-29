@@ -13,6 +13,8 @@ use app\models\GradeSearch;
 use app\models\Decaissement;
 use app\models\DecaissementSearch;
 use app\models\Decaissementhistorique;
+use yii\web\UploadedFile;
+
 
 include 'notifications.php';
 
@@ -123,7 +125,7 @@ class ResponsableDeStationController extends BaseController
     /**
      * ALL Methodes Responsible On Palliers
      *
-     * 
+     *
      */
 
     /**
@@ -150,90 +152,110 @@ class ResponsableDeStationController extends BaseController
      *
      * @return void
      */
-    public function actionCreateDemande($id = null)
+    public function actionCreateDemande()
     {
 
         $model = new Decaissement();
         $model1 = new Decaissementhistorique();
-        $counter=0;
-        
-        //Ajax saving demande before click on confirmation dialog
-        if (\Yii::$app->request->isAjax) {
-            $data = \Yii::$app->request->post();
-            //data: { 'save_id' : fileid },
-        //I need to put the id of all aprobateur to find theme when we use the notification
-            $role = \app\models\AuthAssignment::find()->where(['item_name' => 'Aprobateur'])->all();
-            foreach ($role as $individualRole) {
-     
-            //Decaissement model
-                if($counter==1){
-                    $model->id++;
-                }
+        $counter = 0;
+        if ($model->load(\Yii::$app->request->post())) {
+
+            $Aprobateur = \app\models\AuthAssignment::find()->where(['item_name' => 'Aprobateur'])->all();
+            foreach ($Aprobateur as $individualRole) {
+                //Decaissement model
                 $now = new \DateTime();
                 $model->date_demande = $now->format('Y-m-d H:i:s');
-                $model->montant = $data['montant'];
-                $model->motif = $data['motif'];
-                $model->piece_jointe = $data['piece_jointe'];
-                $model->sender_user_id = User::getCurrentUser()->id;
-                $model->reciever_user_id = $individualRole->user_id;
-            //Decaissement historique model
-                $model1->date_demande = $now->format('Y-m-d H:i:s ');
-                $model1->montant = $data['montant'];
-                $model1->motif = $data['motif'];
-                $model1->piece_jointe = $data['piece_jointe'];
-                $model1->sender_user_id = User::getCurrentUser()->id;
-                $model1->reciever_user_id = $individualRole->user_id;
-            
-              
-                if ($model->save()) {
-                    echo  $model->id;
+                if ($counter == 0) {
+                    if($model->piece_jointe){
+                        if ($model->upload()) {
+                            //return true;
+                        }
+                    }
+                   
+                }
+
+                if ($counter == 0) {
+                    if($model->piece_jointe){
+                        $model->piece_jointe = UploadedFile::getInstance($model, 'piece_jointe');
+                      
+                    }
+                   
+                    $model->piece_jointe = "vide";
+                    $model->sender_user_id = User::getCurrentUser()->id;
+                    $model->reciever_user_id = $individualRole->user_id;
+                    //Decaissement historique model
+                    $model1->date_demande = $now->format('Y-m-d H:i:s ');
+                    $model1->montant = $model->montant;
+                    $model1->motif =  $model->motif;
+                    if($model->piece_jointe){
+                        $model1->piece_jointe = UploadedFile::getInstance($model, 'piece_jointe');
+                    }
+                 
+                    $model->piece_jointe = "vide";
+                    $model1->sender_user_id = User::getCurrentUser()->id;
+                    $model1->reciever_user_id = $individualRole->user_id;
+                } else {
+                    $modelold = $model;
+                    //
+                    $model = new Decaissement();
+                    $model1 = new Decaissementhistorique();
+                    //
+                    $model->date_demande = $now->format('Y-m-d H:i:s ');
+                    $model->montant = $modelold->montant;
+                    $model->motif =  $modelold->motif;
+                    
+                    if($model->piece_jointe)
+                    $model->piece_jointe = UploadedFile::getInstance($modelold, 'piece_jointe');
+                    $model->piece_jointe = "vide";
+                    //
+                    $model->sender_user_id = User::getCurrentUser()->id;
+                    $model->reciever_user_id = $individualRole->user_id;
+                    //Decaissement historique model
+                    $model1->date_demande = $now->format('Y-m-d H:i:s ');
+                    $model1->montant = $modelold->montant;
+                    $model1->motif =  $modelold->motif;
+                    
+                    if($model->piece_jointe){
+                        $model1->piece_jointe = UploadedFile::getInstance($modelold, 'piece_jointe');
+                    }
+                
+                    $model->piece_jointe = "vide";
+
+                    $model1->sender_user_id = User::getCurrentUser()->id;
+                    $model1->reciever_user_id = $individualRole->user_id;
+                }
+
+
+
+                if ($model->save(false)) {
+
                     $model1->id = $model->id;
-                   if ($model1->save()) {
+                    if ($model1->save(false)) {
                     } else {
                         print_r($model1->errors);
                         echo json_encode(['status' => 'Error', 'message' => 'Demande historique  decaissement  no valide']);
-                       // die();
+                        die();
                     }
                     $decaissement_id = $model->id;
                     $decaissement_montant = $model->montant;
                     $decaissement_motif = $model->motif;
                     $username = $model->senderUser->username;
                     $user = \app\models\User::find()->where(['id' => User::getCurrentUser()->id])->one();
-                    echo json_encode(['status' => 'Success', 'message' => 'Demande decaissement  valide', 'id' => $model->id]);
+
                     AccountNotification::create(AccountNotification::KEY_DEMAMDE_DECAISEMENT, ['user' => $user, 'decaissement_id' => $decaissement_id, 'decaissement_motif' => $decaissement_motif, 'decaissement_montant' => $decaissement_montant, 'username' => $username])->send();
-                  
                 } else {
                     print_r($model->errors);
                     echo json_encode(['status' => 'Error', 'message' => 'Demande decaissement no valide']);
-                   // die();
+                    // die();
                 }
+                $counter++;
             }
-        }
-        //Dans le cas apres il a confirmer 
-        if ($model->load(\Yii::$app->request->post())) {
-            $model =  Decaissement::find()->where(['id' => $id])->one();
-            $model1 =  Decaissementhistorique::find()->where(['id' => $id])->one();
-            $model->status_user = 1;
-            $model1->status_user = 1;
-            if ($model->update() and $model1->update()) {
-                $decaissement_id = $model->id;
-                $decaissement_montant = $model->montant;
-                $decaissement_motif = $model->motif;
-                $username = $model->senderUser->username;
-                $user = \app\models\User::find()->where(['id' => User::getCurrentUser()->id])->one();
-                AccountNotification::create(AccountNotification::KEY_DEMAMDE_DECAISEMENT, ['user' => $user, 'decaissement_id' => $decaissement_id, 'decaissement_motif' => $decaissement_motif, 'decaissement_montant' => $decaissement_montant, 'username' => $username])->send();
-                echo json_encode(['status' => 'Success', 'message' => 'Demande valider']);
-            } else {
-                print_r($model->errors);
-
-                echo json_encode(['status' => 'Error', 'message' => 'Demande no valide']);
-            }
+            \Yii::$app->session->setFlash('success', 'Votre demande a éte crée avec success');
+            return $this->render('/user/admin/decaissement/createdecaissement', ['decaissement' => $model]);
         } else {
-            $decaissement = $this->make(Decaissement::class, [], ['scenario' => 'create']);
-            return $this->render('/user/admin/decaissement/createdecaissement', ['decaissement' => $decaissement]);
+
+            return $this->render('/user/admin/decaissement/createdecaissement', ['decaissement' => $model]);
         }
-        $decaissement = $this->make(Decaissement::class, [], ['scenario' => 'create']);
-        return $this->render('/user/admin/decaissement/createdecaissement', ['decaissement' => $decaissement]);
     }
     /**
      * This Methode is responsible on saving a pallier
@@ -247,7 +269,7 @@ class ResponsableDeStationController extends BaseController
         $role = new Role();
         $grade = $this->make(Grade::class, [], ['scenario' => 'create']);
         if ($model->load(\Yii::$app->request->post())) {
-            //need to create role for the aprobateur or any other specifique user 
+            //need to create role for the aprobateur or any other specifique user
             $role->role_name = $model->role_id;
             $role->user_id = $model->user_id;
 
@@ -265,7 +287,7 @@ class ResponsableDeStationController extends BaseController
                 print_r($model->errors);
                 die();
             }
-            \Yii::$app->session->setFlash('Pallier cree avec success');
+            \Yii::$app->session->setFlash('success', 'Pallier cree avec success');
 
             return $this->render('/user/admin/pallier/createpallier', ['grade' => $grade]);
         }

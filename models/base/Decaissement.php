@@ -14,7 +14,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property string $date_demande
  * @property string $montant
  * @property string $motif
- * @property string $piece_jointe
+ * @property  $piece_jointe
  * @property integer $status_user
  * @property integer $status_admin
  * @property integer $sender_user_id
@@ -27,18 +27,21 @@ use mootensai\behaviors\UUIDBehavior;
 class Decaissement extends \yii\db\ActiveRecord
 {
     use \mootensai\relation\RelationTrait;
-
+    public  $piece_jointe;
     /**
      * @inheritdoc
      */
+   
     public function rules()
     {
         return [
-            [[ 'montant', 'motif', 'piece_jointe'], 'required'],
+            [['montant', 'motif'], 'required'],
+            [['piece_jointe'], 'file', 'skipOnEmpty' => true, 'extensions' => 'file,pdf'],
+
             [['date_demande'], 'safe'],
             [['montant'], 'number'],
             [['status_user', 'status_admin', 'sender_user_id', 'reciever_user_id'], 'integer'],
-            [['date_demande'], 'unique']
+           // [['date_demande'], 'unique']
         ];
     }
     
@@ -111,5 +114,20 @@ class Decaissement extends \yii\db\ActiveRecord
     public static function find()
     {
         return new \app\models\DecaissementQuery(get_called_class());
+    }
+
+    /**
+     * function that save file
+     *
+     * @return void
+     */
+    public function upload()
+    {
+        if ($this->validate()) {
+            $this->piece_jointe->saveAs('uploads/' . $this->piece_jointe->baseName . '.' . $this->piece_jointe->extension,false);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

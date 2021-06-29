@@ -15,16 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+ 
 
     <?= DetailView::widget([
         'model' => $model,
@@ -36,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 'value' => function ($model) {
 
-                    return $model->user->username;
+                    return $model->senderUser->username;
                 },
             ],
             'date_demande',
@@ -53,38 +44,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'motif',
            // 'piece_jointe',
            [
-            'label' => Yii::t('usuario', 'état demande'),
-            'value' => function ($model) {
-                if ($model->status_user == '1') {
-                    return Html::a(
-                        Yii::t('usuario', 'Confirm'),
-                        ['confirm', 'id' => $model->id],
-                        [
-                            'class' => 'btn btn-xs btn-success btn-block disabled',
-                            'data-method' => 'post',
-                            'data-confirm' => Yii::t('usuario', 'Are you sure you want to confirm this user?'),
-                        ]
-                    );
-                } else
-                    return Html::a(
-                        Yii::t('usuario', 'Pending'),
-                        ['confirm', 'id' => $model->id],
-                        [
-                            'class' => 'btn btn-xs btn-warning btn-block disabled',
-                            'data-method' => 'post',
-                            'data-confirm' => Yii::t('usuario', 'Are you sure you want to confirm this user?'),
-                        ]
-                    );
-            },
-            'format' => 'html',
-            'visible' => true,
-        ],
-        [
-            'label' => Yii::t('usuario', 'Suivi admin'),
+            'header' => Yii::t('usuario', 'état demande'),
+            'label' => 'état demande',
             'value' => function ($model) {
                 if ($model->status_admin == '2') {
                     return Html::a(
-                        Yii::t('usuario', 'Confirm'),
+                        Yii::t('usuario', 'Valider'),
                         ['confirm', 'id' => $model->id],
                         [
                             'class' => 'btn btn-xs btn-success btn-block disabled',
@@ -94,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     );
                 } else
                     return Html::a(
-                        Yii::t('usuario', 'Pending'),
+                        Yii::t('usuario', 'En cours de validation'),
                         ['confirm', 'id' => $model->id],
                         [
                             'class' => 'btn btn-xs btn-warning btn-block disabled',
@@ -103,9 +68,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         ]
                     );
             },
-            'format' => 'html',
-            'visible' => User::isResponsableDeStation(),
-        ],
+            'format' => 'raw',
+            'visible' => true,
+        ]
+       
             
         ],
     ]) ?>

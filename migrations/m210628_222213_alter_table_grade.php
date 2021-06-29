@@ -13,7 +13,7 @@ class m210628_222213_alter_table_grade extends Migration
     public function safeUp()
     {
       
-        $this->addForeignKey('fk2_role_id_assignement_id',
+        $this->addForeignKey('fk5_role_id_assignement_id',
         '{{%grade}}','role_id',
         '{{%role}}','id',
         'CASCADE','CASCADE');

@@ -56,7 +56,7 @@ class Grade extends \yii\db\ActiveRecord
      * 
      */
     public function optimisticLock() {
-        return 'lock';
+        //return 'lock';
     }
 
     /**

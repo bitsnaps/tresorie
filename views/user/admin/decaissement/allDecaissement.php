@@ -54,9 +54,9 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'header' => Yii::t('usuario', 'état demande'),
                 'value' => function ($model) {
-                    if ($model->status_user == '1') {
+                    if ($model->status_admin == '2') {
                         return Html::a(
-                            Yii::t('usuario', 'Confirm'),
+                            Yii::t('usuario', 'Valider'),
                             ['confirm', 'id' => $model->id],
                             [
                                 'class' => 'btn btn-xs btn-success btn-block disabled',
@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         );
                     } else
                         return Html::a(
-                            Yii::t('usuario', 'Pending'),
+                            Yii::t('usuario', 'En cours de validation'),
                             ['confirm', 'id' => $model->id],
                             [
                                 'class' => 'btn btn-xs btn-warning btn-block disabled',
@@ -78,33 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'visible' => true,
             ],
-            [
-                'label' => Yii::t('usuario', 'Suivi admin'),
-                'value' => function ($model) {
-                    if ($model->status_admin == '2') {
-                        return Html::a(
-                            Yii::t('usuario', 'Confirm'),
-                            ['confirm', 'id' => $model->id],
-                            [
-                                'class' => 'btn btn-xs btn-success btn-block disabled',
-                                'data-method' => 'post',
-                                'data-confirm' => Yii::t('usuario', 'Are you sure you want to confirm this user?'),
-                            ]
-                        );
-                    } else
-                        return Html::a(
-                            Yii::t('usuario', 'Pending'),
-                            ['confirm', 'id' => $model->id],
-                            [
-                                'class' => 'btn btn-xs btn-warning btn-block disabled',
-                                'data-method' => 'post',
-                                'data-confirm' => Yii::t('usuario', 'Are you sure you want to confirm this user?'),
-                            ]
-                        );
-                },
-                'format' => 'html',
-                'visible' => User::isResponsableDeStation(),
-            ],
+
             [
                 'header' => Yii::t('usuario', 'Confirmer la demande '),
                 'value' => function ($model) {
@@ -161,7 +135,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{view}{confirm} ',
                 'visible' => User::isAdmin() or User::isAprobateur(),
                 'buttons' => [
-                    'delete' => function ($url, $model) {
+                  /*  'delete' => function ($url, $model) {
                         return Html::a('<span class="glyphicon glyphicon-trash"></span>', ['delete', 'id' => $model->id], [
                             'class' => '',
                             'data' => [
@@ -169,7 +143,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'method' => 'post',
                             ]
                         ]);
-                    },
+                    },*/
                     /*'update' => function ($url, $model) {
                         return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['update', 'id' => $model->id], [
                             'class' => '',
@@ -179,6 +153,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                         ]);
                     },*/
+
                     'view' => function ($url, $model) {
                         return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['view-decaissement', 'id' => $model->id],  [
                             'class' => '',
@@ -194,10 +169,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{view}{update}{confirm} {delete}',
+                'template' => '{view}',
                 'visible' => User::isResponsableDeStation(),
                 'buttons' => [
-                    'delete' =>function ($url, $model) {
+                   /* 'delete' =>function ($url, $model) {
                         if (User::decaissementAuthorirty($model->status_user))
                             return Html::a('<span class="glyphicon glyphicon-trash"></span>', ['admin/delete-decaissement', 'id' => $model->id], [
                                 'class' => '',
@@ -207,8 +182,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ]
                             ]);
                         return false;
-                    },
-                    'update' => function ($url, $model) {
+                    },*/
+                  /*  'update' => function ($url, $model) {
                         if (User::decaissementAuthorirty($model->status_user))
                             return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['admin/update-decaissement', 'id' => $model->id], [
                                 'class' => '',
@@ -218,7 +193,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ],
                             ]);
                         return false;
-                    },
+                    },*/
                     'view' => function ($url, $model) {
                      
                             return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['admin/view-decaissement', 'id' => $model->id],  [

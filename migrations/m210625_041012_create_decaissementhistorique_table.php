@@ -36,7 +36,7 @@ class m210625_041012_create_decaissementhistorique_table extends Migration
          '{{%user}}','id',
          'CASCADE','CASCADE'
       );
-            $this->createIndex('date_demande','{{%decaissementhistorique}}',['date_demande'],true);
+          //  $this->createIndex('date_demande','{{%decaissementhistorique}}',['date_demande'],true);
     
         }
     

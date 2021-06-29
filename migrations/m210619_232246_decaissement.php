@@ -40,7 +40,7 @@ class m210619_232246_decaissement extends Migration
         '{{%user}}','id',
         'CASCADE','CASCADE'
     );
-        $this->createIndex('date_demande','{{%decaissement}}',['date_demande'],true);
+       // $this->createIndex('date_demande','{{%decaissement}}',['date_demande'],true);
         $this->createIndex('decaissement_fk0','{{%decaissement}}',['sender_user_id'],false);
 
     }

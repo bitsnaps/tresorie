@@ -82,6 +82,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'layout' => 'horizontal',
                                         'enableAjaxValidation' => false,
                                         'enableClientValidation' => true,
+                                        'options'=>[
+                                            'enctype' => 'multipart/form-data'
+                                        ],
                                         'fieldConfig' => [
                                             'horizontalCssClasses' => [
                                                 'wrapper' => 'col-sm-9',

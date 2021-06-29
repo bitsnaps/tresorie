@@ -13,11 +13,12 @@ class m210628_184023_auth_asignement_alter extends Migration
     public function safeUp()
     {
         $this->alterColumn('auth_assignment', 'user_id', $this->integer());
-        $this->addForeignKey('fk_user_id_auth_assignement_id',
+        $this->addForeignKey('fk5_user_id_auth_assignement_id',
         '{{%auth_assignment}}','user_id',
         '{{%user}}','id',
-        'CASCADE','CASCADE'
-     );
+        'CASCADE','CASCADE');
+
+     
     }
 
     /**
