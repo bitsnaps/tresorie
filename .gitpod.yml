@@ -3,6 +3,8 @@ image:
 
 # exposed ports
 ports:
+- port: 3306 # MySQL
+  onOpen: ignore
 - port: 8080
   onOpen: open-preview
   # onOpen: ignore
@@ -15,7 +17,8 @@ vscode:
 tasks:
   # init: Will be executed one time when creating a workspace, command: will be exected each time you open workspace
   - init: |
-      composer update
+      composer self-update
+      composer install --no-interaction --prefer-dist
       mysql -e "CREATE DATABASE IF NOT EXISTS yalitresoredb_test;"
       mysql -e "CREATE DATABASE IF NOT EXISTS yalitresoredb;"
       chmod +x ./yii
