@@ -16,10 +16,10 @@ class AuthItem extends BaseAuthItem
     {
         return array_replace_recursive(parent::rules(),
 	    [
-            [['name', 'type'], 'required'],
-            [['type', 'created_at', 'updated_at'], 'integer'],
-            [['description', 'data'], 'string'],
-            [['name', 'rule_name'], 'string', 'max' => 64],
+            [['name', ], 'required'],
+         //   [['type', 'created_at', 'updated_at'], 'integer'],
+          //  [['description', 'data'], 'string'],
+          //  [['name', 'rule_name'], 'string', 'max' => 64],
           //  [['lock'], 'default', 'value' => '0'],
          //   [['lock'], 'mootensai\components\OptimisticLockValidator']
         ]);

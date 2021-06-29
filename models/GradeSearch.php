@@ -17,7 +17,7 @@ class GradeSearch extends Grade
     public function rules()
     {
         return [
-            [['id', 'user_id', 'role_id'], 'integer'],
+            [['user_id', 'role_id'], 'integer'],
             [['niveau'], 'safe'],
             [['montant'], 'number'],
         ];
@@ -59,7 +59,6 @@ class GradeSearch extends Grade
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
             'user_id' => $this->user_id,
             'role_id' => $this->role_id,
             'montant' => $this->montant,

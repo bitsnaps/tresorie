@@ -14,17 +14,22 @@ use kartik\money\MaskMoney;
  * @var yii\widgets\ActiveForm
  * @var \Da\User\Model\User    $user
  */
-
 ?>
 <?= $form->field($grade, 'user_id')->dropDownList(
 
-ArrayHelper::map(app\models\User::find()->all(), 'id', 'username'),
+ArrayHelper::map(
+
+app\models\AuthAssignment::find()->joinWith('user')->where(['item_name'=>"responsableDeStation"])->all(), 'user.id', function ($model) {
+ //   return ArrayHelper::toArray($model->user->username);
+    return $model->user->username;
+}
+),
 
 ['prompt' => 'Sélectionner Utilisateur']);
 ?>
 <?= $form->field($grade, 'role_id')->dropDownList(
 
-ArrayHelper::map(app\models\AuthItem::find(['name'=>'Aprobateur'])->all(), 'id', 'name'),
+ArrayHelper::map(app\models\Role::find()->where(['role_name'=>'Aprobateur'])->all(), 'role_name', 'role_name'),
 
 ['prompt' => 'Sélectionner Le Role']);
 ?>
