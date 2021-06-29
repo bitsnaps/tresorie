@@ -18,7 +18,7 @@ class m210625_041012_create_decaissementhistorique_table extends Migration
             'date_demande'=> $this->datetime()->notNull(),
             'montant'=> $this->decimal(10)->notNull(),
             'motif'=> $this->string(255)->notNull(),
-            'piece_jointe'=> $this->string(255)->notNull(),
+            'piece_jointe'=> $this->string(255)->notNull()->defaultValue(0),
             'status_user'=> $this->integer(11)->notNull()->defaultValue(0),
             'status_admin'=> $this->integer(11)->notNull()->defaultValue(0),
             'sender_user_id' => $this->integer(11)->notNull(),

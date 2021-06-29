@@ -24,8 +24,8 @@ class m210619_232247_grade extends Migration
                 'role_id'=> $this->integer(11)->notNull(),
                 'niveau'=> $this->string(255)->notNull(),
                 'montant'=> $this->decimal(10)->notNull(),
-                'updated_at'=> $this->integer(100)->notNull(),
-                'created_at'=> $this->integer(00)->notNull(),
+                'updated_at'=> $this->bigInteger()->notNull(),
+                'created_at'=> $this->bigInteger()->notNull(),
             ],$tableOptions
         );
 
