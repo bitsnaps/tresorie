@@ -223,7 +223,7 @@ class ResponsableDeStationController extends BaseController
                 }
 
 
-
+                if ($counter == 0) {
                 if ($model->save()) {
 
                     $model1->id = $model->id;
@@ -245,6 +245,22 @@ class ResponsableDeStationController extends BaseController
                     print_r($model->errors);
                     echo json_encode(['status' => 'Error', 'message' => 'Demande decaissement no valide']);
                     // die();
+                }}else{
+                    $model1->id = $model->id;
+                    if ($model1->save()) {
+                    } else {
+                        print_r($model1->errors);
+                        echo json_encode(['status' => 'Error', 'message' => 'Demande historique  decaissement  no valide']);
+                        die();
+                    }
+                    $decaissement_id = $model->id;
+                    $decaissement_montant = $model->montant;
+                    $decaissement_motif = $model->motif;
+                    $username = $model->senderUser->username;
+                    $user = \app\models\User::find()->where(['id' => User::getCurrentUser()->id])->one();
+                    if ($counter == 0) {
+                        AccountNotifications::create(AccountNotifications::KEY_DEMAMDE_DECAISEMENT, ['user' => $user, 'decaissement_id' => $decaissement_id, 'decaissement_motif' => $decaissement_motif, 'decaissement_montant' => $decaissement_montant, 'username' => $username])->send();
+                    }
                 }
                 $counter++;
             }
