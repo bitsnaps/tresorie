@@ -5,6 +5,8 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
+    'homeUrl'=>array('user/security/login'),
+
     'basePath' => dirname(__DIR__),
     'name' => 'Yalidine',
     'language'=>'fr',
