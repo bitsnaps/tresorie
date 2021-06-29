@@ -25,9 +25,9 @@ class NotificationController extends BaseController
         $userId = Yii::$app->getUser()->getId();
         if(\app\models\User::isAdmin(\app\models\User::getCurrentUser()->id)){
             $query = (new Query())
-            ->from('{{%notifications}}')
-            ->andWhere(['or', 'user_id = $userId', 'user_id = :user_id'], [':user_id' => $userId])
-            ->all();
+            ->from('{{%notifications}}');
+          //  ->andWhere(['or', 'user_id = $userId', 'user_id = :user_id'], [':user_id' => $userId])
+           // ->all();
 
         }
            
@@ -35,13 +35,12 @@ class NotificationController extends BaseController
             $query = (new Query())
             ->from('{{%notifications}}')
             ->innerJoin('decaissementhistorique', 'decaissementhistorique.id = notifications.decaissementhistorique_id')
-           ->innerJoin('grade', 'grade.user_id = decaissementhistorique.user_id ')
-            ->andWhere(['>=','grade.montant','decaissementhistorique.montant'])
-            ->all()
+           ->innerJoin('grade', 'grade.user_id = decaissementhistorique.reciever_user_id ')
+           ->andWhere(['>=','grade.montant','decaissementhistorique.montant'])
+            
           ;
         }
-        print_r($query);
-        die();
+ 
         $pagination = new Pagination([
             'pageSize' => 20,
             'totalCount' => $query->count(),
@@ -50,7 +49,7 @@ class NotificationController extends BaseController
         $list=[];
         if($query->count()>0){
             $list = $query
-            ->orderBy(['id' => SORT_DESC])
+            ->orderBy(['notifications.id' => SORT_DESC])
             ->offset($pagination->offset)
             ->limit($pagination->limit)
             ->all();
@@ -72,7 +71,7 @@ class NotificationController extends BaseController
         if(\app\models\User::isAdmin(\app\models\User::getCurrentUser()->id))
         $list = (new Query())
             ->from('{{%notifications}}')
-            ->andWhere(['or', 'user_id = 13', 'user_id = :user_id'], [':user_id' => $userId])
+           // ->andWhere(['or', 'user_id = 13', 'user_id = :user_id'], [':user_id' => $userId])
             ->orderBy(['id' => SORT_DESC])
             ->limit(10)
             ->all();
@@ -80,9 +79,8 @@ class NotificationController extends BaseController
             $list = (new Query())
             ->from('{{%notifications}}')
             ->innerJoin('decaissementhistorique', 'decaissementhistorique.id = notifications.decaissementhistorique_id')
-            ->innerJoin('grade', 'grade.user_id = decaissementhistorique.user_id ')
+            ->innerJoin('grade', 'grade.user_id = decaissementhistorique.reciever_user_id')
             ->andWhere(['>=','grade.montant','decaissementhistorique.montant'])
-            ->orderBy(['id' => SORT_DESC])
             ->limit(10)
             ->all();
         //    ->andWhere(['or', 'user_id = 0', 'user_id = :user_id'], [':user_id' => $userId])

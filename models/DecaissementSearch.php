@@ -17,7 +17,7 @@ class DecaissementSearch extends Decaissement
     public function rules()
     {
         return [
-            [['id', 'status_user', 'status_admin', 'user_id'], 'integer'],
+            [['id', 'status_user', 'status_admin'], 'integer'],
             [['date_demande', 'motif', 'piece_jointe'], 'safe'],
             [['montant'], 'number'],
         ];
@@ -46,7 +46,7 @@ class DecaissementSearch extends Decaissement
         //Decaissement pour Aprobateur filtrer celon son pallier
         if(User::isAprobateur(User::getCurrentUser()->id)){
             $grade=Grade::find(['user_id'=>User::getCurrentUser()->id])->one();
-            $query=Decaissement::find(['user_id'=>User::getCurrentUser()->id])
+            $query=Decaissement::find(['sender_user_id'=>User::getCurrentUser()->id])
           //      ->innerJoin('grade', 'grade.user_id = decaissement.user_id ')
                 ->where(['<=','decaissement.montant',$grade->montant])
              ;
@@ -73,7 +73,7 @@ class DecaissementSearch extends Decaissement
             'montant' => $this->montant,
             'status_user' => $this->status_user,
             'status_admin' => $this->status_admin,
-            'user_id' => $this->user_id,
+            'sender_user_id' => $this->sender_user_id,
         ]);
 
         $query->andFilterWhere(['like', 'motif', $this->motif])
@@ -106,7 +106,7 @@ class DecaissementSearch extends Decaissement
             'montant' => $this->montant,
             'status_user' => $this->status_user,
             'status_admin' => $this->status_admin,
-            'user_id' => $user_id,
+            'sender_user_id' => $user_id,
         ]);
 
         $query->andFilterWhere(['like', 'motif', $this->motif])

@@ -61,7 +61,7 @@ class UserController extends BaseController
                    
                     return $this->redirect(['/responsable-de-station/create-demande']);
                 }else{
-                    echo "ss";
+                    echo "Wait for Admin";
                     die();
                 }
                // die();

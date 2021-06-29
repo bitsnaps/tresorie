@@ -16,10 +16,10 @@ class Grade extends BaseGrade
     {
         return array_replace_recursive(parent::rules(),
 	    [
-            [['user_id', 'role_id', 'niveau', 'montant', 'updated_at', 'created_at'], 'required'],
-            [['user_id', 'role_id', 'updated_at', 'created_at'], 'integer'],
+            [['user_id', 'role_id', 'niveau', 'montant'], 'required'],
+            [[ 'updated_at', 'created_at'], 'integer'],
             [['montant'], 'number'],
-            [['niveau'], 'string', 'max' => 255],
+          //  [['niveau'], 'string', 'max' => 255],
           //  [['lock'], 'default', 'value' => '0'],
          //   [['lock'], 'mootensai\components\OptimisticLockValidator']
         ]);

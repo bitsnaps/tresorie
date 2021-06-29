@@ -211,9 +211,42 @@ class AdminController extends BaseController
      */
     public function actionCreatePallier(){
     
+        $model =new Grade();
+        $role =new Role();
         $grade = $this->make(Grade::class, [], ['scenario' => 'create']);
+        if($model->load(\Yii::$app->request->post()) && $model->validate()){
+            //need to create role for the aprobateur or any other specifique user 
+            $role->role_name=$model->role_id;
+            $role->user_id=$model->user_id;
+  
+            if($role->save()){
+                //AuthUpdate
+                $auth=\app\models\AuthAssignment::find()->where(['user_id'=>$model->user_id])->one();
+                $auth->item_name='Aprobateur';
+                $auth->update();
+            }else{
+               
+                print_r($role->errors);
+                die();
+            }
+            //saving the grade with it specifique pallier
+            $model->role_id= $role->id;
+            if($model->save()){
 
-        return $this->render('/user/admin/pallier/createpallier', ['grade' => $grade]);
+            }else{
+                print_r($model);
+                print_r($model->errors);
+                die();
+            }
+
+            \Yii::$app->session->setFlash('success','Pallier et Aprobateur crée avec success');
+
+
+            return $this->render('/user/admin/pallier/createpallier', ['grade' => $grade]);
+        }else{
+            
+            return $this->render('/user/admin/pallier/createpallier', ['grade' => $model]);
+        }
     }
     /**
      * This Methode is responsible on saving a pallier

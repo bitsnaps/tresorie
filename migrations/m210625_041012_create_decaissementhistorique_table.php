@@ -21,15 +21,21 @@ class m210625_041012_create_decaissementhistorique_table extends Migration
             'piece_jointe'=> $this->string(255)->notNull(),
             'status_user'=> $this->integer(11)->notNull()->defaultValue(0),
             'status_admin'=> $this->integer(11)->notNull()->defaultValue(0),
-            'user_id'=> $this->integer(11)->notNull(),
-             'user_id'=> $this->integer(11)->notNull(),
+            'sender_user_id' => $this->integer(11)->notNull(),
+            'reciever_user_id' => $this->integer(11)->notNull(),
+            
         ],$tableOptions
     );
-            $this->addForeignKey('fk_decaissementhistorique_user_id',
-            '{{%decaissementhistorique}}','user_id',
+        $this->addForeignKey('fk_decaissementhistorique_sender_user_id',
+            '{{%decaissementhistorique}}','sender_user_id',
             '{{%user}}','id',
             'CASCADE','CASCADE'
          );
+         $this->addForeignKey('fk_decaissementhistorique_reciever_user_id',
+         '{{%decaissementhistorique}}','reciever_user_id',
+         '{{%user}}','id',
+         'CASCADE','CASCADE'
+      );
             $this->createIndex('date_demande','{{%decaissementhistorique}}',['date_demande'],true);
     
         }

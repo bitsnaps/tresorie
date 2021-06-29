@@ -15,7 +15,7 @@ class ScreenChannel extends base
         $className = $notification->className();
         $currTime = time();
         //Our Params
-       // $model=Grade::find()
+        //$model=Grade::find(['user_id'])->
         $decaissement_id=$notification->decaissement_id;
         $decaissement_motif=$notification->decaissement_motif;
         $decaissement_montant=$notification->decaissement_montant;

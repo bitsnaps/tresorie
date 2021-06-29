@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 'value' => function ($model) {
 
-                    return $model->user->username;
+                    return $model->senderUser->username;
                 },
             ],
             'date_demande',

@@ -77,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <?php $form = ActiveForm::begin(
                                
                                     [
-                                        'action' => ['admin/save-pallier'],
+                                      //  'action' => ['admin/save-pallier'],
                                         'method' => 'post',
                                         'layout' => 'horizontal',
                                         'enableAjaxValidation' => false,

@@ -148,7 +148,7 @@ class Notifications extends \yii\base\Widget
                     $count = (new Query())
                     ->from('{{%notifications}}')
                     ->innerJoin('decaissementhistorique', 'decaissementhistorique.id = notifications.decaissementhistorique_id')
-                    ->innerJoin('grade', 'grade.user_id = decaissementhistorique.user_id ')
+                    ->innerJoin('grade', 'grade.user_id = decaissementhistorique.reciever_user_id')
                     ->andWhere(['>=','grade.montant','decaissementhistorique.montant'])
                 //    ->andWhere(['or', 'user_id = 0', 'user_id = :user_id'], [':user_id' => $userId])
                     ->andWhere(['seen' => false])

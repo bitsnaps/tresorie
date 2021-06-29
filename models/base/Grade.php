@@ -31,10 +31,10 @@ class Grade extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'role_id', 'niveau', 'montant', 'updated_at', 'created_at'], 'required'],
-            [['user_id', 'role_id', 'updated_at', 'created_at'], 'integer'],
+            [['user_id', 'role_id', 'niveau', 'montant'], 'required'],
+            [[ 'updated_at', 'created_at'], 'integer'],
             [['montant'], 'number'],
-            [['niveau'], 'string', 'max' => 255],
+      //      [['niveau'], 'string', 'max' => 255],
            // [['lock'], 'default', 'value' => '0'],
           //  [['lock'], 'mootensai\components\OptimisticLockValidator']
         ];
@@ -66,8 +66,8 @@ class Grade extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'user_id' => 'User ID',
-            'role_id' => 'Role ID',
+            'user_id' => 'Nom d \'utilisateur',
+            'role_id' => 'Role ',
             'niveau' => 'Niveau',
             'montant' => 'Montant',
         ];

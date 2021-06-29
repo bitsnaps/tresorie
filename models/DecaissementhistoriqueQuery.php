@@ -11,11 +11,12 @@ class DecaissementhistoriqueQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
-        return $this->andWhere('[[status]]=1');
+        $this->andWhere('[[status]]=1');
+        return $this;
     }*/
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      * @return Decaissementhistorique[]|array
      */
     public function all($db = null)
@@ -24,7 +25,7 @@ class DecaissementhistoriqueQuery extends \yii\db\ActiveQuery
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      * @return Decaissementhistorique|array|null
      */
     public function one($db = null)

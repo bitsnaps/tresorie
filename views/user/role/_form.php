@@ -18,7 +18,7 @@ use Da\User\Helper\AuthHelper;
 use dosamigos\selectize\SelectizeDropDownList;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 
 $unassignedItems = Yii::$container->get(AuthHelper::class)->getUnassignedItems($model);
 ?>
@@ -27,6 +27,11 @@ $unassignedItems = Yii::$container->get(AuthHelper::class)->getUnassignedItems($
     [
         'enableClientValidation' => true,
         'enableAjaxValidation' => false,
+        'fieldConfig' => [
+            'horizontalCssClasses' => [
+                'wrapper' => 'col-sm-9',
+            ],
+        ],
     ]
 ) ?>
 

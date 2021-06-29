@@ -24,7 +24,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property \app\models\User $senderUser
  * @property \app\models\Notifications[] $notifications
  */
-class Decaissement extends \yii\db\ActiveRecord
+class Decaissementhistorique extends \yii\db\ActiveRecord
 {
     use \mootensai\relation\RelationTrait;
 
@@ -34,10 +34,11 @@ class Decaissement extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [[ 'montant', 'motif', 'piece_jointe'], 'required'],
+            [['montant', 'motif', 'piece_jointe'], 'required'],
             [['date_demande'], 'safe'],
             [['montant'], 'number'],
             [['status_user', 'status_admin', 'sender_user_id', 'reciever_user_id'], 'integer'],
+          //  [['motif', 'piece_jointe'], 'string', 'max' => 255],
             [['date_demande'], 'unique']
         ];
     }
@@ -47,7 +48,7 @@ class Decaissement extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'decaissement';
+        return 'decaissementhistorique';
     }
 
     /**
@@ -73,7 +74,7 @@ class Decaissement extends \yii\db\ActiveRecord
      */
     public function getRecieverUser()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'reciever_user_id']);
+        return $this->hasOne(\app\models\User::className(), ['id' => 'reciever_user_id'])->inverseOf('decaissementhistoriques');
     }
         
     /**
@@ -81,7 +82,7 @@ class Decaissement extends \yii\db\ActiveRecord
      */
     public function getSenderUser()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'sender_user_id']);
+        return $this->hasOne(\app\models\User::className(), ['id' => 'sender_user_id'])->inverseOf('decaissementhistoriques');
     }
         
     /**
@@ -89,7 +90,7 @@ class Decaissement extends \yii\db\ActiveRecord
      */
     public function getNotifications()
     {
-        return $this->hasMany(\app\models\Notifications::className(), ['decaissementhistorique_id' => 'id']);
+        return $this->hasMany(\app\models\Notifications::className(), ['decaissementhistorique_id' => 'id'])->inverseOf('decaissementhistorique');
     }
     
 /**
@@ -99,17 +100,17 @@ class Decaissement extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-
+            
            
         ];
     }
 
     /**
      * @inheritdoc
-     * @return \app\models\DecaissementQuery the active query used by this AR class.
+     * @return \app\models\DecaissementhistoriqueQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new \app\models\DecaissementQuery(get_called_class());
+        return new \app\models\DecaissementhistoriqueQuery(get_called_class());
     }
 }

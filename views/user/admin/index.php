@@ -95,7 +95,7 @@ $module = Yii::$app->getModule('user');
                         [
                             'class' => 'btn btn-xs btn-success btn-block',
                             'data-method' => 'post',
-                            'data-confirm' => Yii::t('usuario', 'Are you sure you want to confirm this user?'),
+                            'data-confirm' => Yii::t('usuario', 'Voulez-vous vraiment confirmer cet utilisateur ?'),
                         ]
                     );
                 },

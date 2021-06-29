@@ -26,16 +26,22 @@ class m210619_232246_decaissement extends Migration
                 'piece_jointe'=> $this->string(255)->notNull(),
                 'status_user'=> $this->integer(11)->notNull()->defaultValue(0),
                 'status_admin'=> $this->integer(11)->notNull()->defaultValue(0),
-                'user_id'=> $this->integer(11)->notNull(),
+                'sender_user_id' => $this->integer(11)->notNull(),
+                'reciever_user_id' => $this->integer(11)->notNull(),
             ],$tableOptions
         );
-        $this->addForeignKey('fk_decaissement_user_id',
-        '{{%decaissement}}','user_id',
+        $this->addForeignKey('fk3_decaissement_sender_user_id',
+        '{{%decaissement}}','sender_user_id',
         '{{%user}}','id',
         'CASCADE','CASCADE'
-     );
+        );
+        $this->addForeignKey('fk3_decaissement_reciever_user_id',
+        '{{%decaissement}}','reciever_user_id',
+        '{{%user}}','id',
+        'CASCADE','CASCADE'
+    );
         $this->createIndex('date_demande','{{%decaissement}}',['date_demande'],true);
-        $this->createIndex('decaissement_fk0','{{%decaissement}}',['user_id'],false);
+        $this->createIndex('decaissement_fk0','{{%decaissement}}',['sender_user_id'],false);
 
     }
 
