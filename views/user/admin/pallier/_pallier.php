@@ -29,7 +29,7 @@ app\models\AuthAssignment::find()->joinWith('user')->where(['item_name'=>"respon
 ?>
 <?= $form->field($grade, 'role_id')->dropDownList(
 
-ArrayHelper::map(app\models\AuthAssignment::find()->where(['item_name'=>'Aprobateur'])->all(), 'item_name', 'item_name'),
+ArrayHelper::map(app\models\AuthItem::find()->where(['name'=>'Aprobateur'])->all(), 'name', 'name'),
 
 ['prompt' => 'Sélectionner Le Role']);
 ?>
