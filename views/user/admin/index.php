@@ -21,7 +21,7 @@ use yii\widgets\Pjax;
  * @var $module       Da\User\Module
  */
 
-$this->title = Yii::t('usuario', 'Manage users');
+$this->title = Yii::t('usuario', 'Gérer les utilisateurs');
 $this->params['breadcrumbs'][] = $this->title;
 
 $module = Yii::$app->getModule('user');

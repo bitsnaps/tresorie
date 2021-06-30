@@ -10,7 +10,7 @@ class AccountNotifications extends Notification
 
     const KEY_RESET_PASSWORD = 'reset_password';
 
-    const KEY_DEMAMDE_DECAISEMENT = 'demande décaissement';
+    const KEY_DEMAMDE_DECAISEMENT = 'Décaissement';
     /**
      * @param mixed $name
      * parameter that will be use as parametre for the creation of our notification
@@ -42,7 +42,7 @@ class AccountNotifications extends Notification
             case self::KEY_RESET_PASSWORD:
                 return Yii::t('app', 'Instructions to reset the password');
             case self::KEY_DEMAMDE_DECAISEMENT:
-                return Yii::t('app', 'Responsable de station '.$username."a demander un retrer d'un montant ".$decaissement_montant." Dzd "."Pour un motif de type ".$decaissement_motif );
+                return Yii::t('app', 'Responsable de station : '.$username." a demander:  ".$decaissement_montant." DZD "." pour: ".$decaissement_motif );
 
         }
     }
