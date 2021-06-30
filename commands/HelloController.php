@@ -6,7 +6,7 @@
  */
 
 namespace app\commands;
-
+use yii\helpers\Console;
 use yii\console\Controller;
 use yii\console\ExitCode;
 

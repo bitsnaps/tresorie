@@ -23,13 +23,25 @@ class m210619_232246_decaissement extends Migration
                 'date_demande'=> $this->datetime()->notNull(),
                 'montant'=> $this->decimal(10)->notNull(),
                 'motif'=> $this->string(255)->notNull(),
-                'piece_jointe'=> $this->string(255)->notNull(),
-                'status'=> $this->integer(11)->notNull(),
-                'user_id'=> $this->integer(11)->notNull(),
+                'piece_jointe'=> $this->string(255)->notNull()->defaultValue(0),
+                'status_user'=> $this->integer(11)->notNull()->defaultValue(0),
+                'status_admin'=> $this->integer(11)->notNull()->defaultValue(0),
+                'sender_user_id' => $this->integer(11)->notNull(),
+                'reciever_user_id' => $this->integer(11)->notNull(),
             ],$tableOptions
         );
-        $this->createIndex('date_demande','{{%decaissement}}',['date_demande'],true);
-        $this->createIndex('decaissement_fk0','{{%decaissement}}',['user_id'],false);
+        $this->addForeignKey('fk3_decaissement_sender_user_id',
+        '{{%decaissement}}','sender_user_id',
+        '{{%user}}','id',
+        'CASCADE','CASCADE'
+        );
+        $this->addForeignKey('fk3_decaissement_reciever_user_id',
+        '{{%decaissement}}','reciever_user_id',
+        '{{%user}}','id',
+        'CASCADE','CASCADE'
+    );
+       // $this->createIndex('date_demande','{{%decaissement}}',['date_demande'],true);
+        $this->createIndex('decaissement_fk0','{{%decaissement}}',['sender_user_id'],false);
 
     }
 

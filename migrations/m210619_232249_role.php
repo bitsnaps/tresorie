@@ -19,9 +19,10 @@ class m210619_232249_role extends Migration
         $this->createTable(
             '{{%role}}',
             [
-                'id'=> $this->integer(11)->notNull(),
+                'id'=> $this->primaryKey(11),
                 'role_name'=> $this->string(255)->notNull(),
                 'user_id'=> $this->integer(11)->notNull(),
+                
             ],$tableOptions
         );
         $this->createIndex('role_fk0','{{%role}}',['user_id'],false);

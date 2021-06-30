@@ -9,6 +9,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\models\User;
 
 AppAsset::register($this);
 ?>
@@ -35,14 +36,21 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+   
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+           // ['label' => 'Home', 'url' => ['/user/security/login']],
+           // ['label' => 'About', 'url' => ['/site/about']],
+           // ['label' => 'Contact', 'url' => ['/site/contact']],
+           ['label' => 'Administrateur', 'url' => ['/user/admin'], 'visible' => User::isAdmin()],
+           ['label' => 'Tous Décaissements', 'url' => ['/admin/decaissement'], 'visible' => User::isAdmin()],
+           ['label' => 'Décaissement', 'url' => ['/admin/decaissement'], 'visible' => User::isAprobateur()],
+           ['label' => 'Demande Décaissement',  'url' => ['/responsable-de-station/create-demande'], 'visible' => User::isResponsableDeStation()],
+           ['label' => 'Mes demande Décaissement', 'url' => ['/responsable-de-station/decaissement'], 'visible' => User::isResponsableDeStation()],
+           app\widgets\Notifications::widget(),
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+                ['label' => 'Login', 'url' => ['/user/security/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
@@ -55,10 +63,13 @@ AppAsset::register($this);
             )
         ],
     ]);
+
+
     NavBar::end();
     ?>
 
     <div class="container">
+   
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>

@@ -9,6 +9,9 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use Da\User\Filter\PasswordAgeEnforceFilter;
+include 'notifications.php';
+
 
 class SiteController extends Controller
 {
@@ -35,6 +38,9 @@ class SiteController extends Controller
                     'logout' => ['post'],
                 ],
             ],
+            /*'enforcePasswordAge' => [
+                'class' => PasswordAgeEnforceFilter::className(),
+            ],*/
         ];
     }
 
@@ -54,6 +60,14 @@ class SiteController extends Controller
         ];
     }
 
+    public function actionNotif(){
+
+        $user = \app\models\User::find()->where(['id'=>13])->one();
+
+        AccountNotification::create(AccountNotification::KEY_RESET_PASSWORD, ['user' =>$user])->send();
+         return $this->render('index');
+
+        }
     /**
      * Displays homepage.
      *
@@ -69,22 +83,10 @@ class SiteController extends Controller
      *
      * @return Response|string
      */
-    public function actionLogin()
+  /*  public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
+        return $this->redirect('index.php?r=user%2Fsecurity%2Flogin');
+    }*/
 
     /**
      * Logout action.

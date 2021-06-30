@@ -2,103 +2,126 @@
 
 namespace app\models;
 
-class User extends \yii\base\BaseObject implements \yii\web\IdentityInterface
+use Da\User\Model\User as BaseUser;
+
+/**
+ * User ActiveRecord model.
+ *
+ * @property string $role
+ * 
+ * 
+ */
+ 
+class User extends BaseUser
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
-
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
-
-
-    /**
+        /**
      * {@inheritdoc}
      */
-    public static function findIdentity($id)
+    public $role;
+
+    public function rules()
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return array_merge(parent::rules(), [ 
+            [['role'],'safe']
+      ]);
+
+    }
+    public function attributeLabels()
+    {
+        return [
+            'username' => \Yii::t('usuario', 'Nom d\'utilisateur'),
+            'email' => \Yii::t('usuario', 'Email'),
+            'registration_ip' => \Yii::t('usuario', 'IP d\'enregistrement'),
+            'unconfirmed_email' => \Yii::t('usuario', 'Nouveau courriel'),
+            'password' => \Yii::t('usuario', 'Mot de passe'),
+            'created_at' => \Yii::t('usuario', 'Heure d\'inscription'),
+            'confirmed_at' => \Yii::t('usuario', 'Heure de confirmation'),
+            'last_login_at' => \Yii::t('usuario', 'Dernière connexion'),
+        ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
+    public static function tableName()
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
+        return '{{%user}}';
+    }
+    public static function getCurrentUser()
+    {
+        return \Yii::$app->user;
+    }
+    public static function userHasRole($role, $id)
+    {
+        $User = new self();
+        return $User->getAuth()->hasRole($id, $role);
+    }
+    public static  function isAdmin()
+    {
+        //$User = new self();  
+        if (User::userHasRole('admin', User::getCurrentUser()->id))
+            return  true;
+        return  false;
+    }
+    public static  function isAprobateur()
+    {
+        //$User = new self();  
+        if (User::userHasRole('Aprobateur', User::getCurrentUser()->id))
+            return  true;
+        return  false;
+    }
+    public static  function isResponsableDeStation()
+    {
+        //$User = new self();  
+        if (User::userHasRole('responsableDeStation', User::getCurrentUser()->id))
+            return  true;
+        return  false;
+    }
+
+    public static function decaissementAuthorirty($status_user)
+    {
+        if ($status_user != 1)
+            return  true;
+        else
+            return false;
+    }
+    public static function authAssignementResponsableDeStationToConfirmedUser($user_id,$roleName)
+    {
+        $model = new \app\models\AuthAssignment();
+        $model->item_name = $roleName;
+        $model->user_id = $user_id;
+
+        if ($model->save()) {
+        } else {
+            print_r($model);
+            die();
         }
+        $model = new \app\models\Role();
+        $model->role_name = $roleName;
+        $model->user_id = $user_id;
 
-        return null;
-    }
-
-    /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
+        if ($model->save()) {
+        } else {
+            print_r($model);
+            die();
         }
-
-        return null;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getId()
+    public static function assignRoleToConfirmedUser($user_id,$roleName)
     {
-        return $this->id;
-    }
+        $model1 = \app\models\AuthItem::find()->where(['name' =>$roleName ])->one();
+        if ($model1) {
+            self::authAssignementResponsableDeStationToConfirmedUser($user_id,$roleName);
+            //je cree l'utilisateur 
+        } else {
+            $model1 = new \app\models\AuthItem;
+            $model1->name = $roleName;
+            $model1->type = 1;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getAuthKey()
-    {
-        return $this->authKey;
-    }
+            if ($model1->save()) {
+                self::authAssignementResponsableDeStationToConfirmedUser($user_id,$roleName);
+            } else {
+                print_r($model1);
+                die();
+            }
+            //Saving role for new confirmed user 
 
-    /**
-     * {@inheritdoc}
-     */
-    public function validateAuthKey($authKey)
-    {
-        return $this->authKey === $authKey;
-    }
-
-    /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
-     */
-    public function validatePassword($password)
-    {
-        return $this->password === $password;
+        }
     }
 }

@@ -1,0 +1,173 @@
+<?php
+
+namespace app\controllers\notification;
+use Yii;
+use webzop\notifications\controllers\DefaultController as BaseController;
+use yii\web\Controller;
+use yii\db\Query;
+use yii\data\Pagination;
+use yii\helpers\Url;
+use webzop\notifications\helpers\TimeElapsed;
+use app\widgets\Notifications;
+
+class NotificationController extends BaseController
+{
+    public $layout = "@app/views/layouts/main";
+
+    /**
+     * Displays index page.
+     *
+     * @return string
+     */
+    public function actionIndex()
+    {
+       
+        $userId = Yii::$app->getUser()->getId();
+        if(\app\models\User::isAdmin(\app\models\User::getCurrentUser()->id)){
+            $query = (new Query())
+            ->from('{{%notifications}}');
+          //  ->andWhere(['or', 'user_id = $userId', 'user_id = :user_id'], [':user_id' => $userId])
+           // ->all();
+
+        }
+           
+        if(\app\models\User::isAprobateur(\app\models\User::getCurrentUser()->id)){
+            $query = (new Query())
+            ->from('{{%notifications}}')
+            ->innerJoin('decaissementhistorique', 'decaissementhistorique.id = notifications.decaissementhistorique_id')
+           ->innerJoin('grade', 'grade.user_id = decaissementhistorique.reciever_user_id ')
+           ->andWhere(['>=','grade.montant','decaissementhistorique.montant'])
+            
+          ;
+        }
+ 
+        $pagination = new Pagination([
+            'pageSize' => 20,
+            'totalCount' => $query->count(),
+        ]);
+      
+        $list=[];
+        if($query->count()>0){
+            $list = $query
+            ->orderBy(['notifications.id' => SORT_DESC])
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+        }
+        
+       
+
+        $notifs = $this->prepareNotifications($list);
+
+        return $this->render('@app/views/notification/default/index', [
+            'notifications' => $notifs,
+            'pagination' => $pagination,
+        ]);
+    }
+
+    public function actionList()
+    {
+        $userId = Yii::$app->getUser()->getId();
+        if(\app\models\User::isAdmin(\app\models\User::getCurrentUser()->id))
+        $list = (new Query())
+            ->from('{{%notifications}}')
+           // ->andWhere(['or', 'user_id = 13', 'user_id = :user_id'], [':user_id' => $userId])
+            ->orderBy(['id' => SORT_DESC])
+            ->limit(10)
+            ->all();
+        if(\app\models\User::isAprobateur(\app\models\User::getCurrentUser()->id)){
+            $list = (new Query())
+            ->from('{{%notifications}}')
+            ->innerJoin('decaissementhistorique', 'decaissementhistorique.id = notifications.decaissementhistorique_id')
+            ->innerJoin('grade', 'grade.user_id = decaissementhistorique.reciever_user_id')
+            ->andWhere(['>=','grade.montant','decaissementhistorique.montant'])
+            ->limit(10)
+            ->all();
+        //    ->andWhere(['or', 'user_id = 0', 'user_id = :user_id'], [':user_id' => $userId])
+           
+           ;
+        }
+        $notifs = $this->prepareNotifications($list);
+        $this->ajaxResponse(['list' => $notifs]);
+    }
+
+    public function actionCount()
+    {
+        $count = Notifications::getCountUnseen();
+        $this->ajaxResponse(['count' => $count]);
+    }
+
+    public function actionRead($id)
+    {
+        Yii::$app->getDb()->createCommand()->update('{{%notifications}}', ['read' => true], ['id' => $id])->execute();
+
+        if(Yii::$app->getRequest()->getIsAjax()){
+            return $this->ajaxResponse(1);
+        }
+
+        return Yii::$app->getResponse()->redirect(['/notifications/default/index']);
+    }
+
+    public function actionReadAll()
+    {
+        Yii::$app->getDb()->createCommand()->update('{{%notifications}}', ['read' => true])->execute();
+        if(Yii::$app->getRequest()->getIsAjax()){
+            return $this->ajaxResponse(1);
+        }
+
+        Yii::$app->getSession()->setFlash('success', Yii::t('modules/notifications', 'All notifications have been marked as read.'));
+
+        return Yii::$app->getResponse()->redirect(['/notifications/default/index']);
+    }
+
+    public function actionDeleteAll()
+    {
+        Yii::$app->getDb()->createCommand()->delete('{{%notifications}}')->execute();
+
+        if(Yii::$app->getRequest()->getIsAjax()){
+            return $this->ajaxResponse(1);
+        }
+
+        Yii::$app->getSession()->setFlash('success', Yii::t('modules/notifications', 'All notifications have been deleted.'));
+
+        return Yii::$app->getResponse()->redirect(['/notifications/default/index']);
+    }
+
+    private function prepareNotifications($list){
+        $notifs = [];
+        $seen = [];
+        foreach($list as $notif){
+            if(!$notif['seen']){
+                $seen[] = $notif['id'];
+            }
+            $route = @unserialize($notif['route']);
+            $notif['url'] = !empty($route) ? Url::to($route) : '';
+           $notif['timeago'] = TimeElapsed::timeElapsed($notif['created_at']);
+            $notifs[] = $notif;
+        }
+
+        if(!empty($seen)){
+            Yii::$app->getDb()->createCommand()->update('{{%notifications}}', ['seen' => true], ['id' => $seen])->execute();
+        }
+
+        return $notifs;
+    }
+
+    public function ajaxResponse($data = [])
+    {
+        if(is_string($data)){
+            $data = ['html' => $data];
+        }
+
+        $session = \Yii::$app->getSession();
+        $flashes = $session->getAllFlashes(true);
+        foreach ($flashes as $type => $message) {
+            $data['notifications'][] = [
+                'type' => $type,
+                'message' => $message,
+            ];
+        }
+        return $this->asJson($data);
+    }
+
+}

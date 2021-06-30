@@ -4,18 +4,26 @@ use yii\helpers\Url;
 
 class LoginCest
 {
+
+    
     public function ensureThatLoginWorks(AcceptanceTester $I)
     {
-        $I->amOnPage(Url::toRoute('/site/login'));
-        $I->see('Login', 'h1');
+        $I->amOnPage('index.php?r=user%2Fsecurity%2Flogin');
+        $I->wait(5); // wait for button to be clicked
+        $I->fillField('#loginform-login', 'admin');
+        $I->fillField('#loginform-password', 'amar500G');
+        $I->click('Sign in');
+        $I->wait(5); // wait for button to be clicked
 
-        $I->amGoingTo('try to login with correct credentials');
-        $I->fillField('input[name="LoginForm[username]"]', 'admin');
-        $I->fillField('input[name="LoginForm[password]"]', 'admin');
-        $I->click('login-button');
-        $I->wait(2); // wait for button to be clicked
+       // $I->expectTo('see user info');
+       // $I->see('Logout');
+    }
+    public function waiting(AcceptanceTester $I)
+    {
 
-        $I->expectTo('see user info');
-        $I->see('Logout');
+        $I->wait(5); // wait for button to be clicked
+
+       // $I->expectTo('see user info');
+       // $I->see('Logout');
     }
 }
