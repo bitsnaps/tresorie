@@ -1,0 +1,54 @@
+language: php
+os:
+  - linux
+dist: trusty
+php:
+  # - '5.4'
+  # - '5.6'
+  # - '7.1'
+  - '7.4'
+
+# Database service
+services:
+  # - postgresql
+  - mysql
+
+# In case of issue with xdebug
+# env:
+#     global:
+#         - XDEBUG_MODE=coverage
+
+# Email notifications (https://docs.travis-ci.com/user/notifications/)
+notifications:
+  email: false
+
+# cache composer cache
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+# run build against hhvm but allow them to fail
+# http://docs.travis-ci.com/user/build-configuration/#Rows-That-are-Allowed-To-Fail
+matrix:
+  fast_finish: true
+  allow_failures:
+    - php: 7.1
+
+before_install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS yalitresoredb_test;'
+  # - psql -c 'create database yalitresoredb_test;' -U postgres
+  - sudo apt-get -y install git zip php5-cli php5-curl
+
+before_script:
+  - composer self-update
+  - composer install --no-interaction --prefer-dist
+
+script:
+  # - psql -c "SELECT version();"
+  - tests/bin/yii migrate --migrationNamespaces=Da\\User\\Migration --interactive=0
+  - tests/bin/yii migrate --migrationPath=@yii/rbac/migrations --interactive=0
+  - ./tests/bin/yii migrate --interactive=0
+  - tests/bin/yii serve &
+  - vendor/bin/codecept build
+  - vendor/bin/codecept run unit #functional
+  #- vendor/bin/codecept run --coverage --coverage-html
