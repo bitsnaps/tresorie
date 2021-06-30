@@ -117,12 +117,44 @@ class AdminController extends BaseController
             if ($this->make(UserCreateService::class, [$user, $mailService])->run()) {
                 Yii::$app->getSession()->setFlash('success', Yii::t('usuario', 'User has been created'));
                 $this->trigger(UserEvent::EVENT_AFTER_CREATE, $event);
-                User::assignRoleToConfirmedUser($user->id);
-                return $this->redirect(['update', 'id' => $user->id]);
+                $role_name=$user->role;
+             //   var_dump($user->Role);
+               
+                User::assignRoleToConfirmedUser($user->id,$role_name);
+                Yii::$app->session->setFlash('success', Yii::t('usuario', 'Vous avez crée un nouvelle utilisateur avec le role'.$role_name));
+                return $this->redirect(['create', 'id' => $user->id]);
             }
             Yii::$app->session->setFlash('danger', Yii::t('usuario', 'User account could not be created.'));
         }
 
         return $this->render('create', ['user' => $user]);
+    }
+ /**
+  *  Overide action Update
+  *
+  * @param [type] $id
+  * @return void
+  */
+    public function actionUpdate($id)
+    {
+        $user = $this->userQuery->where(['id' => $id])->one();
+        $user->setScenario('update');
+        /** @var UserEvent $event */
+        $event = $this->make(UserEvent::class, [$user]);
+
+        $this->make(AjaxRequestModelValidator::class, [$user])->validate();
+
+        if ($user->load(Yii::$app->request->post())) {
+            $this->trigger(ActiveRecord::EVENT_BEFORE_UPDATE, $event);
+
+            if ($user->save()) {
+                Yii::$app->getSession()->setFlash('success', Yii::t('usuario', 'Account details have been updated'));
+                $this->trigger(ActiveRecord::EVENT_AFTER_UPDATE, $event);
+
+                return $this->refresh();
+            }
+        }
+
+        return $this->render('_account', ['user' => $user]);
     }
 }

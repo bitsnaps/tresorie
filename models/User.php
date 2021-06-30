@@ -4,11 +4,28 @@ namespace app\models;
 
 use Da\User\Model\User as BaseUser;
 
+/**
+ * User ActiveRecord model.
+ *
+ * @property string $role
+ * 
+ * 
+ */
+ 
 class User extends BaseUser
 {
         /**
      * {@inheritdoc}
      */
+    public $role;
+
+    public function rules()
+    {
+        return array_merge(parent::rules(), [ 
+            [['role'],'safe']
+      ]);
+
+    }
     public function attributeLabels()
     {
         return [
@@ -65,10 +82,10 @@ class User extends BaseUser
         else
             return false;
     }
-    public static function authAssignementResponsableDeStationToConfirmedUser($user_id)
+    public static function authAssignementResponsableDeStationToConfirmedUser($user_id,$roleName)
     {
         $model = new \app\models\AuthAssignment();
-        $model->item_name = 'responsableDeStation';
+        $model->item_name = $roleName;
         $model->user_id = $user_id;
 
         if ($model->save()) {
@@ -77,7 +94,7 @@ class User extends BaseUser
             die();
         }
         $model = new \app\models\Role();
-        $model->role_name = 'responsableDeStation';
+        $model->role_name = $roleName;
         $model->user_id = $user_id;
 
         if ($model->save()) {
@@ -86,19 +103,19 @@ class User extends BaseUser
             die();
         }
     }
-    public static function assignRoleToConfirmedUser($user_id)
+    public static function assignRoleToConfirmedUser($user_id,$roleName)
     {
-        $model1 = \app\models\AuthItem::find()->where(['name' => 'responsableDeStation'])->one();
+        $model1 = \app\models\AuthItem::find()->where(['name' =>$roleName ])->one();
         if ($model1) {
-            self::authAssignementResponsableDeStationToConfirmedUser($user_id);
+            self::authAssignementResponsableDeStationToConfirmedUser($user_id,$roleName);
             //je cree l'utilisateur 
         } else {
             $model1 = new \app\models\AuthItem;
-            $model1->name = 'responsableDeStation';
+            $model1->name = $roleName;
             $model1->type = 1;
 
             if ($model1->save()) {
-                self::authAssignementResponsableDeStationToConfirmedUser($user_id);
+                self::authAssignementResponsableDeStationToConfirmedUser($user_id,$roleName);
             } else {
                 print_r($model1);
                 die();

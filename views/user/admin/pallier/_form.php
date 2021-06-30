@@ -13,23 +13,33 @@ use kartik\money\MaskMoney;
 <div class="grade-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    
-    <?= $form->field($model, 'user_id')->dropDownList(
 
-    ArrayHelper::map(app\models\User::find()->where(['id'=>$model->user_id])->all(), 'id', 'username'),
+    <?= $form->field($grade, 'user_id')->dropDownList(
 
-    ['prompt' => 'Sélectionner Utilisateur']);
+        ArrayHelper::map(
+
+            app\models\AuthAssignment::find()->joinWith('user')->where(['item_name' => "Aprobateur"])->all(),
+            'user.id',
+            function ($model) {
+                //   return ArrayHelper::toArray($model->user->username);
+                return $model->user->username;
+            }
+        ),
+
+        ['prompt' => 'Sélectionner Utilisateur']
+    );
     ?>
     <?= $form->field($model, 'role_id')->dropDownList(
 
-ArrayHelper::map(app\models\AuthItem::find()->where(['name'=>'Aprobateur'])->all(), 'name', 'name'),
+        ArrayHelper::map(app\models\AuthItem::find()->where(['name' => 'Aprobateur'])->all(), 'name', 'name'),
 
-    ['prompt' => 'Sélectionner Le Role']);
+        ['prompt' => 'Sélectionner Le Role']
+    );
     ?>
     <?= $form->field($model, 'niveau')->textInput(['maxlength' => 255]) ?>
-    <?= $form->field($model, 'montant')->textInput(['type' => 'number','min'=>0, 'options' => [
+    <?= $form->field($model, 'montant')->textInput(['type' => 'number', 'min' => 0, 'options' => [
         'placeholder' => 'Entrer  Montant...',
-        'min'=>0,
+        'min' => 0,
         'style' => 'width:300 px'
     ]]) ?>
     <div class="form-group">
