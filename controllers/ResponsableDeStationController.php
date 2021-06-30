@@ -148,6 +148,63 @@ class ResponsableDeStationController extends BaseController
         );
     }
     /**
+     * sauvgarder une demande de decaissement
+     *
+     * @param [object] $model
+     * @return void
+     */
+    public function saveDecaissement($model)
+    {
+        //Assigning Attribute to the model
+        $now = new \DateTime();
+        $model->date_demande = $now->format('Y-m-d H:i:s');
+        if ($model->piece_jointe != 'vide' and !empty($model->piece_jointe)) {
+            if ($model->upload()) {
+                //return true;
+            }
+        }
+        if ($model->piece_jointe) {
+            $model->piece_jointe = UploadedFile::getInstance($model, 'piece_jointe');
+        } else {
+            $model->piece_jointe = "vide";
+        }
+        $model->sender_user_id = User::getCurrentUser()->id;
+        //Saving Decaissement model
+        if ($model->save(false)) {
+        } else {
+            throw new \yii\web\HttpException(404, 'On a pas pu sauvgarder votre demande de decaissement.');
+        }
+    }
+    /**
+     * sauvgarder l'historique  d'une demande de decaissement qui sera attribuer a tous les aprobateur
+     *
+     * @param [object] $model
+     * @param [object] $model1
+     * @param [integer] $individualRole
+     * @return void
+     */
+    public function saveDecaissementHistorique($model, $model1, $individualRole)
+    {
+        //Decaissement historique model
+        $now = new \DateTime();
+        $model1->date_demande = $now->format('Y-m-d H:i:s ');
+        $model1->montant = $model->montant;
+        $model1->motif =  $model->motif;
+        if ($model->piece_jointe) {
+            $model1->piece_jointe = UploadedFile::getInstance($model, 'piece_jointe');
+        }
+        $model1->id = $model->id;
+        $model1->piece_jointe = "vide";
+        $model1->sender_user_id = User::getCurrentUser()->id;
+        $model1->reciever_user_id = $individualRole->user_id;
+
+        if ($model1->save(false)) {
+        } else {
+            //print_r($model1->errors);
+            throw new \yii\web\HttpException(404, 'On a pas pu sauvgarder votre demande de decaissement.');
+        }
+    }
+    /**
      * This function create a pallier for a specific user assigned by an admin
      *
      * @return void
@@ -159,68 +216,23 @@ class ResponsableDeStationController extends BaseController
         $model1 = new Decaissementhistorique();
         $counter = 0;
         if ($model->load(\Yii::$app->request->post())) {
-            
             $Aprobateur = \app\models\AuthAssignment::find()->where(['item_name' => 'Aprobateur'])->all();
-         
-            foreach ($Aprobateur as $individualRole) {
-                //Decaissement model
-                $now = new \DateTime();
-                $model->date_demande = $now->format('Y-m-d H:i:s');
-               
-                if ($counter == 0) {
-                    if ($model->piece_jointe) {
-                        if ($model->upload()) {
-                            //return true;
-                        }
-                    }
+            if ($Aprobateur) {
+                foreach ($Aprobateur as $individualRole) {
+                    //Decaissement model
+                    $this->saveDecaissement($model);
+                    $this->saveDecaissementHistorique($model, $model1, $individualRole);
                 }
-              
-              
-                    if ($model->piece_jointe) {
-                        $model->piece_jointe = UploadedFile::getInstance($model, 'piece_jointe');
-                    }
-
-                    $model->piece_jointe = "vide";
-                    $model->sender_user_id = User::getCurrentUser()->id;
-                    $model->reciever_user_id = $individualRole->user_id;
-                    //Decaissement historique model
-                    $model1->date_demande = $now->format('Y-m-d H:i:s ');
-                    $model1->montant = $model->montant;
-                    $model1->motif =  $model->motif;
-                    if ($model->piece_jointe) {
-                        $model1->piece_jointe = UploadedFile::getInstance($model, 'piece_jointe');
-                    }
-                    $model1->piece_jointe = "vide";
-                    $model1->sender_user_id = User::getCurrentUser()->id;
-                    $model1->reciever_user_id = $individualRole->user_id;
-
-
-
-                    
-                if ($model->save(false)) {
-
-                    $model1->id = $model->id;
-                    if ($model1->save(false)) {
-                    } else {
-                        print_r($model1->errors);
-                        echo json_encode(['status' => 'Error', 'message' => 'Demande historique  decaissement  no valide']);
-                        die();
-                    }
-                    $decaissement_id = $model->id;
-                    $decaissement_montant = $model->montant;
-                    $decaissement_motif = $model->motif;
-                    $username = $model->senderUser->username;
-                    $user = \app\models\User::find()->where(['id' => User::getCurrentUser()->id])->one();
-                    if ($counter == 0) {
-                        AccountNotifications::create(AccountNotifications::KEY_DEMAMDE_DECAISEMENT, ['user' => $user, 'decaissement_id' => $decaissement_id, 'decaissement_motif' => $decaissement_motif, 'decaissement_montant' => $decaissement_montant, 'username' => $username])->send();
-                    }
-                } else {
-                    print_r($model->errors);
-                    echo json_encode(['status' => 'Error', 'message' => 'Demande decaissement no valide']);
-                    // die();
-                }
-               
-                $counter++;
+            } else {
+                $this->saveDecaissement($model);
+            }
+            $decaissement_id = $model->id;
+            $decaissement_montant = $model->montant;
+            $decaissement_motif = $model->motif;
+            $username = $model->senderUser->username;
+            $user = \app\models\User::find()->where(['id' => User::getCurrentUser()->id])->one();
+            if ($counter == 0) {
+                AccountNotifications::create(AccountNotifications::KEY_DEMAMDE_DECAISEMENT, ['user' => $user, 'decaissement_id' => $decaissement_id, 'decaissement_motif' => $decaissement_motif, 'decaissement_montant' => $decaissement_montant, 'username' => $username])->send();
             }
             \Yii::$app->session->setFlash('success', 'Votre demande a éte crée avec success');
             return $this->render('/user/admin/decaissement/createdecaissement', ['decaissement' => $model]);

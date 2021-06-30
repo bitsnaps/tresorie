@@ -14,11 +14,7 @@ class m210619_232252_Relations extends Migration
 
     public function safeUp()
     {
-        $this->addForeignKey('fk1_decaissement_user_id',
-        '{{%decaissement}}','reciever_user_id',
-            '{{%user}}','id',
-            'CASCADE','CASCADE'
-         );
+
         $this->addForeignKey('fk1_grade_user_id',
             '{{%grade}}','user_id',
             '{{%user}}','id',
