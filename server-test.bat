@@ -1,1 +1,0 @@
-tests\bin\yii.bat serve
