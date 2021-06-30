@@ -67,10 +67,10 @@ use app\models\User;
                         'label' => Yii::t('usuario', 'Nouvelle utilisateur'),
                         'url' => ['/user/admin/create'],
                     ],
-                    [
+                   /* [
                         'label' => Yii::t('usuario', 'Nouveau role'),
                         'url' => ['/user/role/create'],
-                    ],
+                    ],*/
                     [
                         'label' => Yii::t('usuario', 'Nouveau Grade'),
                         'url' => ['/admin/create-pallier'],
