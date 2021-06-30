@@ -34,3 +34,6 @@ tests/_support/_generated
 
 # chrome driver
 chromedriver.exe
+
+# ingore uploads
+./web/uploads/*
