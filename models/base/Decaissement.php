@@ -18,9 +18,7 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $status_user
  * @property integer $status_admin
  * @property integer $sender_user_id
- * @property integer $reciever_user_id
  *
- * @property \app\models\User $recieverUser
  * @property \app\models\User $senderUser
  * @property \app\models\Notifications[] $notifications
  */
@@ -40,7 +38,7 @@ class Decaissement extends \yii\db\ActiveRecord
 
             [['date_demande'], 'safe'],
             [['montant'], 'number'],
-            [['status_user', 'status_admin', 'sender_user_id', 'reciever_user_id'], 'integer'],
+            [['status_user', 'status_admin', 'sender_user_id'], 'integer'],
            // [['date_demande'], 'unique']
         ];
     }

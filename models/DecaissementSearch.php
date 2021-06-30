@@ -46,10 +46,15 @@ class DecaissementSearch extends Decaissement
         //Decaissement pour Aprobateur filtrer celon son pallier
         if(User::isAprobateur(User::getCurrentUser()->id)){
             $grade=Grade::find(['user_id'=>User::getCurrentUser()->id])->one();
-            $query=Decaissement::find(['sender_user_id'=>User::getCurrentUser()->id])
-          //      ->innerJoin('grade', 'grade.user_id = decaissement.user_id ')
-                ->where(['<=','decaissement.montant',$grade->montant])
-             ;
+            if( $grade){
+                $query=Decaissement::find(['sender_user_id'=>User::getCurrentUser()->id])
+                //      ->innerJoin('grade', 'grade.user_id = decaissement.user_id ')
+                      ->where(['<=','decaissement.montant',$grade->montant])
+                   ;
+            }else{
+                throw new \yii\web\HttpException(403, 'Vous devez attendre que l\'administrateur vous affecte un grade.');
+            }
+           
         }
        
         $dataProvider = new ActiveDataProvider([

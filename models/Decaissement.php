@@ -20,7 +20,7 @@ class Decaissement extends BaseDecaissement
             [['piece_jointe'], 'file', 'skipOnEmpty' => true, 'extensions' => 'file,pdf'],
             [['date_demande'], 'safe'],
             [['montant'], 'number'],
-            [['status_user', 'status_admin', 'sender_user_id', 'reciever_user_id'], 'integer'],
+            [['status_user', 'status_admin', 'sender_user_id'], 'integer'],
           //  [['date_demande'], 'unique']
         ]);
     }
