@@ -41,16 +41,9 @@ before_install:
 
 before_script:
   - composer self-update
-<<<<<<< HEAD
   - composer update --no-interaction --prefer-dist
-
-script:
-=======
-  - composer install --no-interaction --prefer-dist
-
 script:
   # - psql -c "SELECT version();"
->>>>>>> dev
   - tests/bin/yii migrate --migrationNamespaces=Da\\User\\Migration --interactive=0
   - tests/bin/yii migrate --migrationPath=@yii/rbac/migrations --interactive=0
   - ./tests/bin/yii migrate --interactive=0
