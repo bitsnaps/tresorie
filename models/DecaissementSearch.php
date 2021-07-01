@@ -33,6 +33,13 @@ class DecaissementSearch extends Decaissement
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+     public function getDecaissment()
+     {
+         return $this->hasOne(\app\models\Decaissement::className(), ['id' => 'decaissment_id']);
+     }
+    /**
      * Creates data provider instance with search query applied
      *
      * @param array $params

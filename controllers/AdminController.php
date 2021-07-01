@@ -10,7 +10,7 @@ use app\models\Grade;
 use app\models\GradeSearch;
 use app\models\Decaissement;
 use app\models\DecaissementSearch;
-
+use app\models\Transaction;
 use app\models\Role;
 
 // ...
@@ -146,7 +146,16 @@ class AdminController extends BaseController
             $model->status_admin=0;
 
         if($model->update()){
+            //
+            $transaction=new Transaction();
+            $transaction->date_transaction=$model->date_demande;
+            $transaction->montant=$model->montant;
+            $transaction->decaissment_id=$model->id;
+            if($transaction->save()){
 
+            }else{
+                throw new \NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas archiver votre demande de transaction'));
+            }
         }else{
             print_r($model->errors);
             die();

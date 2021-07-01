@@ -42,6 +42,11 @@ use app\models\User;
                 'visible' => User::isAdmin()
             ],
             [
+                'label' => Yii::t('usuario', 'Tous les transaction'),
+                'url' => ['/transaction/index'],
+                'visible' => User::isAdmin()
+            ],
+            [
                 'label' => Yii::t('usuario', 'Créer une demande'),
                 'url' => ['/responsable-de-station/create-demande'],
                 'visible' => User::isResponsableDeStation()
