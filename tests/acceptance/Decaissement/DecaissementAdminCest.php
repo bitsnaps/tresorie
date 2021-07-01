@@ -22,7 +22,7 @@ class DecaissementAdminCest
         if ($I->loadSessionSnapshot('login')){
             $I->amOnPage('index.php?r=admin%2Fdecaissement');
             $I->click('Tous les Décaissements');
-            $I->wait(5); // wait for button to be clicked
+    
             // $I->expectTo('see user info');
             // $I->see('Logout');
         }
@@ -33,8 +33,6 @@ class DecaissementAdminCest
         if ($I->loadSessionSnapshot('login')){
             $I->amOnPage('index.php?r=admin%2Fdecaissement');
             $I->click('Tous les Décaissements');
-         
-            $I->wait(5); // wait for button to be clicked
             $I->click('Confirmer');
             $I->click('Ok');
             $I->wait(5); // wait for button to be clicked

@@ -318,9 +318,16 @@ class AdminController extends BaseController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $id=$model->role_id;
+        if ($model->load(\Yii::$app->request->post())) {
 
-        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/user/admin/pallier/view', 'id' => $model->id]);
+ 
+            $model->role_id=$id;
+            if($model->save()){
+            }else{
+                throw new \NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas faire cette modification de grade'));
+            }
+            return $this->redirect(['/admin/view', 'id' => $model->id]);
         }
 
         return $this->render('/user/admin/pallier/update', [

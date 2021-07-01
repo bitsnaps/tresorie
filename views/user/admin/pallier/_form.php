@@ -14,7 +14,7 @@ use kartik\money\MaskMoney;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($grade, 'user_id')->dropDownList(
+    <?= $form->field($model, 'user_id')->dropDownList(
 
         ArrayHelper::map(
 
