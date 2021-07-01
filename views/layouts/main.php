@@ -36,7 +36,7 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-   
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
@@ -44,10 +44,10 @@ AppAsset::register($this);
            // ['label' => 'About', 'url' => ['/site/about']],
            // ['label' => 'Contact', 'url' => ['/site/contact']],
            ['label' => 'Administrateur', 'url' => ['/user/admin'], 'visible' => User::isAdmin()],
-           ['label' => 'Tous Décaissements', 'url' => ['/admin/decaissement'], 'visible' => User::isAdmin()],
-           ['label' => 'Décaissement', 'url' => ['/admin/decaissement'], 'visible' => User::isAprobateur()],
+           ['label' => 'Décaissements', 'url' => ['/admin/decaissement'], 'visible' => User::isAdmin()],
+           ['label' => 'Décaissements', 'url' => ['/admin/decaissement'], 'visible' => User::isAprobateur()],
            ['label' => 'Demande Décaissement',  'url' => ['/responsable-de-station/create-demande'], 'visible' => User::isResponsableDeStation()],
-           ['label' => 'Mes demande Décaissement', 'url' => ['/responsable-de-station/decaissement'], 'visible' => User::isResponsableDeStation()],
+           ['label' => 'Mes demandes', 'url' => ['/responsable-de-station/decaissement'], 'visible' => User::isResponsableDeStation()],
            app\widgets\Notifications::widget(),
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/user/security/login']]
@@ -69,7 +69,7 @@ AppAsset::register($this);
     ?>
 
     <div class="container">
-   
+
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>

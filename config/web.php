@@ -5,7 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
-    'homeUrl'=>array('user/security/login'),
+    'homeUrl'=> array('/site/index'),
 
     'basePath' => dirname(__DIR__),
     'name' => 'Yalidine',
@@ -24,13 +24,13 @@ $config = [
                 ],
                 'webzop\notifications\NotificationsAsset' => [
                     //'sourcePath' => null,
-        
+
                     'js' => [
                      //   '@web/js/notifications.js'
                     ],
                 ]
-            
-                
+
+
 
             ],
         ],
@@ -120,15 +120,15 @@ $config = [
                     ],
                 ],
             ],
-           
+
             'controllerMap' => [
                 'default' => 'app\controllers\notification\NotificationController',
-                
+
 
             ],
 
         ],
-       
+
     ],
     'params' => $params,
 ];
