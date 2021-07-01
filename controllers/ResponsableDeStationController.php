@@ -66,7 +66,7 @@ class ResponsableDeStationController extends BaseController
         $dataProvider = $searchModel->searchMyDemande(\Yii::$app->request->queryParams, User::getCurrentUser()->id);
 
         return $this->render(
-            '/user/admin/decaissement/allDecaissement',
+            '/user/admin/decaissement/allDecaissementResponsable',
             [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
@@ -277,6 +277,16 @@ class ResponsableDeStationController extends BaseController
         }
     }
     /**
+     * function to view Decaissement
+     */
+    public function actionViewDecaissement($id)
+    {
+      
+        return $this->render('/user/admin/decaissement/view', [
+            'model' => $this->findModelDecaissement($id),
+        ]);
+    }
+    /**
      * Displays a single Grade model.
      * @param integer $id
      * @return mixed
@@ -337,5 +347,14 @@ class ResponsableDeStationController extends BaseController
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    protected function findModelDecaissement($id)
+    {
+        if (($model = Decaissement::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new \NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 }
