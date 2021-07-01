@@ -19,7 +19,7 @@ use yii\helpers\Html;
  */
 
 $this->title = Yii::t('usuario', 'Cree un palier');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('usuario', 'Users'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('usuario', 'Grade'), 'url' => ['create-pallier']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
