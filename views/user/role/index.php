@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'style' => 'width: 55%',
                 ],
             ],
-            [
+           /* [
                 'class' => ActionColumn::className(),
                 'template' => '{update} {delete}',
                 'urlCreator' => function ($action, $model) {
@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'options' => [
                     'style' => 'width: 5%',
                 ],
-            ],
+            ],*/
         ],
     ]
 ) ?>

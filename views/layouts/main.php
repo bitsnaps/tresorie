@@ -50,7 +50,7 @@ AppAsset::register($this);
            ['label' => 'Mes demande Décaissement', 'url' => ['/responsable-de-station/decaissement'], 'visible' => User::isResponsableDeStation()],
            app\widgets\Notifications::widget(),
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/user/security/login']]
+                ['label' => 'Login', 'url' => ['user/security/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
