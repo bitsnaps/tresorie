@@ -52,13 +52,15 @@ class UserController extends BaseController
                 $this->trigger(FormEvent::EVENT_AFTER_LOGIN, $event);
                 //redirecting corresponding the role 
                 if(User::isAdmin()){
+                    Yii::$app->homeUrl="/user/admin";
                     return $this->redirect(['/user/admin']);
                 }
                 if(User::isAprobateur()){
+                    Yii::$app->homeUrl="/admin/decaissement";
                     return $this->redirect(['/admin/decaissement']);
                 }
                 if(User::isResponsableDeStation()){
-                   
+                    Yii::$app->homeUrl="/responsable-de-station/create-demande";
                     return $this->redirect(['/responsable-de-station/create-demande']);
                 }else{
                     echo "Wait for Admin";
