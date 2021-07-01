@@ -21,6 +21,8 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
+        'css/kpi.css',
+        'css\font-awesome.min.css'
     ];
     public $js = [
         'js/notifications.js'
@@ -28,5 +30,6 @@ class AppAsset extends AssetBundle
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
+      
     ];
 }
