@@ -25,7 +25,7 @@ class m210619_232250_transaction extends Migration
                 'decaissment_id'=> $this->integer(11)->notNull(),
             ],$tableOptions
         );
-        $this->createIndex('transaction_fk0','{{%transaction}}',['decaissment_id'],false);
+        $this->createIndex('transaction_fk0','{{%transaction}}',['decaissement_id'],false);
 
     }
 
