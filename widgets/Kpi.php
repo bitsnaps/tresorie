@@ -2,6 +2,8 @@
 namespace app\widgets;
 
 use Yii;
+use app\models\User;
+use app\Query\kpiQuery;
 
 /**
  * Alert widget renders a message from session flash. All flash messages are displayed
@@ -33,17 +35,17 @@ class Kpi extends \yii\bootstrap\Widget
     public function run()
     {
         $html='';
-        
+        if( User::isAdmin())
         $html.='
-        <div class="container">
+    
             <div class="row">
                 <div class="col-md-3 col-xl-3">
                     <div class="card bg-c-blue order-card">
                         <div class="card-block">
-                            <h6 class="m-b-20">Administrateur</h6>
+                            <h4 class="m-b-20">Administrateur</h4>
                             <h2 class="text-right">
                            
-                            <span>486</span></h2>
+                            <span>'.kpiQuery::countUserByRole('admin').'</span></h2>
                         </div>
                     </div>
                 </div>
@@ -51,10 +53,10 @@ class Kpi extends \yii\bootstrap\Widget
                 <div class="col-md-3 col-xl-3">
                     <div class="card bg-c-green order-card">
                         <div class="card-block">
-                            <h6 class="m-b-20">Aprobateur</h6>
+                            <h4 class="m-b-20">Aprobateur</h4>
                             <h2 class="text-right">
                          
-                            <span>486</span></h2>
+                            <span>'.kpiQuery::countUserByRole('Aprobateur').'</span></h2>
                         </div>
                     </div>
                 </div>
@@ -62,10 +64,10 @@ class Kpi extends \yii\bootstrap\Widget
                 <div class="col-md-3 col-xl-3">
                     <div class="card bg-c-yellow order-card">
                         <div class="card-block">
-                            <h6 class="m-b-20">Responsable de station</h6>
+                            <h4 class="m-b-20">Responsable de station</h4>
                             <h2 class="text-right">
                            
-                            <span>486</span></h2>
+                            <span>'.kpiQuery::countUserByRole('responsableDeStation').'</span></h2>
                         </div>
                     </div>
                 </div>
@@ -73,15 +75,15 @@ class Kpi extends \yii\bootstrap\Widget
                 <div class="col-md-3 col-xl-3">
                     <div class="card bg-c-pink order-card">
                         <div class="card-block">
-                            <h6 class="m-b-20">Decaissement</h6>
+                            <h4 class="m-b-20">Decaissement</h4>
                             <h2 class="text-right">
                            
-                            <span>486</span></h2>
+                            <span>'.kpiQuery::countDecaissement().'</span></h2>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+       
         ';
         return $html;
          
