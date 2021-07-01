@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Grade */
 
 $this->title = Yii::t('app', 'Create Grade');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Grades'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Grades'), 'url' => ['create-pallier']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="grade-create">
