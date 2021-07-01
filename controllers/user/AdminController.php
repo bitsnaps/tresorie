@@ -137,7 +137,7 @@ class AdminController extends BaseController
   */
     public function actionUpdate($id)
     {
-        $user = $this->userQuery->where(['id' => $id])->one();
+        $user = User::find()->where(['id' => $id])->one();
         $user->setScenario('update');
         /** @var UserEvent $event */
         $event = $this->make(UserEvent::class, [$user]);

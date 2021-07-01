@@ -5,12 +5,13 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
+
     'homeUrl'=> array('/site/index'),
 
     'basePath' => dirname(__DIR__),
     'name' => 'Yalidine',
     'language'=>'fr',
-    'defaultRoute' => 'user/security/login',
+    'defaultRoute' => '/user/security/login',
     'bootstrap' => ['log', 'user'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
