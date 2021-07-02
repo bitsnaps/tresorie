@@ -9,25 +9,21 @@ ports:
   onOpen: open-preview
   # onOpen: ignore
 
-vscode:
-  extensions:
-    - ms-azuretools.vscode-docker@1.8.1:xuHtLS23Q5czFwYH7grcCQ==
-
 # start up tasks
 tasks:
   # init: Will be executed one time when creating a workspace, command: will be exected each time you open workspace
   - init: |
-      composer self-update
-      composer install --no-interaction --prefer-dist
+      composer update --no-interaction --prefer-dist
       mysql -e "CREATE DATABASE IF NOT EXISTS yalitresoredb_test;"
       mysql -e "CREATE DATABASE IF NOT EXISTS yalitresoredb;"
       chmod +x ./yii
       chmod +x ./tests/bin/yii
-    command: |
-      sudo service mysql restart
-      ./yii migrate --migrationNamespaces=Da\\User\\Migration --interactive=0
       ./yii migrate --migrationPath=@yii/rbac/migrations --interactive=0
+      ./yii migrate --migrationNamespaces=Da\\User\\Migration --interactive=0
+      chmod +x admin-create.bat
+      ./admin-create.bat
+    command: |
       ./yii migrate --interactive=0
-      ./yii serve
+      ./yii serve 0.0.0.0
   # - command: gp await-port 8080 && ./vendor/bin/codecept run --coverage
   - command: gp await-port 8080 && gp preview $(gp url 8080)
