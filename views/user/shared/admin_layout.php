@@ -18,12 +18,6 @@ use yii\helpers\Html;
 ?>
 <div class="clearfix"></div>
 
-<?= $this->render(
-    '/shared/_alert',
-    [
-        'module' => Yii::$app->getModule('user'),
-    ]
-) ?>
 
 <div class="row">
     <div class="col-md-12">
