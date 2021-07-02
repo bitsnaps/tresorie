@@ -24,12 +24,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="clearfix"></div>
-<?= $this->render(
-    '/shared/_alert',
-    [
-        'module' => Yii::$app->getModule('user'),
-    ]
-) ?>
 
 <div class="row">
     <div class="col-md-12">
@@ -77,13 +71,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="col-md-9">
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <div class="alert alert-info">
-                                    <?= Yii::t('usuario', 'Credentials will be sent to the user by email') ?>.
-                                    <?= Yii::t(
-                                        'usuario',
-                                        'A password will be generated automatically if not provided'
-                                    ) ?>.
-                                </div>
                                 <?php $form = ActiveForm::begin(
                                     [
                                         'layout' => 'horizontal',
