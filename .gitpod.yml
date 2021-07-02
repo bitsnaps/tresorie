@@ -13,8 +13,7 @@ ports:
 tasks:
   # init: Will be executed one time when creating a workspace, command: will be exected each time you open workspace
   - init: |
-      composer self-update
-      composer install --no-interaction --prefer-dist
+      composer update --no-interaction --prefer-dist
       mysql -e "CREATE DATABASE IF NOT EXISTS yalitresoredb_test;"
       mysql -e "CREATE DATABASE IF NOT EXISTS yalitresoredb;"
       chmod +x ./yii
