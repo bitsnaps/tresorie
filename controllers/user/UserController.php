@@ -16,6 +16,7 @@ use Da\User\Controller\SecurityController as BaseController;
 
 class UserController extends BaseController
 {
+
     public function actionLogin()
     {
 

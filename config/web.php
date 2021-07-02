@@ -10,6 +10,7 @@ $config = [
 
     'basePath' => dirname(__DIR__),
     'name' => 'Yalidine',
+    
     'language'=>'fr',
     'defaultRoute' => '/user/security/login',
     'bootstrap' => ['log', 'user'],
