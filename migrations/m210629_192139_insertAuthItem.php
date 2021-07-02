@@ -13,15 +13,15 @@ class m210629_192139_insertAuthItem extends Migration
     public function safeUp()
     {
         $this->insert('auth_item', [
-            'name' => 'admin',
+            'name' => 'Administrateur',
             'type' => '1',
         ]);
         $this->insert('auth_item', [
-            'name' => 'Aprobateur',
+            'name' => 'Approbateur',
             'type' => '1',
         ]);
         $this->insert('auth_item', [
-            'name' => 'responsableDeStation',
+            'name' => 'Utilisateur',
             'type' => '1',
         ]);
     }
