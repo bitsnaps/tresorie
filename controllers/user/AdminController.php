@@ -150,7 +150,7 @@ class AdminController extends BaseController
              //   var_dump($user->Role);
                
                 User::assignRoleToConfirmedUser($user->id,$role_name);
-                Yii::$app->session->setFlash('success', Yii::t('usuario', 'Vous avez crée un nouvelle utilisateur avec le role'.$role_name));
+                Yii::$app->session->setFlash('success', Yii::t('usuario', 'Vous avez crée un nouvelle utilisateur avec le role '.$role_name));
                 return $this->redirect(['create', 'id' => $user->id]);
             }
             Yii::$app->session->setFlash('danger', Yii::t('usuario', 'User account could not be created.'));
