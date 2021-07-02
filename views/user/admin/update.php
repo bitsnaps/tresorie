@@ -55,18 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 'label' => Yii::t('usuario', 'Account details'),
                                                 'url' => ['/user/admin/update', 'id' => $user->id],
                                             ],
-                                            [
-                                                'label' => Yii::t('usuario', 'Profile details'),
-                                                'url' => ['/user/admin/update-profile', 'id' => $user->id],
-                                            ],
-                                            [
-                                                'label' => Yii::t('usuario', 'Information'),
-                                                'url' => ['/user/admin/info', 'id' => $user->id],
-                                            ],
-                                            [
-                                                'label' => Yii::t('usuario', 'Assignments'),
-                                                'url' => ['/user/admin/assignments', 'id' => $user->id],
-                                            ],
+                                          
                                             '<hr>',
                                             [
                                                 'label' => Yii::t('usuario', 'Confirm'),
