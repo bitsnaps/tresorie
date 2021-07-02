@@ -7,6 +7,7 @@ $config = [
     'id' => 'basic',
 
     'homeUrl'=> array('/site/index'),
+
     'basePath' => dirname(__DIR__),
     'name' => 'Yalidine',
     'language'=>'fr',
@@ -95,7 +96,7 @@ $config = [
             'class' => \Da\User\Module::class,
             //think how to create a component for that
             // ...other configs from here: [Configuration Options](installation/configuration-options.md), e.g.
-            'administrators' => ['admin', 'admin1', 'admin2'], // this is required for accessing administrative actions
+            'administrators' => ['admin'], // this is required for accessing administrative actions
             // 'generatePasswords' => true,
             // 'switchIdentitySessionKey' => 'myown_usuario_admin_user_key',
             'controllerMap' => [

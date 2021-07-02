@@ -41,7 +41,36 @@ use Da\User\Controller\AdminController as BaseController;
 class AdminController extends BaseController
 {
 
-
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['post'],
+                    'confirm' => ['post'],
+                    'block' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::class,
+                'ruleConfig' => [
+                    'class' => AccessRuleFilter::class,
+                ],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            if(User::isAdmin())
+                            return  true;
+                            return false;
+                        },
+                    ],
+                ],
+            ],
+        ];
+    }
     public function actionConfirm($id)
     {
         /** @var User $user */
