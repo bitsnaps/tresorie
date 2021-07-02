@@ -18,12 +18,11 @@ tasks:
       mysql -e "CREATE DATABASE IF NOT EXISTS yalitresoredb;"
       chmod +x ./yii
       chmod +x ./tests/bin/yii
+      ./yii migrate --migrationPath=@yii/rbac/migrations --interactive=0
+      ./yii migrate --migrationNamespaces=Da\\User\\Migration --interactive=0
       chmod +x admin-create.bat
       ./admin-create.bat
     command: |
-      sudo service mysql restart
-      ./yii migrate --migrationPath=@yii/rbac/migrations --interactive=0
-      ./yii migrate --migrationNamespaces=Da\\User\\Migration --interactive=0
       ./yii migrate --interactive=0
       ./yii serve 0.0.0.0
   # - command: gp await-port 8080 && ./vendor/bin/codecept run --coverage
