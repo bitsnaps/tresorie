@@ -55,10 +55,20 @@ class User extends BaseUser
     }
     public static  function isAdmin()
     {
+        
         //$User = new self();  
-        if (User::userHasRole('admin', User::getCurrentUser()->id))
+        if (User::userHasRole('admin', User::getCurrentUser()->id)){
             return  true;
+        }
+          
         return  false;
+    }
+    public static  function isAdminBehavior()
+    {
+        //$User = new self();  
+        die();
+        if (User::userHasRole('admin', User::getCurrentUser()->id))
+            return  ['admin'];
     }
     public static  function isAprobateur()
     {

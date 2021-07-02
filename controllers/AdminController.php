@@ -11,6 +11,7 @@ use app\models\GradeSearch;
 use app\models\Decaissement;
 use app\models\DecaissementSearch;
 use app\models\Transaction;
+use app\models\User;
 use app\models\Role;
 
 // ...
@@ -39,7 +40,12 @@ class AdminController extends BaseController
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['admin'],
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            if(User::isAdmin())
+                            return  true;
+                            return false;
+                        },
                     ],
                     [
                         'actions' => ['view', 'search','decaissement','view-decaissement','update-decaissement','delete-decaissement','confirm-decaissement','block-decaissement'],
