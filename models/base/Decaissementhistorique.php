@@ -75,7 +75,7 @@ class Decaissementhistorique extends \yii\db\ActiveRecord
      */
     public function getRecieverUser()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'reciever_user_id'])->inverseOf('decaissementhistoriques');
+        return $this->hasOne(\app\models\User::className(), ['id' => 'reciever_user_id']);
     }
         
     /**
@@ -83,7 +83,7 @@ class Decaissementhistorique extends \yii\db\ActiveRecord
      */
     public function getSenderUser()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'sender_user_id'])->inverseOf('decaissementhistoriques');
+        return $this->hasOne(\app\models\User::className(), ['id' => 'sender_user_id']);
     }
         
     /**

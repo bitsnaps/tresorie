@@ -11,12 +11,11 @@ class TransactionQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
-        $this->andWhere('[[status]]=1');
-        return $this;
+        return $this->andWhere('[[status]]=1');
     }*/
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      * @return Transaction[]|array
      */
     public function all($db = null)
@@ -25,7 +24,7 @@ class TransactionQuery extends \yii\db\ActiveQuery
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      * @return Transaction|array|null
      */
     public function one($db = null)

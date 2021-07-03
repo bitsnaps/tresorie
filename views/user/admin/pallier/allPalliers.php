@@ -59,3 +59,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>
 <?php $this->endContent() ?>
+<?php
+$this->registerJs('
+$("body").on("keyup.yiiGridView", ".grid-view .filters input", function(){
+    $(".grid-view").yiiGridView("applyFilter");
+})', \yii\web\View::POS_READY);
+?>

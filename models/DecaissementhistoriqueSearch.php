@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Transaction;
+use app\models\Decaissementhistorique;
 
 /**
- * TransactionSearch represents the model behind the search form of `app\models\Transaction`.
+ * DecaissementhistoriqueSearch represents the model behind the search form of `app\models\Decaissementhistorique`.
  */
-class TransactionSearch extends Transaction
+class DecaissementhistoriqueSearch extends Decaissementhistorique
 {
     public $utilisateur;
     /**
@@ -18,8 +18,8 @@ class TransactionSearch extends Transaction
     public function rules()
     {
         return [
-            [['id', 'decaissment_id'], 'integer'],
-            [['utilisateur','date_transaction'], 'safe'],
+            [['id', 'status_user', 'status_admin', 'sender_user_id', 'reciever_user_id'], 'integer'],
+            [['utilisateur','date_demande', 'motif', 'piece_jointe'], 'safe'],
             [['montant'], 'number'],
         ];
     }
@@ -42,8 +42,8 @@ class TransactionSearch extends Transaction
      */
     public function search($params)
     {
-        $query = Transaction::find();
-        $query->joinWith('decaissment');
+        $query = Decaissementhistorique::find();
+        $query->joinWith('senderUser');
 
         // add conditions that should always apply here
 
@@ -62,14 +62,17 @@ class TransactionSearch extends Transaction
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-         //   'date_transaction' => $this->date_transaction,
-        //    'montant' => $this->montant,
-            'decaissment_id' => $this->decaissment_id ,
+            'date_demande' => $this->date_demande,
+            'montant' => $this->montant,
+            'status_user' => $this->status_user,
+            'status_admin' => $this->status_admin,
+            'sender_user_id' => $this->sender_user_id,
+            'reciever_user_id' => $this->reciever_user_id,
         ]);
-        $query->andFilterWhere(['like',   'transaction.montant' , $this->montant])
-        //->andFilterWhere(['like', 'piece_jointe', $this->piece_jointe])
-        //->andFilterWhere(['like', 'user.username', $this->utilisateur])
-        ;
+
+        $query->andFilterWhere(['like', 'motif', $this->motif])
+            ->andFilterWhere(['like', 'piece_jointe', $this->piece_jointe])
+            ->andFilterWhere(['like', 'user.username', $this->utilisateur]);
 
         return $dataProvider;
     }
