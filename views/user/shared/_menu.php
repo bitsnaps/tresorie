@@ -42,7 +42,7 @@ use app\models\User;
                 'visible' => User::isAdmin()
             ],
             [
-                'label' => Yii::t('usuario', 'Tous les transaction'),
+                'label' => Yii::t('usuario', 'Tous les transactions'),
                 'url' => ['/transaction/index'],
                 'visible' => User::isAdmin()
             ],
