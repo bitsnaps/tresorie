@@ -48,7 +48,7 @@ class ResponsableDeStationController extends BaseController
                     [
 
                         'allow' => true,
-                        'roles' => ['responsableDeStation'],
+                        'roles' => ['Utilisateur'],
                     ],
                 ],
             ],
@@ -232,7 +232,7 @@ class ResponsableDeStationController extends BaseController
             $username = $model->senderUser->username;
             $user = \app\models\User::find()->where(['id' => User::getCurrentUser()->id])->one();
             if ($counter == 0) {
-                AccountNotifications::create(AccountNotifications::KEY_DEMAMDE_DECAISEMENT, ['user' => $user, 'decaissement_id' => $decaissement_id, 'decaissement_motif' => $decaissement_motif, 'decaissement_montant' => $decaissement_montant, 'username' => $username])->send();
+                AccountNotification::create(AccountNotification::KEY_DEMAMDE_DECAISEMENT, ['user' => $user, 'decaissement_id' => $decaissement_id, 'decaissement_motif' => $decaissement_motif, 'decaissement_montant' => $decaissement_montant, 'username' => $username])->send();
             }
             \Yii::$app->session->setFlash('success', 'Votre demande a éte crée avec success');
             return $this->render('/user/admin/decaissement/createdecaissement', ['decaissement' => $model]);

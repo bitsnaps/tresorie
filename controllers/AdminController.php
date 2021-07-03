@@ -156,7 +156,7 @@ class AdminController extends BaseController
             $transaction=new Transaction();
             $transaction->date_transaction=$model->date_demande;
             $transaction->montant=$model->montant;
-            $transaction->decaissment_id=$model->id;
+            $transaction->decaissement_id=$model->id;
             if($transaction->save()){
 
             }else{

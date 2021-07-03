@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 'value' => function ($model) {
 
-                    return $model->decaissment->senderUser->username ;
+                    return $model->decaissement->senderUser->username ;
                 },
             ],
             [
@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'motif',
                 'format' => 'raw',
                 'label' => 'Motif',
-                'value' =>'decaissment.motif' 
+                'value' =>'decaissement.motif' 
             ],
 
          

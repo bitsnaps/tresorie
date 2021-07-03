@@ -13,9 +13,9 @@ use mootensai\behaviors\UUIDBehavior;
  * @property integer $id
  * @property string $date_transaction
  * @property string $montant
- * @property integer $decaissment_id
+ * @property integer $decaissement_id
  *
- * @property \app\models\Decaissement $decaissment
+ * @property \app\models\Decaissement $decaissement
  */
 class Transaction extends \yii\db\ActiveRecord
 {
@@ -27,10 +27,10 @@ class Transaction extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['date_transaction', 'montant', 'decaissment_id'], 'required'],
+            [['date_transaction', 'montant', 'decaissement_id'], 'required'],
             [['date_transaction'], 'safe'],
             [['montant'], 'number'],
-            [['decaissment_id'], 'integer']
+            [['decaissement_id'], 'integer']
         ];
     }
     
@@ -51,16 +51,16 @@ class Transaction extends \yii\db\ActiveRecord
             'id' => 'ID',
             'date_transaction' => 'Date Transaction',
             'montant' => 'Montant',
-            'decaissment_id' => 'Decaissment ID',
+            'decaissement_id' => 'Decaissement ID',
         ];
     }
     
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDecaissment()
+    public function getDecaissement()
     {
-        return $this->hasOne(\app\models\Decaissement::className(), ['id' => 'decaissment_id']);
+        return $this->hasOne(\app\models\Decaissement::className(), ['id' => 'decaissement_id']);
     }
     
 /**
@@ -70,7 +70,7 @@ class Transaction extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            
+           
         ];
     }
 

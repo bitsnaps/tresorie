@@ -20,7 +20,7 @@ class TransactionSearch extends Transaction
     public function rules()
     {
         return [
-            [['id', 'decaissment_id'], 'integer'],
+            [['id', 'decaissement_id'], 'integer'],
             [['utilisateur','motif','date_transaction'], 'safe'],
             [['montant'], 'number'],
         ];
@@ -46,11 +46,11 @@ class TransactionSearch extends Transaction
     {
         $query = Transaction::find();
       
-        $query->joinWith(['decaissment' => function($query) {
+        $query->joinWith(['decaissement' => function($query) {
             $query->joinWith('senderUser') ;
             
         }]);
-
+        
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -64,13 +64,15 @@ class TransactionSearch extends Transaction
             // $query->where('0=1');
             return $dataProvider;
         }
-
+      
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
          //   'date_transaction' => $this->date_transaction,
            'montant' => $this->montant,
-            'decaissment_id' => $this->decaissment_id ,
+           
+
+         //   'decaissment_id' => $this->decaissment_id ,
         ]);
         $query
         ->andFilterWhere(['like',   'transaction.montant' , $this->montant])
