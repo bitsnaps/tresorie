@@ -24,14 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'summary' => '',
         'columns' => [
             [
-                'attribute' => 'user_id',
-                'format' => 'raw',
+                'attribute' => 'utilisateur',
                 'label' => 'Utilisateur',
-
-                'value' => function ($model) {
-
-                    return $model->senderUser->username;
-                },
+                'value' =>'senderUser.username' 
             ],
             [
                 'attribute' => 'date_demande',
@@ -233,3 +228,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>
 <?php $this->endContent() ?>
+<?php 
+$this->registerJs('
+$("body").on("keyup.yiiGridView", ".grid-view .filters input", function(){
+    $(".grid-view").yiiGridView("applyFilter");
+})', \yii\web\View::POS_READY);
+?>

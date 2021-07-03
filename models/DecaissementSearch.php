@@ -77,7 +77,7 @@ class DecaissementSearch extends Decaissement
         $query->andFilterWhere(['like', 'motif', $this->motif])
             ->andFilterWhere(['like', 'piece_jointe', $this->piece_jointe])
             ->andFilterWhere(['like', 'user.username', $this->utilisateur])
-            ->andFilterWhere(['like',   'date_demande' , $this->date_demande])
+            ->andFilterWhere(['like',  'date_demande' , $this->date_demande])
             ;
 
         return $dataProvider;
@@ -85,7 +85,7 @@ class DecaissementSearch extends Decaissement
     public function searchMyDemande($params,$user_id)
     {
         $query = Decaissement::find();
-
+        $query->joinWith('senderUser');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -111,7 +111,11 @@ class DecaissementSearch extends Decaissement
         ]);
 
         $query->andFilterWhere(['like', 'motif', $this->motif])
-            ->andFilterWhere(['like', 'piece_jointe', $this->piece_jointe]);
+            ->andFilterWhere(['like', 'piece_jointe', $this->piece_jointe])
+            ->andFilterWhere(['like', 'user.username', $this->utilisateur])
+            ->andFilterWhere(['like',  'date_demande' , $this->date_demande])
+            ;
+
 
         return $dataProvider;
     }

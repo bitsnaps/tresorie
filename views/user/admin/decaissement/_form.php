@@ -7,14 +7,14 @@ use kartik\money\MaskMoney;
 ?>
 
 
-    <?= $form->field($model, 'montant')->textInput(['type' => 'number',   'min'=>0, 'options' => [
-        'placeholder' => 'Entrer  Montant...',
+    <?= $form->field($model, 'montant')->textInput(['type' => 'number',   'min'=>0,'placeholder' => 'Entrer le  Montant...', 'options' => [
+        
         'style' => 'width:300 px',
      
     ]]) ?>
     
 
-    <?= $form->field($model, 'motif')->textArea() ?>
+    <?= $form->field($model, 'motif')->textArea(['placeholder' => 'Entrer  un Motif...',]) ?>
 
     <?= $form->field($model, 'piece_jointe')->fileInput() ?>
 
