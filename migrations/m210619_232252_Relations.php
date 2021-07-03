@@ -31,7 +31,7 @@ class m210619_232252_Relations extends Migration
             'CASCADE','CASCADE'
          );
         $this->addForeignKey('fk1_transaction_decaissment_id',
-            '{{%transaction}}','decaissment_id',
+            '{{%transaction}}','decaissement_id',
             '{{%decaissement}}','id',
             'CASCADE','CASCADE'
          );
