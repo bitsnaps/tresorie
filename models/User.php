@@ -57,7 +57,7 @@ class User extends BaseUser
     {
         
         //$User = new self();  
-        if (User::userHasRole('admin', User::getCurrentUser()->id)){
+        if (User::userHasRole('Administrateur', User::getCurrentUser()->id)){
             return  true;
         }
           
@@ -67,20 +67,20 @@ class User extends BaseUser
     {
         //$User = new self();  
         die();
-        if (User::userHasRole('admin', User::getCurrentUser()->id))
-            return  ['admin'];
+        if (User::userHasRole('Administrateur', User::getCurrentUser()->id))
+            return  ['Administrateur'];
     }
     public static  function isAprobateur()
     {
         //$User = new self();  
-        if (User::userHasRole('Aprobateur', User::getCurrentUser()->id))
+        if (User::userHasRole('Approbateur', User::getCurrentUser()->id))
             return  true;
         return  false;
     }
     public static  function isResponsableDeStation()
     {
         //$User = new self();  
-        if (User::userHasRole('responsableDeStation', User::getCurrentUser()->id))
+        if (User::userHasRole('Utilisateur', User::getCurrentUser()->id))
             return  true;
         return  false;
     }
