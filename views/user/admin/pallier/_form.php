@@ -36,9 +36,9 @@ use kartik\money\MaskMoney;
         ['prompt' => 'Sélectionner Le Role']
     );
     ?>
-    <?= $form->field($model, 'niveau')->textInput(['maxlength' => 255]) ?>
-    <?= $form->field($model, 'montant')->textInput(['type' => 'number', 'min' => 0, 'options' => [
-        'placeholder' => 'Entrer  Montant...',
+    <?= $form->field($model, 'niveau')->textInput(['placeholder' => 'Entrer  un niveau...','maxlength' => 255]) ?>
+    <?= $form->field($model, 'montant')->textInput(['type' => 'number','placeholder' => 'Entrer  un Montant...', 'min' => 0, 'options' => [
+        
         'min' => 0,
         'style' => 'width:300 px'
     ]]) ?>

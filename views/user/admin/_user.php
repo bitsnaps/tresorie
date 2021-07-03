@@ -12,12 +12,12 @@ use yii\helpers\ArrayHelper;
 
 ?>
 
-<?= $form->field($user, 'email')->textInput(['maxlength' => 255]) ?>
-<?= $form->field($user, 'username')->textInput(['maxlength' => 255]) ?>
-<?= $form->field($user, 'password')->passwordInput() ?>
+<?= $form->field($user, 'email')->textInput(['placeholder' => 'Entrer l\'email...','maxlength' => 255]) ?>
+<?= $form->field($user, 'username')->textInput(['placeholder' => 'Entrer le nom d\'utilisateur...','maxlength' => 255]) ?>
+<?= $form->field($user, 'password')->passwordInput(['placeholder' => 'Entrer un mot de passe...']) ?>
 <?= $form->field($user, 'role')->dropDownList(
 
 ArrayHelper::map(app\models\AuthItem::find()->where([])->all(), 'name', 'name'),
 
-    ['prompt' => 'Sélectionner Le Role']);
+    ['prompt' => 'Sélectionner un Role']);
     ?>

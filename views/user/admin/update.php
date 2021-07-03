@@ -26,10 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="clearfix"></div>
-<<<<<<< HEAD
-=======
 
->>>>>>> FixingRoleName
 
 <div class="row">
     <div class="col-md-12">
@@ -64,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'data-method' => 'post',
                                                     'data-confirm' => Yii::t(
                                                         'usuario',
-                                                        'Are you sure you want to confirm this user?'
+                                                        'Voulez-vous vraiment confirmer cet utilisateur ?'
                                                     ),
                                                 ],
                                             ],
@@ -77,7 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'data-method' => 'post',
                                                     'data-confirm' => Yii::t(
                                                         'usuario',
-                                                        'Are you sure you want to block this user?'
+                                                        'Êtes vous sûr de vouloir bloquer cet utilisateur?'
                                                     ),
                                                 ],
                                             ],
@@ -90,7 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'data-method' => 'post',
                                                     'data-confirm' => Yii::t(
                                                         'usuario',
-                                                        'Are you sure you want to unblock this user?'
+                                                        'Voulez-vous vraiment débloquer cet utilisateur ?'
                                                     ),
                                                 ],
                                             ],
@@ -102,7 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     'data-method' => 'post',
                                                     'data-confirm' => Yii::t(
                                                         'usuario',
-                                                        'Are you sure you want to delete this user?'
+                                                        'Êtes-vous sûr de vouloir supprimer cet utilisateur ?'
                                                     ),
                                                 ],
                                             ],
