@@ -22,7 +22,7 @@ class m210619_232250_transaction extends Migration
                 'id'=> $this->primaryKey(11),
                 'date_transaction'=> $this->datetime()->notNull(),
                 'montant'=> $this->decimal(10)->notNull(),
-                'decaissment_id'=> $this->integer(11)->notNull(),
+                'decaissement_id'=> $this->integer(11)->notNull(),
             ],$tableOptions
         );
         $this->createIndex('transaction_fk0','{{%transaction}}',['decaissement_id'],false);

@@ -4,23 +4,22 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Grade;
+use app\models\Decaissementhistorique;
 
 /**
- * GradeSearch represents the model behind the search form of `app\models\Grade`.
+ * DecaissementhistoriqueSearch represents the model behind the search form of `app\models\Decaissementhistorique`.
  */
-class GradeSearch extends Grade
+class DecaissementhistoriqueSearch extends Decaissementhistorique
 {
-    public $userID;
-    public $roleID;
+    public $utilisateur;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-      
-            [['roleID','userID','role_id','user_id','niveau'], 'safe'],
+            [['id', 'status_user', 'status_admin', 'sender_user_id', 'reciever_user_id'], 'integer'],
+            [['utilisateur','date_demande', 'motif', 'piece_jointe'], 'safe'],
             [['montant'], 'number'],
         ];
     }
@@ -43,9 +42,8 @@ class GradeSearch extends Grade
      */
     public function search($params)
     {
-        $query = Grade::find();
-        $query->joinWith('user');
-        $query->joinWith('role');
+        $query = Decaissementhistorique::find();
+        $query->joinWith('senderUser');
 
         // add conditions that should always apply here
 
@@ -63,16 +61,18 @@ class GradeSearch extends Grade
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'user_id' => $this->user_id,
-            'role_id' => $this->role_id,
+            'id' => $this->id,
+            'date_demande' => $this->date_demande,
             'montant' => $this->montant,
+            'status_user' => $this->status_user,
+            'status_admin' => $this->status_admin,
+            'sender_user_id' => $this->sender_user_id,
+            'reciever_user_id' => $this->reciever_user_id,
         ]);
-      
-        $query
-        ->andFilterWhere(['like', 'niveau', $this->niveau])
-        ->andFilterWhere(['like', 'user.username', $this->userID])
-        ->andFilterWhere(['like', 'role.role_name', $this->roleID])
-        ;
+
+        $query->andFilterWhere(['like', 'motif', $this->motif])
+            ->andFilterWhere(['like', 'piece_jointe', $this->piece_jointe])
+            ->andFilterWhere(['like', 'user.username', $this->utilisateur]);
 
         return $dataProvider;
     }

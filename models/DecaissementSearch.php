@@ -11,6 +11,7 @@ use app\models\base\Decaissement;
  */
 class DecaissementSearch extends Decaissement
 {
+    public $utilisateur;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +19,7 @@ class DecaissementSearch extends Decaissement
     {
         return [
             [['id', 'status_user', 'status_admin'], 'integer'],
-            [['date_demande', 'motif', 'piece_jointe'], 'safe'],
+            [['utilisateur','date_demande', 'motif', 'piece_jointe'], 'safe'],
             [['montant'], 'number'],
         ];
     }
@@ -50,25 +51,11 @@ class DecaissementSearch extends Decaissement
     {
         //Admin peut voir tous les decaissement
         $query = Decaissement::find();
-        //Decaissement pour Aprobateur filtrer celon son pallier
-        if(User::isAprobateur(User::getCurrentUser()->id)){
-            $grade=Grade::find(['user_id'=>User::getCurrentUser()->id])->one();
-            if( $grade){
-                $query=Decaissement::find(['sender_user_id'=>User::getCurrentUser()->id])
-                //      ->innerJoin('grade', 'grade.user_id = decaissement.user_id ')
-                      ->where(['<=','decaissement.montant',$grade->montant])
-                   ;
-            }else{
-                throw new \yii\web\HttpException(403, 'Vous devez attendre que l\'administrateur vous affecte un grade.');
-            }
-           
-        }
-       
+        $query->joinWith('senderUser');
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-      //  print_r($dataProvider );
-       // die();
 
         $this->load($params);
 
@@ -89,7 +76,9 @@ class DecaissementSearch extends Decaissement
         ]);
 
         $query->andFilterWhere(['like', 'motif', $this->motif])
-            ->andFilterWhere(['like', 'piece_jointe', $this->piece_jointe]);
+            ->andFilterWhere(['like', 'piece_jointe', $this->piece_jointe])
+            ->andFilterWhere(['like', 'user.username', $this->utilisateur])
+            ;
 
         return $dataProvider;
     }

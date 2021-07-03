@@ -26,6 +26,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="clearfix"></div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> FixingRoleName
 
 <div class="row">
     <div class="col-md-12">
