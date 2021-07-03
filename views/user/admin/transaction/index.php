@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 use app\models\User;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\DecaissementSearch */
@@ -33,7 +34,21 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->decaissment->senderUser->username ;
                 },
             ],
-            'date_transaction',
+            [
+                'attribute' => 'date_transaction',
+                'format' => 'html',
+                'label' => 'Date transaction',
+                'value' =>'date_transaction',
+                'filter' => \yii\jui\DatePicker::widget([
+                    'model'=>$searchModel,
+                    'attribute'=>'date_transaction',
+                    'language' => 'en',
+                    'dateFormat' => 'yyyy-MM-dd',
+                    'options' => [
+                        'class' => 'form-control'
+                    ],
+                ]),
+            ],
             [
                 'attribute' => 'montant',
                 'format' => 'raw',

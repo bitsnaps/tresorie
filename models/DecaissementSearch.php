@@ -68,7 +68,6 @@ class DecaissementSearch extends Decaissement
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'date_demande' => $this->date_demande,
             'montant' => $this->montant,
             'status_user' => $this->status_user,
             'status_admin' => $this->status_admin,
@@ -78,6 +77,7 @@ class DecaissementSearch extends Decaissement
         $query->andFilterWhere(['like', 'motif', $this->motif])
             ->andFilterWhere(['like', 'piece_jointe', $this->piece_jointe])
             ->andFilterWhere(['like', 'user.username', $this->utilisateur])
+            ->andFilterWhere(['like',   'date_demande' , $this->date_demande])
             ;
 
         return $dataProvider;

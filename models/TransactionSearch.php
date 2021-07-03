@@ -69,13 +69,14 @@ class TransactionSearch extends Transaction
         $query->andFilterWhere([
             'id' => $this->id,
          //   'date_transaction' => $this->date_transaction,
-        //    'montant' => $this->montant,
+           'montant' => $this->montant,
             'decaissment_id' => $this->decaissment_id ,
         ]);
         $query
         ->andFilterWhere(['like',   'transaction.montant' , $this->montant])
         ->andFilterWhere(['like',   'user.username' , $this->utilisateur])
         ->andFilterWhere(['like',   'decaissement.motif' , $this->motif])
+        ->andFilterWhere(['like',   'date_transaction' , $this->date_transaction])
         //->andFilterWhere(['like', 'piece_jointe', $this->piece_jointe])
         //->andFilterWhere(['like', 'user.username', $this->utilisateur])
         ;

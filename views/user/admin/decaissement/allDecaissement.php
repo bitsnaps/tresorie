@@ -29,7 +29,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 'value' =>'senderUser.username' 
             ],
-            'date_demande',
+            [
+                'attribute' => 'date_demande',
+                'format' => 'html',
+                'label' => 'Date transaction',
+                'value' =>'date_demande',
+                'filter' => \yii\jui\DatePicker::widget([
+                    'model'=>$searchModel,
+                    'attribute'=>'date_demande',
+                    'language' => 'en',
+                    'dateFormat' => 'yyyy-MM-dd',
+                    'options' => [
+                        'class' => 'form-control'
+                    ],
+                ]),
+            ],
             [
                 'attribute' => 'montant',
                 'format' => 'raw',
