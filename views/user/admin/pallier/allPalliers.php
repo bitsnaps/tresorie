@@ -27,27 +27,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'summary'=>'', 
         'columns' => [
             [
-                'attribute' => 'user_id',
+                'attribute' => 'userID',
                 'label' => 'Utilisateur',
-                'value' => function ($model) {
-                    
-                    $user=User::find()->where(['id'=>$model->user_id])->all();
-                        return $user[0]->username;
-                   
-                },
+                'value' => 'user.username'
+                
     
             ],
             [
-                'attribute' => 'role_id',
+                'attribute' => 'roleID',
                 'label' => 'Role',
-                'value' => function ($model) {
-                    
-                    $role=Role::find()->where(['id'=>$model->role_id])->all();
-                    if($role)
-                        return $role[0]->role_name;
-                    else
-                        return '';
-                },
+                'value' => 'role.role_name'
             ],
           //  'niveau',
             [

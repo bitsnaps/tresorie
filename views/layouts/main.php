@@ -75,7 +75,6 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        <?= Alert::widget() ?>
         <!-- Kpi for admin -->
         <?= Kpi::widget() ?>
         <?= $content ?>

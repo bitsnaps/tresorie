@@ -78,7 +78,7 @@ class Grade extends \yii\db\ActiveRecord
      */
     public function getRole()
     {
-        return $this->hasOne(\app\models\Role::className(), ['id' => 'role_id'])->inverseOf('grades');
+        return $this->hasOne(\app\models\Role::className(), ['id' => 'role_id']);
     }
         
     /**
@@ -86,7 +86,7 @@ class Grade extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(\app\models\User::className(), ['id' => 'user_id'])->inverseOf('grades');
+        return $this->hasOne(\app\models\User::className(), ['id' => 'user_id']);
     }
     
 /**

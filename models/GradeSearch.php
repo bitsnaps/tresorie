@@ -11,14 +11,16 @@ use app\models\Grade;
  */
 class GradeSearch extends Grade
 {
+    public $userID;
+    public $roleID;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['user_id', 'role_id'], 'integer'],
-            [['niveau'], 'safe'],
+      
+            [['roleID','userID','role_id','user_id','niveau'], 'safe'],
             [['montant'], 'number'],
         ];
     }
@@ -42,6 +44,8 @@ class GradeSearch extends Grade
     public function search($params)
     {
         $query = Grade::find();
+        $query->joinWith('user');
+        $query->joinWith('role');
 
         // add conditions that should always apply here
 
@@ -63,8 +67,12 @@ class GradeSearch extends Grade
             'role_id' => $this->role_id,
             'montant' => $this->montant,
         ]);
-
-        $query->andFilterWhere(['like', 'niveau', $this->niveau]);
+      
+        $query
+        ->andFilterWhere(['like', 'niveau', $this->niveau])
+        ->andFilterWhere(['like', 'user.username', $this->userID])
+        ->andFilterWhere(['like', 'role.role_name', $this->roleID])
+        ;
 
         return $dataProvider;
     }
