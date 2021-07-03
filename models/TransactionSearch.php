@@ -12,6 +12,8 @@ use app\models\Transaction;
 class TransactionSearch extends Transaction
 {
     public $utilisateur;
+    public $motif;
+
     /**
      * {@inheritdoc}
      */
@@ -19,7 +21,7 @@ class TransactionSearch extends Transaction
     {
         return [
             [['id', 'decaissment_id'], 'integer'],
-            [['utilisateur','date_transaction'], 'safe'],
+            [['utilisateur','motif','date_transaction'], 'safe'],
             [['montant'], 'number'],
         ];
     }
@@ -43,7 +45,11 @@ class TransactionSearch extends Transaction
     public function search($params)
     {
         $query = Transaction::find();
-        $query->joinWith('decaissment');
+      
+        $query->joinWith(['decaissment' => function($query) {
+            $query->joinWith('senderUser') ;
+            
+        }]);
 
         // add conditions that should always apply here
 
@@ -66,7 +72,10 @@ class TransactionSearch extends Transaction
         //    'montant' => $this->montant,
             'decaissment_id' => $this->decaissment_id ,
         ]);
-        $query->andFilterWhere(['like',   'transaction.montant' , $this->montant])
+        $query
+        ->andFilterWhere(['like',   'transaction.montant' , $this->montant])
+        ->andFilterWhere(['like',   'user.username' , $this->utilisateur])
+        ->andFilterWhere(['like',   'decaissement.motif' , $this->motif])
         //->andFilterWhere(['like', 'piece_jointe', $this->piece_jointe])
         //->andFilterWhere(['like', 'user.username', $this->utilisateur])
         ;

@@ -61,6 +61,7 @@ class Transaction extends \yii\db\ActiveRecord
         return $this->hasOne(Decaissement::className(), ['id' => 'decaissment_id']);
     }
 
+
     /**
      * {@inheritdoc}
      * @return TransactionQuery the active query used by this AR class.

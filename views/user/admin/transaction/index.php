@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'summary' => '',
         'columns' => [
             [
-                'attribute' => 'decaissement_id',
+                'attribute' => 'utilisateur',
                 'format' => 'raw',
                 'label' => 'Utilisateur',
 
@@ -45,14 +45,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             [
-                'attribute' => 'decaissement_id',
+                'attribute' => 'motif',
                 'format' => 'raw',
                 'label' => 'Motif',
-
-                'value' => function ($model) {
-
-                    return $model->decaissment->motif ;
-                },
+                'value' =>'decaissment.motif' 
             ],
 
          
