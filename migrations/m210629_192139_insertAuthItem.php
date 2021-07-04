@@ -32,7 +32,6 @@ class m210629_192139_insertAuthItem extends Migration
     public function safeDown()
     {
         echo "m210629_192139_insertAuthItem cannot be reverted.\n";
-
         return false;
     }
 
