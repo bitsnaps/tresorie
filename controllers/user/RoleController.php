@@ -37,9 +37,7 @@ class RoleController extends BaseController
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
-                            if(User::isAdmin())
-                            return  true;
-                            return false;
+                            return User::isAdmin();
                         },
                     ],
                   

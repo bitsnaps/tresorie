@@ -26,7 +26,8 @@ class m210628_222213_alter_table_grade extends Migration
     public function safeDown()
     {
         echo "m210628_222213_alter_table_grade cannot be reverted.\n";
-
+        // TODO: check if this works
+        //$this->dropForeignKey( 'fk5_role_id_assignement_id', '{{%grade}}' );
         return false;
     }
 
