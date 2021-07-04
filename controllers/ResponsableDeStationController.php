@@ -184,7 +184,7 @@ class ResponsableDeStationController extends BaseController
      * @param [integer] $individualRole
      * @return void
      */
-    public function saveDecaissementHistorique($model, $model1, $individualRole)
+    public function saveDecaissementHistorique($model, $model1, $individualRole = null)
     {
         //Decaissement historique model
         $now = new \DateTime();
@@ -197,10 +197,9 @@ class ResponsableDeStationController extends BaseController
         $model1->id = $model->id;
         $model1->piece_jointe = "vide";
         $model1->sender_user_id = User::getCurrentUser()->id;
-        $model1->reciever_user_id = $individualRole->user_id;
+        $model1->reciever_user_id = User::getCurrentUser()->id;
 
         if ($model1->save(false)) {
-            
         } else {
             //print_r($model1->errors);
             throw new \yii\web\HttpException(404, 'On a pas pu sauvgarder votre demande de decaissement.');
@@ -218,25 +217,16 @@ class ResponsableDeStationController extends BaseController
         $model1 = new Decaissementhistorique();
         $counter = 0;
         if ($model->load(\Yii::$app->request->post())) {
-           // $Aprobateur = \app\models\AuthAssignment::find()->where(['item_name' => 'Aprobateur'])->all();
-         /*   if ($Aprobateur) {
-                foreach ($Aprobateur as $individualRole) {
-                    //Decaissement model
-                    $this->saveDecaissement($model);
-                    $this->saveDecaissementHistorique($model, $model1, $individualRole);
-                }
-            } else {*/
-               $model= $this->saveDecaissement($model);
-         //   }
-                
+            $model = $this->saveDecaissement($model);
+            $this->saveDecaissementHistorique($model, $model1);
             $decaissement_id = $model->id;
             $decaissement_montant = $model->montant;
             $decaissement_motif = $model->motif;
             $username = $model->senderUser->username;
             $user = \app\models\User::find()->where(['id' => User::getCurrentUser()->id])->one();
-                
+
             AccountNotification::create(AccountNotification::KEY_DEMAMDE_DECAISEMENT, ['user' => $user, 'decaissement_id' => $decaissement_id, 'decaissement_motif' => $decaissement_motif, 'decaissement_montant' => $decaissement_montant, 'username' => $username])->send();
-           
+
             \Yii::$app->session->setFlash('success', 'Votre demande a éte crée avec success');
             return $this->render('/user/admin/decaissement/createdecaissement', ['decaissement' => $model]);
         } else {
@@ -284,7 +274,7 @@ class ResponsableDeStationController extends BaseController
      */
     public function actionViewDecaissement($id)
     {
-      
+
         return $this->render('/user/admin/decaissement/view', [
             'model' => $this->findModelDecaissement($id),
         ]);

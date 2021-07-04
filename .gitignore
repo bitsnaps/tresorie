@@ -9,6 +9,9 @@ nbproject
 .project
 .settings
 
+# selenium 
+selenium-server-standalone-3.141.59.jar
+
 # windows thumbnail cache
 Thumbs.db
 
