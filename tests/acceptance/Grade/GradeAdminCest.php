@@ -17,12 +17,16 @@ class GradeAdminCest
     }
     public function createNewGrade(AcceptanceTester $I){
         if ($I->loadSessionSnapshot('login')){
-            $I->amOnPage('index.php?r=admin/create-pallier');
-            $option = $I->grabTextFrom('select option:nth-child(2)');
-            $I->selectOption("select", $option);
-            $option = $I->grabTextFrom('select option:nth-child(2)');
-            $I->selectOption("select", $option);
-
+            $I->click('Créer');
+            $I->click('Nouveau Grade');
+            //Filling the creation of new grade
+            $option = $I->grabTextFrom('#grade-user_id    option:nth-child(2)');
+            $I->selectOption("#grade-user_id ", $option);
+            $option = $I->grabTextFrom('#grade-role_id  option:nth-child(2)');
+            $I->selectOption("#grade-role_id   ", $option);
+            $I->fillField('#grade-niveau', 2);
+            $I->fillField('#grade-montant', 1000);
+            $I->click('Save');
 
         }
     }
@@ -30,11 +34,12 @@ class GradeAdminCest
     public function viewAllGrade(AcceptanceTester $I)
     {
         if ($I->loadSessionSnapshot('login')){
-            $I->amOnPage('admin/palliers');
+            $I->click('Grade');
+            $I->wait(5); // wait for button to be clicked
 
         }
     }
-    public function viewSpecifiqueGrade(AcceptanceTester $I)
+  /*  public function viewSpecifiqueGrade(AcceptanceTester $I)
     {
         if ($I->loadSessionSnapshot('login')){
             $I->amOnPage('index.php?r=admin/palliers');
@@ -54,6 +59,6 @@ class GradeAdminCest
             $I->amOnPage('admin/palliers');
 
         }
-    }
+    }*/
 
 }
