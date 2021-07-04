@@ -254,7 +254,7 @@ class AdminController extends BaseController
                 die();
             }
 
-            \Yii::$app->session->setFlash('success','Pallier et Approbateur crée avec success');
+            \Yii::$app->session->setFlash('success','Grade  crée avec success');
 
 
             return $this->render('/user/admin/pallier/createpallier', ['grade' => $grade]);
