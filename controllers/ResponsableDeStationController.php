@@ -151,7 +151,7 @@ class ResponsableDeStationController extends BaseController
      * sauvgarder une demande de decaissement
      *
      * @param [object] $model
-     * @return void
+     * @return object
      */
     public function saveDecaissement($model)
     {
@@ -171,6 +171,7 @@ class ResponsableDeStationController extends BaseController
         $model->sender_user_id = User::getCurrentUser()->id;
         //Saving Decaissement model
         if ($model->save(false)) {
+            return $model;
         } else {
             throw new \yii\web\HttpException(404, 'On a pas pu sauvgarder votre demande de decaissement.');
         }
@@ -199,6 +200,7 @@ class ResponsableDeStationController extends BaseController
         $model1->reciever_user_id = $individualRole->user_id;
 
         if ($model1->save(false)) {
+            
         } else {
             //print_r($model1->errors);
             throw new \yii\web\HttpException(404, 'On a pas pu sauvgarder votre demande de decaissement.');
@@ -216,24 +218,25 @@ class ResponsableDeStationController extends BaseController
         $model1 = new Decaissementhistorique();
         $counter = 0;
         if ($model->load(\Yii::$app->request->post())) {
-            $Aprobateur = \app\models\AuthAssignment::find()->where(['item_name' => 'Aprobateur'])->all();
-            if ($Aprobateur) {
+           // $Aprobateur = \app\models\AuthAssignment::find()->where(['item_name' => 'Aprobateur'])->all();
+         /*   if ($Aprobateur) {
                 foreach ($Aprobateur as $individualRole) {
                     //Decaissement model
                     $this->saveDecaissement($model);
                     $this->saveDecaissementHistorique($model, $model1, $individualRole);
                 }
-            } else {
-                $this->saveDecaissement($model);
-            }
+            } else {*/
+               $model= $this->saveDecaissement($model);
+         //   }
+                
             $decaissement_id = $model->id;
             $decaissement_montant = $model->montant;
             $decaissement_motif = $model->motif;
             $username = $model->senderUser->username;
             $user = \app\models\User::find()->where(['id' => User::getCurrentUser()->id])->one();
-            if ($counter == 0) {
-                AccountNotification::create(AccountNotification::KEY_DEMAMDE_DECAISEMENT, ['user' => $user, 'decaissement_id' => $decaissement_id, 'decaissement_motif' => $decaissement_motif, 'decaissement_montant' => $decaissement_montant, 'username' => $username])->send();
-            }
+                
+            AccountNotification::create(AccountNotification::KEY_DEMAMDE_DECAISEMENT, ['user' => $user, 'decaissement_id' => $decaissement_id, 'decaissement_motif' => $decaissement_motif, 'decaissement_montant' => $decaissement_montant, 'username' => $username])->send();
+           
             \Yii::$app->session->setFlash('success', 'Votre demande a éte crée avec success');
             return $this->render('/user/admin/decaissement/createdecaissement', ['decaissement' => $model]);
         } else {
