@@ -50,7 +50,7 @@ class AdminController extends BaseController
                     [
                         'actions' => ['view', 'search','decaissement','view-decaissement','update-decaissement','delete-decaissement','confirm-decaissement','block-decaissement'],
                         'allow' => true,
-                        'roles' => ['Aprobateur','admin','responsableDeStation'],
+                        'roles' => ['Approbateur','Administrateur','Utilisateur'],
                     ],
                 ],
             ],
@@ -237,7 +237,7 @@ class AdminController extends BaseController
             if($role->save()){
                 //AuthUpdate
                 $auth=\app\models\AuthAssignment::find()->where(['user_id'=>$model->user_id])->one();
-                $auth->item_name='Aprobateur';
+                $auth->item_name='Approbateur';
                 $auth->update();
             }else{
                
@@ -254,7 +254,7 @@ class AdminController extends BaseController
                 die();
             }
 
-            \Yii::$app->session->setFlash('success','Pallier et Aprobateur crée avec success');
+            \Yii::$app->session->setFlash('success','Pallier et Approbateur crée avec success');
 
 
             return $this->render('/user/admin/pallier/createpallier', ['grade' => $grade]);
@@ -281,7 +281,7 @@ class AdminController extends BaseController
             if($role->save()){
                 //AuthUpdate
                 $auth=\app\models\AuthAssignment::find()->where(['user_id'=>$model->user_id])->one();
-                $auth->item_name='Aprobateur';
+                $auth->item_name='Approbateur';
                 $auth->update();
             }else{
                
@@ -298,7 +298,7 @@ class AdminController extends BaseController
                 die();
             }
 
-            \Yii::$app->session->setFlash('success','Pallier et Aprobateur crée avec success');
+            \Yii::$app->session->setFlash('success','Pallier et Approbateur crée avec success');
 
 
             return $this->render('/user/admin/pallier/createpallier', ['grade' => $grade]);

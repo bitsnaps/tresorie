@@ -8,7 +8,7 @@ class TransactionAdminCest
 {
     public function _before(AcceptanceTester $I)
     {
-        $I->amOnPage('user/security/login');
+        $I->amOnPage('index.php?r=user/security/login');
         $I->fillField('#loginform-login', 'admin');
         $I->fillField('#loginform-password', '1234567');
         $I->click('Sign in');
@@ -20,7 +20,6 @@ class TransactionAdminCest
     public function viewAllTransction(AcceptanceTester $I)
     {
         if ($I->loadSessionSnapshot('login')){
-            $I->amOnPage('transaction/index');
             $I->click('Tous les transactions');
     
             // $I->expectTo('see user info');
@@ -28,10 +27,10 @@ class TransactionAdminCest
         }
     }
 
-    public function searchTransaction(AcceptanceTester $I)
+   /* public function searchTransaction(AcceptanceTester $I)
     {
         if ($I->loadSessionSnapshot('login')){
-            $I->amOnPage('transaction/index');
+            $I->click('Tous les transactions');
         
           
             // $I->expectTo('see user info');
@@ -39,6 +38,6 @@ class TransactionAdminCest
         }
         
        
-    }
+    }*/
 
 }

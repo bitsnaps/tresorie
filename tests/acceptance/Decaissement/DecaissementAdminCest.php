@@ -8,7 +8,7 @@ class DecaissementAdminCest
 {
     public function _before(AcceptanceTester $I)
     {
-        $I->amOnPage('index.php?r=user%2Fsecurity%2Flogin');
+        $I->amOnPage('index.php?r=user/security/Flogin');
         $I->fillField('#loginform-login', 'admin');
         $I->fillField('#loginform-password', '1234567');
         $I->click('Sign in');
@@ -20,8 +20,8 @@ class DecaissementAdminCest
     public function viewAllDecaissement(AcceptanceTester $I)
     {
         if ($I->loadSessionSnapshot('login')){
-            $I->amOnPage('index.php?r=admin%2Fdecaissement');
-            $I->click('Tous les Décaissements');
+            $I->amOnPage('index.php?r=admin/decaissement');
+     
     
             // $I->expectTo('see user info');
             // $I->see('Logout');
@@ -31,12 +31,12 @@ class DecaissementAdminCest
     public function confirmDecaissement(AcceptanceTester $I)
     {
         if ($I->loadSessionSnapshot('login')){
-            $I->amOnPage('index.php?r=admin%2Fdecaissement');
+            $I->amOnPage('index.php?r=admin/decaissement');
             $I->click('Tous les Décaissements');
             $I->click('Confirmer');
             $I->click('Ok');
-            $I->wait(5); // wait for button to be clicked
-            // $I->expectTo('see user info');
+            $I->see('Confirmed');
+            $I->wait(10); // wait for button to be clicked
             // $I->see('Logout');
         }
         

@@ -8,7 +8,7 @@ class GradeAdminCest
 {
     public function _before(AcceptanceTester $I)
     {
-        $I->amOnPage('user/security/login');
+        $I->amOnPage('index.php?r=user/security/login');
         $I->fillField('#loginform-login', 'admin');
         $I->fillField('#loginform-password', '1234567');
         $I->click('Sign in');
@@ -17,7 +17,12 @@ class GradeAdminCest
     }
     public function createNewGrade(AcceptanceTester $I){
         if ($I->loadSessionSnapshot('login')){
-            $I->amOnPage('admin/create-pallier');
+            $I->amOnPage('index.php?r=admin/create-pallier');
+            $option = $I->grabTextFrom('select option:nth-child(2)');
+            $I->selectOption("select", $option);
+            $option = $I->grabTextFrom('select option:nth-child(2)');
+            $I->selectOption("select", $option);
+
 
         }
     }
@@ -32,14 +37,14 @@ class GradeAdminCest
     public function viewSpecifiqueGrade(AcceptanceTester $I)
     {
         if ($I->loadSessionSnapshot('login')){
-            $I->amOnPage('admin/palliers');
+            $I->amOnPage('index.php?r=admin/palliers');
 
         }
     }
     public function UpdateSpecifiqueGrade(AcceptanceTester $I)
     {
         if ($I->loadSessionSnapshot('login')){
-            $I->amOnPage('admin/palliers');
+            $I->amOnPage('index.php?r=admin/palliers');
 
         }
     }

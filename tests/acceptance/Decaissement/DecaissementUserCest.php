@@ -8,9 +8,9 @@ class DecaissementUserCest
 {
     public function _before(AcceptanceTester $I)
     {
-        $I->amOnPage('index.php?r=user%2Fsecurity%2Flogin');
+        $I->amOnPage('index.php?r=user/security/Flogin');
         $I->fillField('#loginform-login', 'user');
-        $I->fillField('#loginform-password', 'user123');
+        $I->fillField('#loginform-password', '1234567');
         $I->click('Sign in');
         $I->wait(2); // wait for button to be clicked
         $I->saveSessionSnapshot('login');
@@ -34,7 +34,7 @@ class DecaissementUserCest
     public function viewAllDecaissement(AcceptanceTester $I)
     {
         if ($I->loadSessionSnapshot('login')){
-            $I->amOnPage('index.php?r=responsable-de-station%2Fdecaissement');
+            $I->amOnPage('index.php?r=responsable-de-station/decaissement');
             $I->click('Mes Décaissements');
             $I->wait(5); // wait for button to be clicked
             // $I->expectTo('see user info');

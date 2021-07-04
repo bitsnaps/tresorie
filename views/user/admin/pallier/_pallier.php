@@ -19,7 +19,7 @@ use kartik\money\MaskMoney;
 
 ArrayHelper::map(
 
-app\models\AuthAssignment::find()->joinWith('user')->where(['item_name'=>"Aprobateur"])->all(), 'user.id', function ($model) {
+app\models\AuthAssignment::find()->joinWith('user')->where(['item_name'=>"Approbateur"])->all(), 'user.id', function ($model) {
  //   return ArrayHelper::toArray($model->user->username);
     return $model->user->username;
 }
@@ -29,7 +29,7 @@ app\models\AuthAssignment::find()->joinWith('user')->where(['item_name'=>"Aproba
 ?>
 <?= $form->field($grade, 'role_id')->dropDownList(
 
-ArrayHelper::map(app\models\AuthItem::find()->where(['name'=>'Aprobateur'])->all(), 'name', 'name'),
+ArrayHelper::map(app\models\AuthItem::find()->where(['name'=>'Approbateur'])->all(), 'name', 'name'),
 
 ['prompt' => 'Sélectionner Le Role']);
 ?>
