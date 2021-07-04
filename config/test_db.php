@@ -1,13 +1,7 @@
 <?php
-return [
-    'class' => 'yii\db\Connection',
-    'dsn' =>'mysql:host=127.0.0.1:3306;dbname=yalitresoredb_test',
-    'username' => 'root',
-    'password' => '',
-    'charset' => 'utf8',
+$db = require __DIR__ . '/db.php';
+// test database! Important not to run tests on production or development databases
 
-    // Schema cache options (for production environment)
-    //'enableSchemaCache' => true,
-    //'schemaCacheDuration' => 60,
-    //'schemaCache' => 'cache',
-];
+$db['dsn'] = 'mysql:host=127.0.0.1:3306;dbname=yalitresoredb_test';
+
+return $db;

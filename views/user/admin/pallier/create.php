@@ -10,7 +10,12 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Grades'), 'url' => [
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="grade-create">
-
+    <?= $this->render(
+        '/shared/_alert',
+        [
+            'module' => Yii::$app->getModule('user'),
+        ]
+    ) ?>
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [

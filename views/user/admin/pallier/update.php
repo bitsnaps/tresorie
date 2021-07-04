@@ -13,7 +13,12 @@ $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' 
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="grade-update">
-
+    <?= $this->render(
+        '/shared/_alert',
+        [
+            'module' => Yii::$app->getModule('user'),
+        ]
+    ) ?>
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
