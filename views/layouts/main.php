@@ -78,6 +78,7 @@ AppAsset::register($this);
 
         <!-- Kpi for admin -->
         <?= Kpi::widget() ?>
+        <?= Alert::widget() ?>
         <?= $content ?>
     </div>
 </div>
