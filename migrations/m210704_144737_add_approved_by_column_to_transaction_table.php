@@ -24,7 +24,7 @@ class m210704_144737_add_approved_by_column_to_transaction_table extends Migrati
      */
     public function safeDown()
     {
-        $this->dropColumn('{{%transaction}}', 'approved_by');
         $this->dropForeignKey( 'fk_approved_by_id_user_id', '{{%transaction}}' );
+        $this->dropColumn('{{%transaction}}', 'approved_by');
     }
 }
