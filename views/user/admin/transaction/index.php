@@ -65,6 +65,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Motif',
                 'value' =>'decaissement.motif' 
             ],
+            [
+                'attribute' => 'approvedBy',
+                'format' => 'raw',
+                'label' => 'Approuvé par',
+                'value' => function ($model) {
+
+                    return $model->approvedBy->username ;
+                },
+            ],
 
          
         

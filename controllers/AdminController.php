@@ -157,8 +157,9 @@ class AdminController extends BaseController
             $transaction->date_transaction=$model->date_demande;
             $transaction->montant=$model->montant;
             $transaction->decaissement_id=$model->id;
+            $transaction->approved_by= User::getCurrentUser()->id;
             if($transaction->save()){
-
+                \Yii::$app->session->setFlash('success','La demande a été approuver correctement et archiver dans transactions.');
             }else{
                 throw new \NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas archiver votre demande de transaction'));
             }

@@ -13,6 +13,7 @@ class TransactionSearch extends Transaction
 {
     public $utilisateur;
     public $motif;
+    public $approvedBy;
 
     /**
      * {@inheritdoc}
@@ -21,7 +22,7 @@ class TransactionSearch extends Transaction
     {
         return [
             [['id', 'decaissement_id'], 'integer'],
-            [['utilisateur','motif','date_transaction'], 'safe'],
+            [['approvedBy','utilisateur','motif','date_transaction'], 'safe'],
             [['montant'], 'number'],
         ];
     }
@@ -45,11 +46,13 @@ class TransactionSearch extends Transaction
     public function search($params)
     {
         $query = Transaction::find();
-      
+        
+        $query->joinWith('approvedBy') ;
         $query->joinWith(['decaissement' => function($query) {
             $query->joinWith('senderUser') ;
             
         }]);
+      
         
         // add conditions that should always apply here
 
@@ -79,6 +82,8 @@ class TransactionSearch extends Transaction
         ->andFilterWhere(['like',   'user.username' , $this->utilisateur])
         ->andFilterWhere(['like',   'decaissement.motif' , $this->motif])
         ->andFilterWhere(['like',   'date_transaction' , $this->date_transaction])
+        ->andFilterWhere(['like',   'user.username' , $this->approvedBy])
+        
         //->andFilterWhere(['like', 'piece_jointe', $this->piece_jointe])
         //->andFilterWhere(['like', 'user.username', $this->utilisateur])
         ;

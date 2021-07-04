@@ -28,7 +28,7 @@ class Transaction extends \yii\db\ActiveRecord
     {
         return [
             [['date_transaction', 'montant', 'decaissement_id'], 'required'],
-            [['date_transaction'], 'safe'],
+            [['approvedBy','date_transaction'], 'safe'],
             [['montant'], 'number'],
             [['decaissement_id'], 'integer']
         ];
@@ -61,6 +61,14 @@ class Transaction extends \yii\db\ActiveRecord
     public function getDecaissement()
     {
         return $this->hasOne(\app\models\Decaissement::className(), ['id' => 'decaissement_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getApprovedBy()
+    {
+        return $this->hasOne(\app\models\User::className(), ['id' => 'approved_by']);
     }
     
 /**
