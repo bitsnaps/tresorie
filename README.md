@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/CorpoSense/tresorie.svg?branch=master)](https://travis-ci.com/CorpoSense/tresorie)
 
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/CorpoSense/tresorie/tree/stable)
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/CorpoSense/tresorie/tree/dev)
 
 
 This software is used to apply a simple Cash Management using a simple approval workflow business processes in your company's hierarchy.
