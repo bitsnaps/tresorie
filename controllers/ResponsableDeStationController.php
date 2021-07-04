@@ -228,7 +228,9 @@ class ResponsableDeStationController extends BaseController
             AccountNotification::create(AccountNotification::KEY_DEMAMDE_DECAISEMENT, ['user' => $user, 'decaissement_id' => $decaissement_id, 'decaissement_motif' => $decaissement_motif, 'decaissement_montant' => $decaissement_montant, 'username' => $username])->send();
 
             \Yii::$app->session->setFlash('success', 'Votre demande a éte crée avec success');
-            return $this->render('/user/admin/decaissement/createdecaissement', ['decaissement' => $model]);
+
+            return $this->redirect(['/responsable-de-station/decaissement']);
+      
         } else {
 
             return $this->render('/user/admin/decaissement/createdecaissement', ['decaissement' => $model]);

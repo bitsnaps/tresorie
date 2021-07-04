@@ -27,7 +27,7 @@ use app\models\User;
                 'visible' => User::isAdmin()
             ],
             [
-                'label' => Yii::t('usuario', 'rôles'),
+                'label' => Yii::t('usuario', 'Rôles'),
                 'url' => ['/user/role/index'],
                 'visible' => User::isAdmin()
             ],
@@ -37,12 +37,12 @@ use app\models\User;
                 'visible' => User::isAdmin()
             ],
             [
-                'label' => Yii::t('usuario', 'Tous les Décaissements'),
+                'label' => Yii::t('usuario', 'Décaissement'),
                 'url' => ['/admin/decaissement'],
                 'visible' => User::isAdmin()
             ],
             [
-                'label' => Yii::t('usuario', 'Tous les transactions'),
+                'label' => Yii::t('usuario', 'Transactions'),
                 'url' => ['/transaction/index'],
                 'visible' => User::isAdmin()
             ],
@@ -52,7 +52,7 @@ use app\models\User;
                 'visible' => User::isResponsableDeStation()
             ],
             [
-                'label' => Yii::t('usuario', 'Mes Décaissements'),
+                'label' => Yii::t('usuario', 'Mes Décaissement'),
                 'url' => ['/responsable-de-station/decaissement'],
                 'visible' => User::isResponsableDeStation()
             ],
