@@ -8,14 +8,14 @@ use app\models\User;
 /* @var $searchModel app\models\DecaissementSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Decaissements');
+$this->title = Yii::t('app', 'Décaissements');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php $this->beginContent('@app/views/user/shared/admin_layout_decaissement.php') ?>
 <div class="decaissement-index">
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    <?php // echo $this->render('_search', ['model' => $searchModel]);
     ?>
 
     <?= GridView::widget([
@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'utilisateur',
                 'label' => 'Utilisateur',
 
-                'value' =>'senderUser.username' 
+                'value' =>'senderUser.username'
             ],
             [
                 'attribute' => 'date_demande',
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
             [
-                'header' => Yii::t('usuario', 'état demande'),
+                'header' => Yii::t('usuario', 'Etat demande'),
                 'value' => function ($model) {
                     if ($model->status_admin == '2') {
                         return Html::a(
@@ -141,7 +141,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
-               
+
                 'template' => '{view}{confirm} ',
                 'visible' => User::isAdmin() or User::isAprobateur(),
                 'buttons' => [
@@ -158,7 +158,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['update', 'id' => $model->id], [
                             'class' => '',
                             'data' => [
-    
+
                                 'method' => 'post',
                             ],
                         ]);
@@ -205,7 +205,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         return false;
                     },*/
                     'view' => function ($url, $model) {
-                     
+
                             return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['admin/view-decaissement', 'id' => $model->id],  [
                                 'class' => '',
                                 'data' => [
@@ -213,7 +213,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'method' => 'post',
                                 ],
                             ]);
-                     
+
                     },
 
 

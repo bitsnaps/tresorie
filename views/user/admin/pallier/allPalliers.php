@@ -10,10 +10,10 @@ use kartik\money\MaskMoney;
 /* @var $searchModel app\models\GradeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Tous les palliers');
+$this->title = Yii::t('app', 'Tous les Paliers');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?php $this->beginContent('@app/views/user/shared/admin_layout_pallier.php') ?>
+<?php $this->beginContent('@app/views/user/shared/admin_layout_Palier.php') ?>
 <div class="grade-index">
 
 

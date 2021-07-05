@@ -143,7 +143,7 @@ class Notifications extends \yii\base\Widget
                 return $count;
             }else{
 
-                //All aprobateur that have the pallier to aprove
+                //All aprobateur that have the Palier to aprove
                 if(\app\models\User::isAprobateur(\app\models\User::getCurrentUser()->id)){
                     $count = (new Query())
                     ->from('{{%notifications}}')

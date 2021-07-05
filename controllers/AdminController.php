@@ -1,7 +1,9 @@
 <?php
-// ...
+
 namespace app\controllers;
-use  Da\User\Controller\AdminController as BaseController;
+
+use yii\web\NotFoundHttpException;
+use Da\User\Controller\AdminController as BaseController;
 use app\models\UserSearch;
 use Da\User\Filter\AccessRuleFilter;
 use yii\filters\AccessControl;
@@ -14,8 +16,6 @@ use app\models\Transaction;
 use app\models\User;
 use app\models\Role;
 use Yii;
-
-// ...
 
 class AdminController extends BaseController
 {
@@ -78,7 +78,7 @@ class AdminController extends BaseController
      */
     public function actionViewDecaissement($id)
     {
-      
+
         return $this->render('/user/admin/decaissement/view', [
             'model' => $this->findModelDecaissement($id),
         ]);
@@ -123,23 +123,23 @@ class AdminController extends BaseController
      * @return void
      */
     public function actionDecaissement(){
-        
+
         //case admin
         if(User::isAdmin()){
             $searchModel = $this->make(DecaissementSearch::class);
             $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
         }
         if(User::isAprobateur()){
-          
+
             $searchModel = $this->make(DecaissementSearch::class);
             $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
         }
         if(User::isResponsableDeStation()){
-           
+
             $searchModel = $this->make(DecaissementSearch::class);
              $dataProvider = $searchModel->searchDemandesUtilisateur(\Yii::$app->request->queryParams,User::getCurrentUser()->id);
         }
-        
+
 
         return $this->render(
             '/user/admin/decaissement/allDecaissement',
@@ -157,7 +157,7 @@ class AdminController extends BaseController
      */
     public function actionConfirmDecaissement($id){
         $model=Decaissement::findOne(['id'=>$id]);
-        
+
         if($model->status_admin==0)
              $model->status_admin=2;
         else
@@ -173,14 +173,14 @@ class AdminController extends BaseController
             if($transaction->save()){
                 \Yii::$app->session->setFlash('success','La demande a été approuver correctement et archiver dans transactions.');
             }else{
-                throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas archiver votre demande de transaction'));
+                throw new NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas archiver votre demande de transaction'));
             }
         }else{
-            throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas archiver votre demande de transaction'));
+            throw new NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas archiver votre demande de transaction'));
         }
 
         return $this->redirect(['/admin/decaissement']);
-        
+
     }
 
     /**
@@ -190,17 +190,17 @@ class AdminController extends BaseController
      */
     public function actionBlockDecaissement($id){
         $model=Decaissement::findOne(['id'=>$id]);
-        
+
         if($model->status_admin==0 or $model->status_admin==2)
             $model->status_admin=1;
         else
             $model->status_admin=0;
-        
+
 
         if($model->update()){
 
         }else{
-            throw new \yii\web\NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas Blocker cette demande'));
+            throw new NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas Blocker cette demande'));
         }
 
         return $this->redirect(['/admin/decaissement']);
@@ -209,8 +209,8 @@ class AdminController extends BaseController
     /**
      * ALL Methodes Responsible On Palliers
      *
-     * 
-     */  
+     *
+     */
 
     /**
      * This function return all palliers assigned by the admin
@@ -218,7 +218,7 @@ class AdminController extends BaseController
      * @return void
      */
     public function actionPalliers(){
-    
+
         $searchModel = $this->make(GradeSearch::class);
         $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
@@ -236,27 +236,27 @@ class AdminController extends BaseController
      * @return void
      */
     public function actionCreatePallier(){
-    
+
         $model =new Grade();
         $role =new Role();
         $grade = $this->make(Grade::class, [], ['scenario' => 'create']);
         if($model->load(\Yii::$app->request->post()) && $model->validate()){
-            //need to create role for the aprobateur or any other specifique user 
+            //need to create role for the aprobateur or any other specifique user
             $role->role_name=$model->role_id;
             $role->user_id=$model->user_id;
-  
+
             if($role->save()){
-       
+
             }else{
-               
-                throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas crée cette pallier'));
+
+                throw new NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas crée cette pallier'));
             }
             //saving the grade with it specifique pallier
             $model->role_id= $role->id;
             if($model->save()){
 
             }else{
-                throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas crée ce role'));
+                throw new NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas crée ce role'));
             }
 
             \Yii::$app->session->setFlash('success','Grade  crée avec success');
@@ -264,11 +264,11 @@ class AdminController extends BaseController
 
             return $this->redirect(['/admin/palliers']);
         }else{
-            
+
             return $this->render('/user/admin/pallier/createpallier', ['grade' => $model]);
         }
     }
-  
+
      /**
      * Displays a single Grade model.
      * @param integer $id
@@ -297,11 +297,11 @@ class AdminController extends BaseController
        // $model->
         if ($model->load(\Yii::$app->request->post())) {
 
- 
+
             $model->role_id=$id;
             if($model->save()){
             }else{
-                throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas faire cette modification de grade'));
+                throw new NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas faire cette modification de grade'));
             }
             return $this->redirect(['/admin/view', 'id' => $model->id]);
         }
@@ -346,10 +346,7 @@ class AdminController extends BaseController
             return $model;
         }
 
-        throw new \NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
 
-
-   
-    
 }

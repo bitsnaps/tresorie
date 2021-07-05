@@ -9,14 +9,14 @@ use app\models\User;
 /* @var $searchModel app\models\DecaissementSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Decaissements');
+$this->title = Yii::t('app', 'Décaissements');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php $this->beginContent('@app/views/user/shared/admin_layout_decaissement.php') ?>
 <div class="decaissement-index">
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    <?php // echo $this->render('_search', ['model' => $searchModel]);
     ?>
 
     <?= GridView::widget([
@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'motif',
                 'format' => 'raw',
                 'label' => 'Motif',
-                'value' =>'decaissement.motif' 
+                'value' =>'decaissement.motif'
             ],
             [
                 'attribute' => 'approvedBy',
@@ -75,8 +75,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
 
-         
-        
+
+
 
 
         ],

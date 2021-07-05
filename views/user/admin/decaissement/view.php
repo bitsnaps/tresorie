@@ -7,7 +7,7 @@ use app\models\User;
 /* @var $model app\models\Decaissement */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Decaissements'), 'url' => ['decaissement']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Décaissements'), 'url' => ['decaissement']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
- 
+
 
     <?= DetailView::widget([
         'model' => $model,
@@ -44,12 +44,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'motif',
            // 'piece_jointe',
            [
-            'header' => Yii::t('usuario', 'état demande'),
-            'label' => 'état demande',
+            'header' => Yii::t('usuario', 'Etat demande'),
+            'label' => 'Etat demande',
             'value' => function ($model) {
                 if ($model->status_admin == '2') {
                     return Html::a(
-                        Yii::t('usuario', 'Valider'),
+                        Yii::t('usuario', 'Validé'),
                         ['confirm', 'id' => $model->id],
                         [
                             'class' => 'btn btn-xs btn-success btn-block disabled',
@@ -71,8 +71,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'format' => 'raw',
             'visible' => true,
         ]
-       
-            
+
+
         ],
     ]) ?>
 

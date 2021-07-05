@@ -2,23 +2,22 @@
 // ...
 namespace app\controllers;
 
-use  Da\User\Controller\AdminController as BaseController;
-use yii\web\Controller;
+use Yii;
+use app\controllers\AccountNotification;
+use Da\User\Controller\AdminController as BaseController;
 use Da\User\Filter\AccessRuleFilter;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
+use yii\web\Controller;
 use app\models\User;
 use app\models\Grade;
 use app\models\GradeSearch;
 use app\models\Decaissement;
 use app\models\DecaissementSearch;
 use app\models\Decaissementhistorique;
-use yii\web\UploadedFile;
-
-
-//require_once 'notifications.php';
-
 use app\models\Role;
+use yii\web\UploadedFile;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+
 
 // ...
 
@@ -178,18 +177,18 @@ class ResponsableDeStationController extends BaseController
             $username = $model->senderUser->username;
             $user = \app\models\User::find()->where(['id' => User::getCurrentUser()->id])->one();
 
-            //AccountNotification::create(AccountNotification::KEY_DEMAMDE_DECAISEMENT, ['user' => $user, 'decaissement_id' => $decaissement_id, 'decaissement_motif' => $decaissement_motif, 'decaissement_montant' => $decaissement_montant, 'username' => $username])->send();
+            AccountNotification::create(AccountNotification::KEY_DEMAMDE_DECAISEMENT, ['user' => $user, 'decaissement_id' => $decaissement_id, 'decaissement_motif' => $decaissement_motif, 'decaissement_montant' => $decaissement_montant, 'username' => $username])->send();
 
             \Yii::$app->session->setFlash('success', 'Votre demande a éte crée avec success');
 
             return $this->redirect(['/responsable-de-station/decaissement']);
-      
+
         } else {
 
             return $this->render('/user/admin/decaissement/createdecaissement', ['decaissement' => $model]);
         }
     }
-   
+
     /**
      * function to view Decaissement
      */

@@ -33,7 +33,7 @@ use app\models\User;
             ],
             [
                 'label' => Yii::t('usuario', 'Grade'),
-                'url' => ['/admin/palliers'],
+                'url' => ['/admin/Paliers'],
                 'visible' => User::isAdmin()
             ],
             [
@@ -78,7 +78,7 @@ use app\models\User;
                     ],*/
                     [
                         'label' => Yii::t('usuario', 'Nouveau Grade'),
-                        'url' => ['/admin/create-pallier'],
+                        'url' => ['/admin/create-Palier'],
                     ],
                    /* [
                         'label' => Yii::t('usuario', 'Nouvelle permission'),

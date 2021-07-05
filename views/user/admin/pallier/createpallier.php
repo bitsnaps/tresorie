@@ -19,7 +19,7 @@ use yii\helpers\Html;
  */
 
 $this->title = Yii::t('usuario', 'Cree un palier');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('usuario', 'Grade'), 'url' => ['create-pallier']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('usuario', 'Grade'), 'url' => ['create-Palier']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -45,16 +45,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                         'items' => [
                                             [
-                                                'label' => Yii::t('usuario', 'Lister tous les pallier'),
-                                                'url' => ['/admin/palliers'],
+                                                'label' => Yii::t('usuario', 'Lister tous les Palier'),
+                                                'url' => ['/admin/Paliers'],
                                                /* 'options' => [
                                                     'class' => 'disabled',
                                                     'onclick' => 'return false;',
                                                 ],*/
                                             ],
                                             [
-                                                'label' => Yii::t('usuario', 'Création Pallier'),
-                                                'url' => ['admin/create-pallier'],
+                                                'label' => Yii::t('usuario', 'Création Palier'),
+                                                'url' => ['admin/create-Palier'],
                                                   'options' => [
                                                   
                                                    
@@ -71,13 +71,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <div class="alert alert-info">
-                                    <?= Yii::t('usuario', "Pallier sera affecté par suite à l'approbateur sélectionné") ?>.
+                                    <?= Yii::t('usuario', "Palier sera affecté par suite à l'approbateur sélectionné") ?>.
                                    
                                 </div>
                                 <?php $form = ActiveForm::begin(
                                
                                     [
-                                      //  'action' => ['admin/save-pallier'],
+                                      //  'action' => ['admin/save-Palier'],
                                         'method' => 'post',
                                         'layout' => 'horizontal',
                                         'enableAjaxValidation' => false,
@@ -93,7 +93,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ]
                                 ); ?>
 
-                                <?= $this->render('_pallier', ['form' => $form, 'grade' => $grade]) ?>
+                                <?= $this->render('_Palier', ['form' => $form, 'grade' => $grade]) ?>
 
                                 <div class="form-group">
                                     <div class="col-lg-offset-3 col-lg-9">

@@ -31,7 +31,7 @@ class AccountNotification extends Notification
      * @var \yii\web\User the user object
      */
     public $user;
-    
+
 
     /**
      * @inheritdoc

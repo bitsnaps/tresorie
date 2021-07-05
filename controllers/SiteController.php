@@ -10,7 +10,6 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use Da\User\Filter\PasswordAgeEnforceFilter;
-include 'notifications.php';
 
 
 class SiteController extends Controller
@@ -60,14 +59,6 @@ class SiteController extends Controller
         ];
     }
 
-    public function actionNotif(){
-
-        $user = \app\models\User::find()->where(['id'=>13])->one();
-
-        AccountNotification::create(AccountNotification::KEY_RESET_PASSWORD, ['user' =>$user])->send();
-         return $this->render('index');
-
-        }
     /**
      * Displays homepage.
      *

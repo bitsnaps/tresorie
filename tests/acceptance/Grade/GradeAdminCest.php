@@ -42,21 +42,21 @@ class GradeAdminCest
   /*  public function viewSpecifiqueGrade(AcceptanceTester $I)
     {
         if ($I->loadSessionSnapshot('login')){
-            $I->amOnPage('index.php?r=admin/palliers');
+            $I->amOnPage('index.php?r=admin/Paliers');
 
         }
     }
     public function UpdateSpecifiqueGrade(AcceptanceTester $I)
     {
         if ($I->loadSessionSnapshot('login')){
-            $I->amOnPage('index.php?r=admin/palliers');
+            $I->amOnPage('index.php?r=admin/Paliers');
 
         }
     }
         public function deleteSpecifiqueGrade(AcceptanceTester $I)
     {
         if ($I->loadSessionSnapshot('login')){
-            $I->amOnPage('admin/palliers');
+            $I->amOnPage('admin/Paliers');
 
         }
     }*/
