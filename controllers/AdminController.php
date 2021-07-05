@@ -164,7 +164,7 @@ class AdminController extends BaseController
             $model->status_admin = 1;
      
 
-        if ($model->update(false)) {
+        if ($model->update()) {
             //
             $transaction = new Transaction();
             $transaction->date_transaction = $model->date_demande;
