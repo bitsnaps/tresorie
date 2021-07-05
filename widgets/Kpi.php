@@ -53,7 +53,7 @@ class Kpi extends \yii\bootstrap\Widget
                 <div class="col-md-3 col-xl-3">
                     <div class="card bg-c-green order-card">
                         <div class="card-block">
-                            <h4 class="m-b-20">Aprobateur</h4>
+                            <h4 class="m-b-20">Approbateur</h4>
                             <h2 class="text-right">
                          
                             <span>'.kpiQuery::countUserByRole('Approbateur').'</span></h2>
