@@ -11,7 +11,7 @@ use Da\User\Model\User as BaseUser;
  * 
  * 
  */
- 
+
 class User extends BaseUser
 {
     public $password_changed_at;
@@ -22,10 +22,9 @@ class User extends BaseUser
 
     public function rules()
     {
-        return array_merge(parent::rules(), [ 
-            [['role'],'safe']
-      ]);
-
+        return array_merge(parent::rules(), [
+            [['role'], 'safe']
+        ]);
     }
     public function attributeLabels()
     {
@@ -56,44 +55,43 @@ class User extends BaseUser
     }
     public static  function isAdmin()
     {
-        
+
         //$User = new self();  
-        if (User::userHasRole('Administrateur', User::getCurrentUser()->id)){
+        if (User::userHasRole('Administrateur', User::getCurrentUser()->id)) {
             return  true;
         }
-          
+
         return  false;
     }
-    public static  function isAdminBehavior()
-    {
-        //$User = new self();  
-        die();
-        if (User::userHasRole('Administrateur', User::getCurrentUser()->id))
-            return  ['Administrateur'];
-    }
+
     public static  function isAprobateur()
     {
-        //$User = new self();  
-        if (User::userHasRole('Approbateur', User::getCurrentUser()->id))
+
+        if (User::userHasRole('Approbateur', User::getCurrentUser()->id)) {
             return  true;
+        }
+
         return  false;
     }
     public static  function isResponsableDeStation()
     {
-        //$User = new self();  
-        if (User::userHasRole('Utilisateur', User::getCurrentUser()->id))
+
+        if (User::userHasRole('Utilisateur', User::getCurrentUser()->id)) {
             return  true;
+        }
+
         return  false;
     }
 
     public static function decaissementAuthorirty($status_user)
     {
-        if ($status_user != 1)
+        if ($status_user != 1) {
             return  true;
-        else
+        } else {
             return false;
+        }
     }
-    public static function authAssignementResponsableDeStationToConfirmedUser($user_id,$roleName)
+    public static function authAssignementResponsableDeStationToConfirmedUser($user_id, $roleName)
     {
         $model = new \app\models\AuthAssignment();
         $model->item_name = $roleName;
@@ -101,39 +99,19 @@ class User extends BaseUser
 
         if ($model->save()) {
         } else {
-            print_r($model);
-            die();
+            throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas confirmer cette utilisateur'));
         }
         $model = new \app\models\Role();
         $model->role_name = $roleName;
         $model->user_id = $user_id;
-
         if ($model->save()) {
         } else {
-            print_r($model);
-            die();
+            throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas confirmer cette utilisateur'));
         }
     }
-    public static function assignRoleToConfirmedUser($user_id,$roleName)
+    public static function assignRoleToConfirmedUser($user_id, $roleName)
     {
-        $model1 = \app\models\AuthItem::find()->where(['name' =>$roleName ])->one();
-        if ($model1) {
-            self::authAssignementResponsableDeStationToConfirmedUser($user_id,$roleName);
-            //je cree l'utilisateur 
-        } else {
-            $model1 = new \app\models\AuthItem;
-            $model1->name = $roleName;
-            $model1->type = 1;
 
-            if ($model1->save()) {
-                self::authAssignementResponsableDeStationToConfirmedUser($user_id,$roleName);
-            } else {
-                print_r($model1);
-                die();
-            }
-            //Saving role for new confirmed user 
-
-        }
+        self::authAssignementResponsableDeStationToConfirmedUser($user_id, $roleName);
     }
-    
 }

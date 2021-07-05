@@ -73,11 +73,9 @@ AppAsset::register($this);
             <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
-            <?php if( Yii::$app->request->getUrl()=="/yalidine/web/index.php?r=site%2Findex"): ?>
-            <div class="jumbotron">
-                <h1>Yalidine - Cash Management</h1>
-            </div>
-            <?php endif; ?>
+      
+
+      
 
             
             <?= Kpi::widget() ?>

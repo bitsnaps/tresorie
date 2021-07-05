@@ -21,7 +21,7 @@ class ScreenChannel extends base
         $decaissement_montant=$notification->decaissement_montant;
         $username=$notification->username;
         //Our Query For the creation of our notification
-      try{
+      
         $db->createCommand()->insert('{{%notifications}}', [
             'class' => strtolower(substr($className, strrpos($className, '\\')+1, -12)),
             'key' => $notification->key,
@@ -31,10 +31,7 @@ class ScreenChannel extends base
             'decaissementhistorique_id'=>(integer) $notification->decaissement_id,
             'created_at' => $currTime,
         ])->execute();
-      } catch(\Exception $e){
-        echo $e->getMessage(). " <pre>".$e->getTraceAsString()."</pre>";
-        die();
-    }
+    
     }
 
 }

@@ -13,6 +13,7 @@ use app\models\DecaissementSearch;
 use app\models\Transaction;
 use app\models\User;
 use app\models\Role;
+use Yii;
 
 // ...
 
@@ -245,10 +246,7 @@ class AdminController extends BaseController
             $role->user_id=$model->user_id;
   
             if($role->save()){
-                //AuthUpdate
-               // $auth=\app\models\AuthAssignment::find()->where(['user_id'=>$model->user_id])->one();
-               // $auth->item_name='Approbateur';
-             //   $auth->update();
+       
             }else{
                
                 throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas crée cette pallier'));
@@ -264,51 +262,13 @@ class AdminController extends BaseController
             \Yii::$app->session->setFlash('success','Grade  crée avec success');
 
 
-            return $this->render('/user/admin/pallier/createpallier', ['grade' => $grade]);
+            return $this->redirect(['/admin/palliers']);
         }else{
             
             return $this->render('/user/admin/pallier/createpallier', ['grade' => $model]);
         }
     }
-    /**
-     * This Methode is responsible on saving a pallier
-     *
-     * @return void
-     */
-    public function actionSavePallier(){
-    
-        $model =new Grade();
-        $role =new Role();
-        $grade = $this->make(Grade::class, [], ['scenario' => 'create']);
-        if ($model->load(\Yii::$app->request->post())) {
-            //need to create role for the aprobateur or any other specifique user 
-            $role->role_name=$model->role_id;
-            $role->user_id=$model->user_id;
   
-            if($role->save()){
-
-            }else{
-                throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas crée cette pallier'));
-            }
-         
-            $model->role_id= $role->id;
-            if($model->save()){
-            }else{
-                throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas crée ce role'));
-            }
-
-            \Yii::$app->session->setFlash('success','Pallier et Approbateur crée avec success');
-
-
-            return $this->render('/user/admin/pallier/createpallier', ['grade' => $grade]);
-        }else{
-            
-             $errors = $model->errors;
-            return $this->render('/user/admin/pallier/createpallier', ['grade' => $grade]);
-        }
-
-       
-    }
      /**
      * Displays a single Grade model.
      * @param integer $id

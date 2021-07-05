@@ -85,7 +85,7 @@ class AdminController extends BaseController
              * static method for the assignement of responsableDeStation On userConfirmation by an admin
              *@param mixed $user_id
              */
-            User::assignRoleToConfirmedUser($user->id);
+            User::assignRoleToConfirmedUser($user->id,'Utilisateur');
 
 
             $this->trigger(UserEvent::EVENT_AFTER_CONFIRMATION, $event);

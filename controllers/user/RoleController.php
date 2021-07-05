@@ -58,22 +58,29 @@ class RoleController extends BaseController
             $authItem->type=1;
             if($authItem->save()){
                 Yii::$app->session->setFlash('success', 'Role a éte crée avec success.');
+                return $this->render(
+                    'create',
+                    [
+                        'model' => $model,
+                        'unassignedItems' => $this->authHelper->getUnassignedItems($model),
+                    ]
+                );
 
             }else{
-                print_r($authItem->errors);
-                die();
+                return $this->render(
+                    'create',
+                    [
+                        'model' => $authItem->errors,
+                        'unassignedItems' => $this->authHelper->getUnassignedItems($model),
+                    ]
+                );
+      
             }
             ;
            
         }
 
-        return $this->render(
-            'create',
-            [
-                'model' => $model,
-                'unassignedItems' => $this->authHelper->getUnassignedItems($model),
-            ]
-        );
+
     }
 
 }

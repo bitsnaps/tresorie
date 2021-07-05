@@ -64,10 +64,9 @@ class UserController extends BaseController
                     Yii::$app->homeUrl="/responsable-de-station/create-demande";
                     return $this->redirect(['/responsable-de-station/create-demande']);
                 }else{
-                    echo "Wait for Admin";
-                    die();
+                    throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Attendez qu\'un admin vous affecte un grade'));
                 }
-               // die();
+              
                 return $this->goBack();
             }
         }
@@ -115,7 +114,7 @@ class UserController extends BaseController
                 $form->getUser()->updateAttributes(['last_login_at' => time()]);
 
                 $this->trigger(FormEvent::EVENT_AFTER_LOGIN, $event);
-                die();
+              
                 return $this->goBack();
             }
         }
