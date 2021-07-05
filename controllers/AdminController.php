@@ -129,8 +129,14 @@ class AdminController extends BaseController
             $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
         }
         if(User::isAprobateur()){
+          
             $searchModel = $this->make(DecaissementSearch::class);
-             $dataProvider = $searchModel->searchMyDemande(\Yii::$app->request->queryParams);
+            $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+        }
+        if(User::isResponsableDeStation()){
+           
+            $searchModel = $this->make(DecaissementSearch::class);
+             $dataProvider = $searchModel->searchDemandesUtilisateur(\Yii::$app->request->queryParams,User::getCurrentUser()->id);
         }
         
 
@@ -166,10 +172,10 @@ class AdminController extends BaseController
             if($transaction->save()){
                 \Yii::$app->session->setFlash('success','La demande a été approuver correctement et archiver dans transactions.');
             }else{
-                throw new \NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas archiver votre demande de transaction'));
+                throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas archiver votre demande de transaction'));
             }
         }else{
-            throw new \NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas archiver votre demande de transaction'));
+            throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas archiver votre demande de transaction'));
         }
 
         return $this->redirect(['/admin/decaissement']);
@@ -193,7 +199,7 @@ class AdminController extends BaseController
         if($model->update()){
 
         }else{
-            throw new \NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas Blocker cette demande'));
+            throw new \yii\web\NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas Blocker cette demande'));
         }
 
         return $this->redirect(['/admin/decaissement']);
@@ -245,14 +251,14 @@ class AdminController extends BaseController
              //   $auth->update();
             }else{
                
-                throw new \NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas crée cette pallier'));
+                throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas crée cette pallier'));
             }
             //saving the grade with it specifique pallier
             $model->role_id= $role->id;
             if($model->save()){
 
             }else{
-                throw new \NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas crée ce role'));
+                throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas crée ce role'));
             }
 
             \Yii::$app->session->setFlash('success','Grade  crée avec success');
@@ -282,13 +288,13 @@ class AdminController extends BaseController
             if($role->save()){
 
             }else{
-                throw new \NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas crée cette pallier'));
+                throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas crée cette pallier'));
             }
          
             $model->role_id= $role->id;
             if($model->save()){
             }else{
-                throw new \NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas crée ce role'));
+                throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas crée ce role'));
             }
 
             \Yii::$app->session->setFlash('success','Pallier et Approbateur crée avec success');
@@ -333,7 +339,7 @@ class AdminController extends BaseController
             $model->role_id=$id;
             if($model->save()){
             }else{
-                throw new \NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas faire cette modification de grade'));
+                throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas faire cette modification de grade'));
             }
             return $this->redirect(['/admin/view', 'id' => $model->id]);
         }

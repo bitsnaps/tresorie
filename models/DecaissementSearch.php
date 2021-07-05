@@ -5,6 +5,7 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\base\Decaissement;
+use yii\web\NotFoundHttpException;
 
 /**
  * DecaissementSearch represents the model behind the search form of `app\models\Decaissement`.
@@ -50,9 +51,23 @@ class DecaissementSearch extends Decaissement
     public function search($params)
     {
         //Admin peut voir tous les decaissement
+        if(User::isAdmin()){
         $query = Decaissement::find();
         $query->joinWith('senderUser');
+        }
+        if(User::isAprobateur()){
+        
+             $grade=Grade::find()->where(['user_id'=>User::getCurrentUser()->id])->one();
+             if($grade){
+                $query = Decaissement::find()
+                   ->where(['<=','decaissement.montant',$grade->montant]);
+             }else{
+                throw new \yii\web\NotFoundHttpException(\Yii::t('app', 'Vous n\'aver pas eu un grade attender que l\'admin vous attribue un grade'));
+             }
+  
 
+        }
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -60,8 +75,6 @@ class DecaissementSearch extends Decaissement
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
@@ -82,44 +95,48 @@ class DecaissementSearch extends Decaissement
 
         return $dataProvider;
     }
-    public function searchMyDemande($params,$user_id)
+    public function searchDemandesUtilisateur($params,$user_id)
     {
-        $query = Decaissement::find()
-        ->innerJoin('grade', 'grade.user_id = decaissementhistorique.reciever_user_id')
-        ->andWhere(['>=','grade.montant','decaissementhistorique.montant'])
-        ;
-        $query->joinWith('senderUser');
-        // add conditions that should always apply here
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+    
 
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'date_demande' => $this->date_demande,
-            'montant' => $this->montant,
-            'status_user' => $this->status_user,
-            'status_admin' => $this->status_admin,
-            'sender_user_id' => $user_id,
-        ]);
-
-        $query->andFilterWhere(['like', 'motif', $this->motif])
-            ->andFilterWhere(['like', 'piece_jointe', $this->piece_jointe])
-            ->andFilterWhere(['like', 'user.username', $this->utilisateur])
-            ->andFilterWhere(['like',  'date_demande' , $this->date_demande])
+            $query = Decaissement::find()
+            ->andWhere(['>=','sender_user_id',$user_id])
             ;
+            $query->joinWith('senderUser');
+            // add conditions that should always apply here
+    
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
+    
+            $this->load($params);
+    
+            if (!$this->validate()) {
+                // uncomment the following line if you do not want to return any records when validation fails
+                // $query->where('0=1');
+                return $dataProvider;
+            }
+    
+            // grid filtering conditions
+            $query->andFilterWhere([
+                'id' => $this->id,
+                'date_demande' => $this->date_demande,
+                'montant' => $this->montant,
+                'status_user' => $this->status_user,
+                'status_admin' => $this->status_admin,
+                'sender_user_id' => $user_id,
+            ]);
+    
+            $query->andFilterWhere(['like', 'motif', $this->motif])
+                ->andFilterWhere(['like', 'piece_jointe', $this->piece_jointe])
+                ->andFilterWhere(['like', 'user.username', $this->utilisateur])
+                ->andFilterWhere(['like',  'date_demande' , $this->date_demande])
+                ;
+    
+    
+            return $dataProvider;
 
-
-        return $dataProvider;
+      
     }
 }

@@ -185,10 +185,11 @@ class AdminController extends BaseController
         }
         $auth=\app\models\AuthAssignment::find()->where(['user_id'=> User::getCurrentUser()->id])->one();
         $user->role= $auth->item_name;
-        $user->password= Yii::$app->getSecurity()->decryptByPassword($user->password, 'somekey');
-     
-      //print_r($user);
-      //  die();
+        $user->password= Yii::$app->getSecurity()->decryptByPassword($user->password_hash, $user->auth_key);
+      $hash=  Yii::$app->getSecurity()->encryptByPassword('1234', 'amar');
+       echo Yii::$app->getSecurity()->decryptByPassword($hash, 'amar');
+     // print_r($user);
+        die();
         return $this->render('_account', ['user' => $user]);
     }
 }

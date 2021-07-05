@@ -46,10 +46,10 @@ class TransactionSearch extends Transaction
     public function search($params)
     {
         $query = Transaction::find();
-        
+
         $query->joinWith('approvedBy') ;
         $query->joinWith(['decaissement' => function($query) {
-            $query->joinWith('senderUser') ;
+        $query->joinWith('senderUser') ;
             
         }]);
       

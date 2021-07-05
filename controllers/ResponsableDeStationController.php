@@ -16,7 +16,7 @@ use app\models\Decaissementhistorique;
 use yii\web\UploadedFile;
 
 
-include 'notifications.php';
+//require_once 'notifications.php';
 
 use app\models\Role;
 
@@ -63,7 +63,7 @@ class ResponsableDeStationController extends BaseController
     {
 
         $searchModel = $this->make(DecaissementSearch::class);
-        $dataProvider = $searchModel->searchMyDemande(\Yii::$app->request->queryParams, User::getCurrentUser()->id);
+        $dataProvider = $searchModel->searchDemandesUtilisateur(\Yii::$app->request->queryParams, User::getCurrentUser()->id);
 
         return $this->render(
             '/user/admin/decaissement/allDecaissementResponsable',
@@ -225,7 +225,7 @@ class ResponsableDeStationController extends BaseController
             $username = $model->senderUser->username;
             $user = \app\models\User::find()->where(['id' => User::getCurrentUser()->id])->one();
 
-            AccountNotification::create(AccountNotification::KEY_DEMAMDE_DECAISEMENT, ['user' => $user, 'decaissement_id' => $decaissement_id, 'decaissement_motif' => $decaissement_motif, 'decaissement_montant' => $decaissement_montant, 'username' => $username])->send();
+            //AccountNotification::create(AccountNotification::KEY_DEMAMDE_DECAISEMENT, ['user' => $user, 'decaissement_id' => $decaissement_id, 'decaissement_motif' => $decaissement_motif, 'decaissement_montant' => $decaissement_montant, 'username' => $username])->send();
 
             \Yii::$app->session->setFlash('success', 'Votre demande a éte crée avec success');
 
