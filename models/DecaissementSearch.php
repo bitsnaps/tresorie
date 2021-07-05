@@ -84,7 +84,10 @@ class DecaissementSearch extends Decaissement
     }
     public function searchMyDemande($params,$user_id)
     {
-        $query = Decaissement::find();
+        $query = Decaissement::find()
+        ->innerJoin('grade', 'grade.user_id = decaissementhistorique.reciever_user_id')
+        ->andWhere(['>=','grade.montant','decaissementhistorique.montant'])
+        ;
         $query->joinWith('senderUser');
         // add conditions that should always apply here
 

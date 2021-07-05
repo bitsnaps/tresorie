@@ -174,7 +174,7 @@ class AdminController extends BaseController
         $this->make(AjaxRequestModelValidator::class, [$user])->validate();
 
         if ($user->load(Yii::$app->request->post())) {
-            $this->trigger(ActiveRecord::EVENT_BEFORE_UPDATE, $event);
+          //  $this->trigger(ActiveRecord::EVENT_BEFORE_UPDATE, $event);
 
             if ($user->save()) {
                 Yii::$app->getSession()->setFlash('success', Yii::t('usuario', 'Account details have been updated'));
@@ -183,7 +183,12 @@ class AdminController extends BaseController
                 return $this->refresh();
             }
         }
-
+        $auth=\app\models\AuthAssignment::find()->where(['user_id'=> User::getCurrentUser()->id])->one();
+        $user->role= $auth->item_name;
+        $user->password= Yii::$app->getSecurity()->decryptByPassword($user->password, 'somekey');
+     
+      //print_r($user);
+      //  die();
         return $this->render('_account', ['user' => $user]);
     }
 }

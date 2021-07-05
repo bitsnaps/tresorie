@@ -112,6 +112,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="col-md-9">
                         <div class="panel panel-default">
                             <div class="panel-body">
+                            
                                 <?= $content ?>
                             </div>
                         </div>

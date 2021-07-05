@@ -124,10 +124,15 @@ class AdminController extends BaseController
     public function actionDecaissement(){
         
         //case admin
-        $searchModel = $this->make(DecaissementSearch::class);
-        //case not admin
-
-        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+        if(User::isAdmin()){
+            $searchModel = $this->make(DecaissementSearch::class);
+            $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+        }
+        if(User::isAprobateur()){
+            $searchModel = $this->make(DecaissementSearch::class);
+             $dataProvider = $searchModel->searchMyDemande(\Yii::$app->request->queryParams);
+        }
+        
 
         return $this->render(
             '/user/admin/decaissement/allDecaissement',
@@ -164,8 +169,7 @@ class AdminController extends BaseController
                 throw new \NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas archiver votre demande de transaction'));
             }
         }else{
-            print_r($model->errors);
-            die();
+            throw new \NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas archiver votre demande de transaction'));
         }
 
         return $this->redirect(['/admin/decaissement']);
@@ -189,8 +193,7 @@ class AdminController extends BaseController
         if($model->update()){
 
         }else{
-            print_r($model->errors);
-            die();
+            throw new \NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas Blocker cette demande'));
         }
 
         return $this->redirect(['/admin/decaissement']);
@@ -237,22 +240,19 @@ class AdminController extends BaseController
   
             if($role->save()){
                 //AuthUpdate
-                $auth=\app\models\AuthAssignment::find()->where(['user_id'=>$model->user_id])->one();
-                $auth->item_name='Approbateur';
-                $auth->update();
+               // $auth=\app\models\AuthAssignment::find()->where(['user_id'=>$model->user_id])->one();
+               // $auth->item_name='Approbateur';
+             //   $auth->update();
             }else{
                
-                print_r($role->errors);
-                die();
+                throw new \NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas crée cette pallier'));
             }
             //saving the grade with it specifique pallier
             $model->role_id= $role->id;
             if($model->save()){
 
             }else{
-                print_r($model);
-                print_r($model->errors);
-                die();
+                throw new \NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas crée ce role'));
             }
 
             \Yii::$app->session->setFlash('success','Grade  crée avec success');
@@ -280,23 +280,15 @@ class AdminController extends BaseController
             $role->user_id=$model->user_id;
   
             if($role->save()){
-                //AuthUpdate
-                $auth=\app\models\AuthAssignment::find()->where(['user_id'=>$model->user_id])->one();
-                $auth->item_name='Approbateur';
-                $auth->update();
-            }else{
-               
-                print_r($role->errors);
-                die();
-            }
-            //saving the grade with it specifique pallier
-            $model->role_id= $role->id;
-            if($model->save()){
 
             }else{
-                print_r($model);
-                print_r($model->errors);
-                die();
+                throw new \NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas crée cette pallier'));
+            }
+         
+            $model->role_id= $role->id;
+            if($model->save()){
+            }else{
+                throw new \NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas crée ce role'));
             }
 
             \Yii::$app->session->setFlash('success','Pallier et Approbateur crée avec success');
