@@ -8,16 +8,21 @@ class DecaissementAdminCest
 {
     public function _before(AcceptanceTester $I)
     {
-        $I->amOnPage('index.php?r=user/security/Flogin');
+        $I->amOnPage('index-test.php?ruser/security/login');
         $I->fillField('#loginform-login', 'admin');
         $I->fillField('#loginform-password', '1234567');
         $I->click('Sign in');
-        $I->wait(2); // wait for button to be clicked
+        $I->wait(6); // wait for button to be clicked
         $I->saveSessionSnapshot('login');
     }
     
-
     public function viewAllDecaissement(AcceptanceTester $I)
+    {
+        if ($I->loadSessionSnapshot('login')){
+            $I->amOnPage('index-test.php?r=admin/decaissement');
+        }
+    }
+   /* public function viewAllDecaissement(AcceptanceTester $I)
     {
         if ($I->loadSessionSnapshot('login')){
             $I->amOnPage('index.php?r=admin/decaissement');

@@ -12,6 +12,8 @@ modules:
             entryScript: index-test.php
             cleanup: false
             class_name: AcceptanceTester
+       
+
         
           #  populator: 'mysql -u $user -h $host $dbname < $dump'
         # - WebDriver:

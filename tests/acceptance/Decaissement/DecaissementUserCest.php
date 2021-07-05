@@ -8,8 +8,8 @@ class DecaissementUserCest
 {
     public function _before(AcceptanceTester $I)
     {
-        $I->amOnPage('index.php?r=user/security/Flogin');
-        $I->fillField('#loginform-login', 'user');
+        $I->amOnPage('index.php?r=user/security/login');
+        $I->fillField('#loginform-login', 'Utilisateur');
         $I->fillField('#loginform-password', '1234567');
         $I->click('Sign in');
         $I->wait(2); // wait for button to be clicked
