@@ -64,6 +64,7 @@ class DecaissementSearch extends Decaissement
              }else{
                 throw new \yii\web\NotFoundHttpException(\Yii::t('app', 'Vous n\'aver pas eu un grade attender que l\'admin vous attribue un grade'));
              }
+             $query->joinWith('senderUser');
   
 
         }

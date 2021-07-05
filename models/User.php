@@ -15,7 +15,6 @@ use Da\User\Model\User as BaseUser;
 class User extends BaseUser
 {
     public $password_changed_at;
-    public $user_id;
     /**
      * {@inheritdoc}
      */
