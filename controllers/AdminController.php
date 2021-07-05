@@ -43,15 +43,15 @@ class AdminController extends BaseController
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
-                            if(User::isAdmin())
-                            return  true;
+                            if (User::isAdmin())
+                                return  true;
                             return false;
                         },
                     ],
                     [
-                        'actions' => ['view', 'search','decaissement','view-decaissement','update-decaissement','delete-decaissement','confirm-decaissement','block-decaissement'],
+                        'actions' => ['view', 'search', 'decaissement', 'view-decaissement', 'update-decaissement', 'delete-decaissement', 'confirm-decaissement', 'block-decaissement'],
                         'allow' => true,
-                        'roles' => ['Approbateur','Administrateur','Utilisateur'],
+                        'roles' => ['Approbateur', 'Administrateur', 'Utilisateur'],
                     ],
                 ],
             ],
@@ -70,7 +70,7 @@ class AdminController extends BaseController
             ]
         );
     }
-         /**
+    /**
      * Displays a single Grade model.
      * @param integer $id
      * @return mixed
@@ -117,27 +117,28 @@ class AdminController extends BaseController
 
         return $this->redirect(['/admin/decaissement']);
     }
-        /**
+    /**
      * This function return all palliers assigned by the admin
      *
      * @return void
      */
-    public function actionDecaissement(){
+    public function actionDecaissement()
+    {
 
         //case admin
-        if(User::isAdmin()){
+        if (User::isAdmin()) {
             $searchModel = $this->make(DecaissementSearch::class);
             $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
         }
-        if(User::isAprobateur()){
+        if (User::isAprobateur()) {
 
             $searchModel = $this->make(DecaissementSearch::class);
             $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
         }
-        if(User::isResponsableDeStation()){
+        if (User::isResponsableDeStation()) {
 
             $searchModel = $this->make(DecaissementSearch::class);
-             $dataProvider = $searchModel->searchDemandesUtilisateur(\Yii::$app->request->queryParams,User::getCurrentUser()->id);
+            $dataProvider = $searchModel->searchDemandesUtilisateur(\Yii::$app->request->queryParams, User::getCurrentUser()->id);
         }
 
 
@@ -155,32 +156,34 @@ class AdminController extends BaseController
      *
      * @return void
      */
-    public function actionConfirmDecaissement($id){
-        $model=Decaissement::findOne(['id'=>$id]);
+    public function actionConfirmDecaissement($id)
+    {
+        $model = Decaissement::findOne(['id' => $id]);
 
-        if($model->status_admin==0)
-             $model->status_admin=2;
-        else
-            $model->status_admin=0;
+     
+            $model->status_admin = 1;
+     
 
-        if($model->update()){
+        if ($model->update(false)) {
             //
-            $transaction=new Transaction();
-            $transaction->date_transaction=$model->date_demande;
-            $transaction->montant=$model->montant;
-            $transaction->decaissement_id=$model->id;
-            $transaction->approved_by= User::getCurrentUser()->id;
-            if($transaction->save()){
-                \Yii::$app->session->setFlash('success','La demande a été approuver correctement et archiver dans transactions.');
-            }else{
-                throw new NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas archiver votre demande de transaction'));
+            $transaction = new Transaction();
+            $transaction->date_transaction = $model->date_demande;
+            $transaction->montant = $model->montant;
+            $transaction->decaissement_id = $model->id;
+            $transaction->approved_by = User::getCurrentUser()->id;
+            if ($transaction->save()) {
+                \Yii::$app->session->setFlash('success', 'La demande a été approuver correctement et archiver dans transactions.');
+            } else {
+
+                throw new NotFoundHttpException(\Yii::t('app', 'Vous pouvez pas archiver votre demande de transaction'));
             }
-        }else{
-            throw new NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas archiver votre demande de transaction'));
+        } else {
+            print_r($model);
+            die();
+            throw new NotFoundHttpException(\Yii::t('app', 'Vous pouvez pas archiver votre demande de transaction'));
         }
 
         return $this->redirect(['/admin/decaissement']);
-
     }
 
     /**
@@ -188,19 +191,19 @@ class AdminController extends BaseController
      *
      * @return void
      */
-    public function actionBlockDecaissement($id){
-        $model=Decaissement::findOne(['id'=>$id]);
+    public function actionBlockDecaissement($id)
+    {
+        $model = Decaissement::findOne(['id' => $id]);
 
-        if($model->status_admin==0 or $model->status_admin==2)
-            $model->status_admin=1;
+        if ($model->status_admin == 0 or $model->status_admin == 1)
+            $model->status_admin = 2;
         else
-            $model->status_admin=0;
+            $model->status_admin = 0;
 
 
-        if($model->update()){
-
-        }else{
-            throw new NotFoundHttpException(403,Yii::t('app', 'Vous pouvez pas Blocker cette demande'));
+        if ($model->update()) {
+        } else {
+            throw new NotFoundHttpException(403, Yii::t('app', 'Vous pouvez pas Blocker cette demande'));
         }
 
         return $this->redirect(['/admin/decaissement']);
@@ -217,7 +220,8 @@ class AdminController extends BaseController
      *
      * @return void
      */
-    public function actionPalliers(){
+    public function actionPalliers()
+    {
 
         $searchModel = $this->make(GradeSearch::class);
         $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
@@ -235,41 +239,40 @@ class AdminController extends BaseController
      *
      * @return void
      */
-    public function actionCreatePallier(){
+    public function actionCreatePallier()
+    {
 
-        $model =new Grade();
-        $role =new Role();
+        $model = new Grade();
+        $role = new Role();
         $grade = $this->make(Grade::class, [], ['scenario' => 'create']);
-        if($model->load(\Yii::$app->request->post()) && $model->validate()){
+        if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
             //need to create role for the aprobateur or any other specifique user
-            $role->role_name=$model->role_id;
-            $role->user_id=$model->user_id;
+            $role->role_name = $model->role_id;
+            $role->user_id = $model->user_id;
 
-            if($role->save()){
+            if ($role->save()) {
+            } else {
 
-            }else{
-
-                throw new NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas crée cette pallier'));
+                throw new NotFoundHttpException(403, \Yii::t('app', 'Vous pouvez pas crée cette pallier'));
             }
             //saving the grade with it specifique pallier
-            $model->role_id= $role->id;
-            if($model->save()){
-
-            }else{
-                throw new NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas crée ce role'));
+            $model->role_id = $role->id;
+            if ($model->save()) {
+            } else {
+                throw new NotFoundHttpException(403, \Yii::t('app', 'Vous pouvez pas crée ce role'));
             }
 
-            \Yii::$app->session->setFlash('success','Grade  crée avec success');
+            \Yii::$app->session->setFlash('success', 'Grade  crée avec success');
 
 
             return $this->redirect(['/admin/palliers']);
-        }else{
+        } else {
 
             return $this->render('/user/admin/pallier/createpallier', ['grade' => $model]);
         }
     }
 
-     /**
+    /**
      * Displays a single Grade model.
      * @param integer $id
      * @return mixed
@@ -292,16 +295,16 @@ class AdminController extends BaseController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $id=$model->role_id;
-        $model->role_id='Approbateur';
-       // $model->
+        $id = $model->role_id;
+        $model->role_id = 'Approbateur';
+        // $model->
         if ($model->load(\Yii::$app->request->post())) {
 
 
-            $model->role_id=$id;
-            if($model->save()){
-            }else{
-                throw new NotFoundHttpException(403,\Yii::t('app', 'Vous pouvez pas faire cette modification de grade'));
+            $model->role_id = $id;
+            if ($model->save()) {
+            } else {
+                throw new NotFoundHttpException(403, \Yii::t('app', 'Vous pouvez pas faire cette modification de grade'));
             }
             return $this->redirect(['/admin/view', 'id' => $model->id]);
         }
@@ -348,5 +351,4 @@ class AdminController extends BaseController
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
-
 }

@@ -64,10 +64,10 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'header' => Yii::t('usuario', 'Etat demande'),
                 'value' => function ($model) {
-                    if ($model->status_admin == '2') {
+                    if ($model->status_admin == '1') {
                         return Html::a(
                             Yii::t('usuario', 'Validée'),
-                            ['confirm', 'id' => $model->id],
+                            ['Confirmé', 'id' => $model->id],
                             [
                                 'class' => 'btn btn-xs btn-success btn-block disabled',
                                 'data-method' => 'post',
@@ -75,15 +75,29 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]
                         );
                     } else
-                        return Html::a(
-                            Yii::t('usuario', 'En cours de validation'),
-                            ['confirm', 'id' => $model->id],
-                            [
-                                'class' => 'btn btn-xs btn-warning btn-block disabled',
-                                'data-method' => 'post',
-                                'data-confirm' => Yii::t('usuario', 'Voulez-vous vraiment confirmer cet demande ?'),
-                            ]
-                        );
+                        if($model->status_admin == '2'){
+                            return Html::a(
+                                Yii::t('usuario', 'Rejetée'),
+                                ['confirm', 'id' => $model->id],
+                                [
+                                    'class' => 'btn btn-xs btn-danger btn-block disabled',
+                                    'data-method' => 'post',
+                                    'data-confirm' => Yii::t('usuario', 'Voulez-vous vraiment confirmer cet demande ?'),
+                                ]
+                            );
+                        }
+                        if($model->status_admin == '0'){
+                            return Html::a(
+                                Yii::t('usuario', 'En cours de validation'),
+                                ['confirm', 'id' => $model->id],
+                                [
+                                    'class' => 'btn btn-xs btn-warning btn-block disabled',
+                                    'data-method' => 'post',
+                                    'data-confirm' => Yii::t('usuario', 'Voulez-vous vraiment confirmer cet demande ?'),
+                                ]
+                            );
+                        }
+                        
                 },
                 'format' => 'raw',
                 'visible' => true,
@@ -92,9 +106,14 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'header' => Yii::t('usuario', 'Confirmer la demande '),
                 'value' => function ($model) {
-                    if ($model->status_admin == 2) {
+                    if ($model->status_admin == 1) {
                         return '<div class="text-center">
                                 <span class="text-success">' . Yii::t('usuario', 'Confirmed') . '</span>
+                            </div>';
+                    }
+                    if ($model->status_admin == 2) {
+                        return '<div class="text-center">
+                                <span class="text-success">' . Yii::t('usuario', 'non confirmer') . '</span>
                             </div>';
                     }
                     if ($model->status_admin == 0)
@@ -114,7 +133,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'header' => Yii::t('usuario', 'Blocker la demande'),
                 'value' => function ($model) {
-                    if ($model->status_admin == 1) {
+                    if ($model->status_admin ==2 ) {
                         return Html::a(
                             Yii::t('usuario', 'Unblock'),
                             ['block-decaissement', 'id' => $model->id],
@@ -125,7 +144,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]
                         );
                     }
-                    if ($model->status_admin == 0 or $model->status_admin == 2)
+                    if ($model->status_admin == 0 or $model->status_admin == 1)
                         return Html::a(
                             Yii::t('usuario', 'Blocker'),
                             ['block-decaissement', 'id' => $model->id],
