@@ -39,16 +39,16 @@ $module = Yii::$app->getModule('user');
         'columns' => [
             [
                 'attribute' => 'username',
-                'label'=>'Nom d\'utilisateur',
+                'label' => 'Nom d\'utilisateur',
                 'value' => function ($model) {
-                
+
                     return $model->username;
                 },
             ],
             'email:email',
             [
                 'attribute' => 'registration_ip',
-                'label'=>'IP d\'enregistrement',
+                'label' => 'IP d\'enregistrement',
                 'value' => function ($model) {
                     return $model->registration_ip == null
                         ? '<span class="not-set">' . Yii::t('usuario', '(not set)') . '</span>'
@@ -58,7 +58,7 @@ $module = Yii::$app->getModule('user');
             ],
             [
                 'attribute' => 'created_at',
-                'label'=>'Heure d\'inscription',
+                'label' => 'Heure d\'inscription',
                 'value' => function ($model) {
                     if (extension_loaded('intl')) {
                         return Yii::t('usuario', '{0, date, MMMM dd, YYYY HH:mm}', [$model->created_at]);
@@ -69,7 +69,7 @@ $module = Yii::$app->getModule('user');
             ],
             [
                 'attribute' => 'last_login_at',
-                'label'=>'Dernière connexion',
+                'label' => 'Dernière connexion',
                 'value' => function ($model) {
                     if (!$model->last_login_at || $model->last_login_at == 0) {
                         return Yii::t('usuario', 'Never');
@@ -133,6 +133,20 @@ $module = Yii::$app->getModule('user');
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{switch} {reset} {update} {delete}',
                 'buttons' => [
+                    'update' => function ($url, $model) {
+                     
+                            return Html::a(
+                                '<span class="glyphicon glyphicon-pencil"></span>',
+                                ['/user/admin/update', 'id' => $model->id],
+                                [
+                                    'title' => Yii::t('usuario', 'Modificier'),
+                                    'data-method' => 'POST',
+                                ]
+                            );
+                        
+
+                        return null;
+                    },
                     'switch' => function ($url, $model) use ($module) {
                         if ($model->id != Yii::$app->user->id && $module->enableSwitchIdentities) {
                             return Html::a(
@@ -152,7 +166,7 @@ $module = Yii::$app->getModule('user');
                         return null;
                     },
                     'reset' => function ($url, $model) use ($module) {
-                        if(!$module->allowPasswordRecovery && $module->allowAdminPasswordRecovery) {
+                        if (!$module->allowPasswordRecovery && $module->allowAdminPasswordRecovery) {
                             return Html::a(
                                 '<span class="glyphicon glyphicon-flash"></span>',
                                 ['/user/admin/password-reset', 'id' => $model->id],
