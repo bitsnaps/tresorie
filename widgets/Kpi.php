@@ -45,7 +45,7 @@ class Kpi extends \yii\bootstrap\Widget
                             <h4 class="m-b-20">Administrateur</h4>
                             <h2 class="text-right">
                            
-                            <span>'.kpiQuery::countUserByRole('admin').'</span></h2>
+                            <span>'.kpiQuery::countUserByRole('Administrateur').'</span></h2>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@ class Kpi extends \yii\bootstrap\Widget
                             <h4 class="m-b-20">Aprobateur</h4>
                             <h2 class="text-right">
                          
-                            <span>'.kpiQuery::countUserByRole('Aprobateur').'</span></h2>
+                            <span>'.kpiQuery::countUserByRole('Approbateur').'</span></h2>
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@ class Kpi extends \yii\bootstrap\Widget
                             <h4 class="m-b-20">Responsable de station</h4>
                             <h2 class="text-right">
                            
-                            <span>'.kpiQuery::countUserByRole('responsableDeStation').'</span></h2>
+                            <span>'.kpiQuery::countUserByRole('Utilisateur').'</span></h2>
                         </div>
                     </div>
                 </div>

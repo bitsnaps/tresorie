@@ -333,6 +333,8 @@ class AdminController extends BaseController
     {
         $model = $this->findModel($id);
         $id=$model->role_id;
+        $model->role_id='Approbateur';
+       // $model->
         if ($model->load(\Yii::$app->request->post())) {
 
  

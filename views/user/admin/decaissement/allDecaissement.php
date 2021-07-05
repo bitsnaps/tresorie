@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model) {
                     if ($model->status_admin == '2') {
                         return Html::a(
-                            Yii::t('usuario', 'Valider'),
+                            Yii::t('usuario', 'Validée'),
                             ['confirm', 'id' => $model->id],
                             [
                                 'class' => 'btn btn-xs btn-success btn-block disabled',

@@ -12,6 +12,7 @@ use yii\helpers\ArrayHelper;
 
 ?>
 
+
 <?= $form->field($user, 'email')->textInput(['placeholder' => 'Entrer l\'email...','maxlength' => 255]) ?>
 <?= $form->field($user, 'username')->textInput(['placeholder' => 'Entrer le nom d\'utilisateur...','maxlength' => 255]) ?>
 <?= $form->field($user, 'password')->passwordInput(['placeholder' => 'Entrer un mot de passe...']) ?>
