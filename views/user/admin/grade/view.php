@@ -8,7 +8,7 @@ use kartik\grid\GridView;
 /* @var $model app\models\Grade */
 
 $this->title = '';
-$this->params['breadcrumbs'][] = ['label' => 'Grade', 'url' => ['Paliers']];
+$this->params['breadcrumbs'][] = ['label' => 'Grade', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="grade-view">

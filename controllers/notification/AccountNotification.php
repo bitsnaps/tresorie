@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controllers;
+namespace app\controllers\notification;
 
 use Yii;
 use webzop\notifications\Notification;

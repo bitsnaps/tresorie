@@ -33,12 +33,12 @@ use app\models\User;
             ],
             [
                 'label' => Yii::t('usuario', 'Grade'),
-                'url' => ['/admin/paliers'],
+                'url' => ['/grade/index'],
                 'visible' => User::isAdmin()
             ],
             [
                 'label' => Yii::t('usuario', 'Décaissement'),
-                'url' => ['/decaissement'],
+                'url' => ['/decaissement/index'],
                 'visible' => User::isAdmin()
             ],
             [
@@ -53,18 +53,9 @@ use app\models\User;
             ],
             [
                 'label' => Yii::t('usuario', 'Mes Décaissement'),
-                'url' => ['/decaissement'],
+                'url' => ['/decaissement/index'],
                 'visible' => User::isResponsableDeStation()
             ],
-
-          /*  [
-                'label' => Yii::t('usuario', 'Permissions'),
-                'url' => ['/user/permission/index'],
-            ],
-            [
-                'label' => Yii::t('usuario', 'Règles'),
-                'url' => ['/user/rule/index'],
-            ],*/
             [
                 'label' => Yii::t('usuario', 'Créer'),
                 'items' => [
@@ -72,22 +63,10 @@ use app\models\User;
                         'label' => Yii::t('usuario', 'Nouvelle utilisateur'),
                         'url' => ['/user/admin/create'],
                     ],
-                   /* [
-                        'label' => Yii::t('usuario', 'Nouveau role'),
-                        'url' => ['/user/role/create'],
-                    ],*/
                     [
                         'label' => Yii::t('usuario', 'Nouveau Grade'),
-                        'url' => ['/admin/create-Palier'],
+                        'url' => ['/grade/create'],
                     ],
-                   /* [
-                        'label' => Yii::t('usuario', 'Nouvelle permission'),
-                        'url' => ['/user/permission/create'],
-                    ],
-                    [
-                        'label' => Yii::t('usuario', 'Nouvelle regle'),
-                        'url' => ['/user/rule/create'],
-                    ],*/
                 ]
                 , 'visible' => User::isAdmin()
             ],

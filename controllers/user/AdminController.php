@@ -70,6 +70,20 @@ class AdminController extends BaseController
             ],
         ];
     }
+    public function actionIndex()
+    {
+    
+        $searchModel = $this->make(UserSearch::class);
+        $dataProvider = $searchModel->search(\Yii::$app->request->get());
+
+        return $this->render(
+            'index',
+            [
+                'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
+            ]
+        );
+    }
     public function actionConfirm($id)
     {
         /** @var User $user */

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\controllers\notification\AccountNotification;
 use yii\web\NotFoundHttpException;
 use Da\User\Controller\AdminController as BaseController;
 use app\models\UserSearch;
@@ -161,7 +162,7 @@ class DecaissementController extends BaseController
             throw new NotFoundHttpException(\Yii::t('app', 'Vous pouvez pas archiver votre demande de transaction'));
         }
 
-        return $this->redirect(['/admin/decaissement']);
+        return $this->redirect(['/decaissement']);
     }
 
     /**
@@ -183,7 +184,7 @@ class DecaissementController extends BaseController
         } else {
             throw new NotFoundHttpException(403, Yii::t('app', 'Vous pouvez pas Blocker cette demande'));
         }
-        return $this->redirect(['/admin/decaissement']);
+        return $this->redirect(['/decaissement']);
     }
     /*Responsable De Station*/
     /**

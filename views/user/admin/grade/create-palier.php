@@ -24,7 +24,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="clearfix"></div>
-
+<?= $this->render(
+        '/user/shared/_alert',
+        [
+            'module' => Yii::$app->getModule('user'),
+        ]
+    ) ?>
 
 <div class="row">
     <div class="col-md-12">
@@ -93,7 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ]
                                 ); ?>
 
-                                <?= $this->render('_Palier', ['form' => $form, 'grade' => $grade]) ?>
+                                <?= $this->render('_form-create', ['form' => $form, 'grade' => $grade]) ?>
 
                                 <div class="form-group">
                                     <div class="col-lg-offset-3 col-lg-9">
