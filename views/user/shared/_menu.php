@@ -34,6 +34,7 @@ use app\models\User;
             [
                 'label' => Yii::t('usuario', 'Grade'),
                 'url' => ['/grade/index'],
+
                 'visible' => User::isAdmin()
             ],
             [
@@ -65,7 +66,9 @@ use app\models\User;
                     ],
                     [
                         'label' => Yii::t('usuario', 'Nouveau Grade'),
+                        
                         'url' => ['/grade/create'],
+
                     ],
                 ]
                 , 'visible' => User::isAdmin()

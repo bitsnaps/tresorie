@@ -13,7 +13,7 @@ use kartik\money\MaskMoney;
 $this->title = Yii::t('app', 'Tous les Paliers');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?php $this->beginContent('@app/views/user/shared/admin_layout_Palier.php') ?>
+<?php $this->beginContent('@app/views/user/shared/admin_layout_palier.php') ?>
 <div class="grade-index">
 
 
@@ -31,7 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Utilisateur',
                 'value' => 'user.username'
                 
-    
             ],
             [
                 'attribute' => 'roleID',

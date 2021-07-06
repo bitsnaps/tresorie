@@ -1,39 +1,63 @@
 <?php
 
 use yii\helpers\Url;
+use app\tests\fixtures\UserFixture;
+
 /**
 * Those tests concern  user creating and viewing his demandes
  */
 class DecaissementAdminCest
 {
-    public function _before(AcceptanceTester $I)
+    // Fixtures are needed here
+    public function _fixtures()
     {
-        $I->amOnPage('index-test.php?ruser/security/login');
-        $I->fillField('#loginform-login', 'admin');
-        $I->fillField('#loginform-password', '1234567');
-        $I->click('Sign in');
-        $I->wait(6); // wait for button to be clicked
-        $I->saveSessionSnapshot('login');
+      return [
+        'users' => [
+          'class' => UserFixture::class,
+        ]
+      ];
     }
-    
-    public function viewAllDecaissement(AcceptanceTester $I)
+
+    public function _after(\AcceptanceTester $I)
+    {
+    }
+
+    public function _before(\AcceptanceTester $I)
+    {
+        $admin = $I->grabFixture('users', 'user1');
+        $I->amOnPage(Url::toRoute('/user/security/login'));
+        $I->fillField('#loginform-login', $admin->username);
+        $I->fillField('#loginform-password', 'admin123');
+        $I->click(['class' => 'btn-primary']);
+        try {
+          // $I->wait(2); // wait for button to be clicked
+        } catch (\Exception $e) {
+        }
+        $I->dontSee('Logout');
+        try {
+          $I->saveSessionSnapshot('login'); // works only for WebDriver
+        } catch (\Exception $e) {}
+    }
+
+    public function viewAllDecaissement(\AcceptanceTester $I)
     {
         if ($I->loadSessionSnapshot('login')){
-            $I->amOnPage('index-test.php?r=admin/decaissement');
+            $I->amOnPage(Url::toRoute('/admin/decaissement'));
+            $I->dontSee('Logout');
         }
     }
-   /* public function viewAllDecaissement(AcceptanceTester $I)
+   /* public function viewAllDecaissement(\AcceptanceTester $I)
     {
         if ($I->loadSessionSnapshot('login')){
             $I->amOnPage('index.php?r=admin/decaissement');
-     
-    
+
+
             // $I->expectTo('see user info');
             // $I->see('Logout');
         }
     }
 
-    public function confirmDecaissement(AcceptanceTester $I)
+    public function confirmDecaissement(\AcceptanceTester $I)
     {
         if ($I->loadSessionSnapshot('login')){
             $I->amOnPage('index.php?r=admin/decaissement');
@@ -41,13 +65,13 @@ class DecaissementAdminCest
             $I->click('Confirmer');
             $I->click('Ok');
             $I->see('Confirmed');
-            $I->wait(10); // wait for button to be clicked
+            //$I->wait(2); // wait for button to be clicked
             // $I->see('Logout');
         }
-        
-       
+
+
     }
-   /* public function BlockDecaissement(AcceptanceTester $I)
+   /* public function BlockDecaissement(\AcceptanceTester $I)
     {
           //check if at list exist one decaissement
     }*/

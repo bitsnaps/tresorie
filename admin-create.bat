@@ -1,6 +1,2 @@
-php yii user/create admin@gmail.com admin 1234567 Administrateur
-php yii user/confirm admin@gmail.com admin
-
-php tests/bin/yii user/create admin@gmail.com admin 1234567 Administrateur
-php yii user/confirm admin@gmail.com admin
-
+./yii user/create admin@example.com admin admin123 Administrateur
+./yii user/confirm admin@example.com admin

@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                         'items' => [
                                             [
-                                                'label' => Yii::t('usuario', 'Lister tous les Palier'),
+                                                'label' => Yii::t('usuario', 'Lister tous les Paliers'),
                                                 'url' => ['/admin/Paliers'],
                                                /* 'options' => [
                                                     'class' => 'disabled',
@@ -99,6 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ); ?>
 
                                 <?= $this->render('_form_create', ['form' => $form, 'grade' => $grade]) ?>
+
 
                                 <div class="form-group">
                                     <div class="col-lg-offset-3 col-lg-9">

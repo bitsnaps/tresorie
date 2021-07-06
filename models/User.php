@@ -9,8 +9,8 @@ use Da\User\Model\User as BaseUser;
  * User ActiveRecord model.
  *
  * @property string $role
- * 
- * 
+ *
+ *
  */
 
 class User extends BaseUser
@@ -56,32 +56,19 @@ class User extends BaseUser
     }
     public static  function isAdmin()
     {
-       // print_r(Yii::$app->params);
-        //die();
-        if (User::userHasRole(Yii::$app->params['roles'][0], User::getCurrentUser()->id)) {
-            return  true;
-        }
+        return  User::userHasRole(Yii::$app->params['roles'][0], User::getCurrentUser()->id);
 
-        return  false;
     }
 
     public static  function isAprobateur()
     {
 
-        if (User::userHasRole(Yii::$app->params['roles'][1], User::getCurrentUser()->id)) {
-            return  true;
-        }
-
-        return  false;
+        return  User::userHasRole(Yii::$app->params['roles'][1], User::getCurrentUser()->id);
     }
     public static  function isResponsableDeStation()
     {
 
-        if (User::userHasRole(Yii::$app->params['roles'][2], User::getCurrentUser()->id)) {
-            return  true;
-        }
-
-        return  false;
+        return  User::userHasRole(Yii::$app->params['roles'][2], User::getCurrentUser()->id);
     }
 
     public static function decaissementAuthorirty($status_user)

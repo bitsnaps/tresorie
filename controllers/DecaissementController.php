@@ -72,7 +72,9 @@ class DecaissementController extends BaseController
             ],
         ];
     }
+
     public function actionIndex()
+
     {
 
         //case admin
@@ -106,7 +108,7 @@ class DecaissementController extends BaseController
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdateDecaissement($id)
+    public function actionUpdate($id)
     {
         $model = $this->findModelDecaissement($id);
 
@@ -138,14 +140,13 @@ class DecaissementController extends BaseController
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDeleteDecaissement($id)
+    public function actionDelete($id)
     {
         $this->findModelDecaissement($id)->delete();
 
-        return $this->redirect(['/admin/decaissement']);
+        return $this->redirect(['/decaissement/index']);
     }
     /**
-     * This methode confirm decaissement aproved by an admin or an approbateur
      *
      * @return void
      */
@@ -173,10 +174,11 @@ class DecaissementController extends BaseController
             throw new NotFoundHttpException(\Yii::t('app', 'Vous pouvez pas archiver votre demande de transaction'));
         }
 
-        return $this->redirect(['/decaissement']);
+        return $this->redirect(['/decaissement/index']);
     }
 
     /**
+
      * This methode block decaissement aproved by an admin or an approbateur
      *
      * @return void
@@ -190,12 +192,12 @@ class DecaissementController extends BaseController
         else
             $model->status_admin = 0;
 
-
         if ($model->update()) {
         } else {
             throw new NotFoundHttpException(403, Yii::t('app', 'Vous pouvez pas Blocker cette demande'));
         }
-        return $this->redirect(['/decaissement']);
+        return $this->redirect(['/decaissement/index']);
+
     }
     /*Responsable De Station*/
     /**
@@ -257,7 +259,7 @@ class DecaissementController extends BaseController
         }
     }
     /**
-     * This function create a pallier for a specific user assigned by an admin
+     * This function create a palier for a specific user assigned by an admin
      *
      * @return void
      */
@@ -280,12 +282,17 @@ class DecaissementController extends BaseController
 
             \Yii::$app->session->setFlash('success', 'Votre demande a éte crée avec success');
 
-            return $this->redirect(['/decaissement']);
+            return $this->redirect(['/decaissement/index']);
         } else {
 
             return $this->render('/user/admin/decaissement/create', ['decaissement' => $model]);
         }
+
     }
+
+
+
+
 
     /**
      * methode finding a specifique  Decaissement
