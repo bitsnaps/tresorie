@@ -77,7 +77,7 @@ class AdminController extends BaseController
         $dataProvider = $searchModel->search(\Yii::$app->request->get());
 
         return $this->render(
-            'index',
+            'user/index',
             [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
@@ -169,7 +169,7 @@ class AdminController extends BaseController
             Yii::$app->session->setFlash('danger', Yii::t('usuario', 'User account could not be created.'));
         }
 
-        return $this->render('create', ['user' => $user]);
+        return $this->render('user/create', ['user' => $user]);
     }
     /**
      *  Overide action Update
@@ -199,6 +199,6 @@ class AdminController extends BaseController
         $auth = \app\models\AuthAssignment::find()->where(['user_id' => $id])->one();
         $user->role = $auth->item_name;
 
-        return $this->render('_account', ['user' => $user]);
+        return $this->render('user/update', ['user' => $user]);
     }
 }

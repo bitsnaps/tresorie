@@ -18,13 +18,12 @@ use yii\helpers\Html;
  * @var \Da\User\Model\User $user
  */
 
-$this->title = Yii::t('usuario', 'Crée une demande de décaissement');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('usuario', 'Décaissement'), 'url' => ['create']];
+$this->title = Yii::t('usuario', 'Modifier le compte utilisateur');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('usuario', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="clearfix"></div>
-
 
 <div class="row">
     <div class="col-md-12">
@@ -33,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h3 class="panel-title"><?= Html::encode($this->title) ?></h3>
             </div>
             <div class="panel-body">
-                <?= $this->render('/user/shared/_menu') ?>
+                <?= $this->render('/shared/_menu') ?>
                 <div class="row">
                     <div class="col-md-3">
                         <div class="panel panel-default">
@@ -45,21 +44,24 @@ $this->params['breadcrumbs'][] = $this->title;
                                         ],
                                         'items' => [
                                             [
-                                                'label' => Yii::t('usuario', 'Lister tous les decassement'),
-                                                'url' => ['decaissement/index'],
-                                               /* 'options' => [
+                                                'label' => Yii::t('usuario', 'Création utilisateur'),
+                                                'url' => ['/user/admin/create'],
+                                            ],
+                                           /* [
+                                                'label' => Yii::t('usuario', 'Profile details'),
+                                                'options' => [
                                                     'class' => 'disabled',
                                                     'onclick' => 'return false;',
-                                                ],*/
-                                            ],
-                                            [
-                                                'label' => Yii::t('usuario', "Création d'une demande"),
-                                                'url' => ['decaissement/create'],
-                                                  'options' => [
-                                                  
                                                 ],
                                             ],
-
+                                            [
+                                                'label' => Yii::t('usuario', 'Information'),
+                                                'options' => [
+                                                    'class' => 'disabled',
+                                                    'onclick' => 'return false;',
+                                                ],
+                                            ],
+                                            */
                                         ],
                                     ]
                                 ) ?>
@@ -69,46 +71,31 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="col-md-9">
                         <div class="panel panel-default">
                             <div class="panel-body">
-                          <!--// yii\widgets\Pjax::begin(['id' => 'new_country']) -->
                                 <?php $form = ActiveForm::begin(
-                               
                                     [
-                                        'action' => ['create'],
-                                        'id' => 'formDecaissement',
-                                        'method' => 'post',
                                         'layout' => 'horizontal',
-                                        'enableAjaxValidation' => false,
-                                        'enableClientValidation' => true,
+                                        'enableAjaxValidation' => true,
+                                        'enableClientValidation' => false,
                                         'fieldConfig' => [
                                             'horizontalCssClasses' => [
                                                 'wrapper' => 'col-sm-9',
                                             ],
                                         ],
-                                       // 'options' => ['data-pjax' => true ]
                                     ]
                                 ); ?>
 
-                                <?= $this->render('_form', ['form' => $form, 'model' => $decaissement]) ?>
+                                <?= $this->render('_user', ['form' => $form, 'user' => $user]) ?>
 
                                 <div class="form-group">
                                     <div class="col-lg-offset-3 col-lg-9">
                                         <?= Html::submitButton(
                                             Yii::t('usuario', 'Save'),
-                                           
-                                            [
-                                            'id'=>'SaveDecaissement',
-                                            'class' => 'btn btn-block btn-success',
-                                            'data-method' => 'post',
-                                            //'data-confirm' => Yii::t('usuario', 'etes vous sure de confirmer cette demande?'),
-                                        ],
-                                        ['create-demande', 'id' => $decaissement->id],
-                                      
+                                            ['class' => 'btn btn-block btn-success']
                                         ) ?>
                                     </div>
                                 </div>
 
                                 <?php ActiveForm::end(); ?>
-                                <!--// yii\widgets\Pjax::end() -->
                             </div>
                         </div>
                     </div>

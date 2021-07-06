@@ -18,7 +18,7 @@ use yii\helpers\Html;
  * @var \Da\User\Model\User $user
  */
 
-$this->title = Yii::t('usuario', 'Create a user account');
+$this->title = Yii::t('usuario', 'Créer un compte utilisateur');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('usuario', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
