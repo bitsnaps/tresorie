@@ -57,12 +57,12 @@ class UserController extends BaseController
                     return $this->redirect(['/user/admin']);
                 }
                 if(User::isAprobateur()){
-                    Yii::$app->homeUrl="/admin/decaissement";
-                    return $this->redirect(['/admin/decaissement']);
+                    Yii::$app->homeUrl="/decaissement";
+                    return $this->redirect(['/decaissement']);
                 }
                 if(User::isResponsableDeStation()){
-                    Yii::$app->homeUrl="/responsable-de-station/create-demande";
-                    return $this->redirect(['/responsable-de-station/create-demande']);
+                    Yii::$app->homeUrl="/decaissement/create";
+                    return $this->redirect(['/decaissement/create']);
                 }else{
                     throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Attendez qu\'un admin vous affecte un grade'));
                 }

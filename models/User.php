@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models;
+use Yii;
 
 use Da\User\Model\User as BaseUser;
 
@@ -55,9 +56,9 @@ class User extends BaseUser
     }
     public static  function isAdmin()
     {
-
-        //$User = new self();  
-        if (User::userHasRole('Administrateur', User::getCurrentUser()->id)) {
+       // print_r(Yii::$app->params);
+        //die();
+        if (User::userHasRole(Yii::$app->params['roles'][0], User::getCurrentUser()->id)) {
             return  true;
         }
 
@@ -67,7 +68,7 @@ class User extends BaseUser
     public static  function isAprobateur()
     {
 
-        if (User::userHasRole('Approbateur', User::getCurrentUser()->id)) {
+        if (User::userHasRole(Yii::$app->params['roles'][1], User::getCurrentUser()->id)) {
             return  true;
         }
 
@@ -76,7 +77,7 @@ class User extends BaseUser
     public static  function isResponsableDeStation()
     {
 
-        if (User::userHasRole('Utilisateur', User::getCurrentUser()->id)) {
+        if (User::userHasRole(Yii::$app->params['roles'][2], User::getCurrentUser()->id)) {
             return  true;
         }
 

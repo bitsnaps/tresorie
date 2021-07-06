@@ -220,7 +220,7 @@ class AdminController extends BaseController
      *
      * @return void
      */
-    public function actionPalliers()
+    public function actionPaliers()
     {
 
         $searchModel = $this->make(GradeSearch::class);

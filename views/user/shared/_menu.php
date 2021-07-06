@@ -33,12 +33,12 @@ use app\models\User;
             ],
             [
                 'label' => Yii::t('usuario', 'Grade'),
-                'url' => ['/admin/Paliers'],
+                'url' => ['/admin/paliers'],
                 'visible' => User::isAdmin()
             ],
             [
                 'label' => Yii::t('usuario', 'Décaissement'),
-                'url' => ['/admin/decaissement'],
+                'url' => ['/decaissement'],
                 'visible' => User::isAdmin()
             ],
             [
@@ -48,12 +48,12 @@ use app\models\User;
             ],
             [
                 'label' => Yii::t('usuario', 'Créer une demande'),
-                'url' => ['/responsable-de-station/create-demande'],
+                'url' => ['/decaissement/create'],
                 'visible' => User::isResponsableDeStation()
             ],
             [
                 'label' => Yii::t('usuario', 'Mes Décaissement'),
-                'url' => ['/responsable-de-station/decaissement'],
+                'url' => ['/decaissement'],
                 'visible' => User::isResponsableDeStation()
             ],
 

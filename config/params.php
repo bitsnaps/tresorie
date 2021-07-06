@@ -5,15 +5,20 @@ return [
     'adminEmail' => 'admin@example.com',
     'senderEmail' => 'noreply@example.com',
     'senderName' => 'Example.com mailer',
+    'roles' => [
+        0 => 'Administrateur',
+        1 => 'Approbateur',
+        2 => 'Utilisateur',
+    ],
     'maskMoneyOptions' => [
         'prefix' => 'Dzd ',
         'suffix' => '',
         'affixesStay' => false,
         'thousands' => '',
         'decimal' => '.',
-        'precision' => 2, 
+        'precision' => 2,
         'allowZero' => false,
         'allowNegative' => false,
     ]
-    
+
 ];

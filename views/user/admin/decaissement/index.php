@@ -184,7 +184,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     },*/
 
                     'view' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['view-decaissement', 'id' => $model->id],  [
+                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['view', 'id' => $model->id],  [
                             'class' => '',
                             'data' => [
 
@@ -225,7 +225,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     },*/
                     'view' => function ($url, $model) {
 
-                            return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['admin/view-decaissement', 'id' => $model->id],  [
+                            return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['view', 'id' => $model->id],  [
                                 'class' => '',
                                 'data' => [
 

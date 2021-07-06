@@ -48,10 +48,10 @@ AppAsset::register($this);
                 // ['label' => 'About', 'url' => ['/site/about']],
                 // ['label' => 'Contact', 'url' => ['/site/contact']],
                 ['label' => 'Administrateur', 'url' => ['/user/admin'], 'visible' => User::isAdmin()],
-                ['label' => 'Décaissements', 'url' => ['/admin/decaissement'], 'visible' => User::isAdmin()],
-                ['label' => 'Décaissements', 'url' => ['/admin/decaissement'], 'visible' => User::isAprobateur()],
-                ['label' => 'Demande Décaissement',  'url' => ['/responsable-de-station/create-demande'], 'visible' => User::isResponsableDeStation()],
-                ['label' => 'Mes demandes', 'url' => ['/responsable-de-station/decaissement'], 'visible' => User::isResponsableDeStation()],
+                ['label' => 'Décaissements', 'url' => ['/decaissement'], 'visible' => User::isAdmin()],
+                ['label' => 'Décaissements', 'url' => ['/decaissement'], 'visible' => User::isAprobateur()],
+                ['label' => 'Demande Décaissement',  'url' => ['/decaissement/create'], 'visible' => User::isResponsableDeStation()],
+                ['label' => 'Mes demandes', 'url' => ['/decaissement'], 'visible' => User::isResponsableDeStation()],
                 app\widgets\Notifications::widget(),
                 Yii::$app->user->isGuest ? (['label' => 'Login', 'url' => ['/user/security/login']]) : ('<li>'
                     . Html::beginForm(['/site/logout'], 'post')
