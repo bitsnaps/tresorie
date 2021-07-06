@@ -12,6 +12,7 @@ This software is used to apply a simple Cash Management using a simple approval 
 Needed for testing:
 ```
 export CHROME_DRIVER =  /path/to/chromedriver
+export SELENIUM =  /path/to/selenium-server-standalone-*.jar
 ```
 
 ## Migrations
