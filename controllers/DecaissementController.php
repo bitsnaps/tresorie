@@ -50,12 +50,23 @@ class DecaissementController extends BaseController
                     [
                         'actions' => ['view', 'search', 'index', 'update-decaissement', 'delete-decaissement', 'confirm-decaissement', 'block-decaissement'],
                         'allow' => true,
-                        'roles' => [Yii::$app->params['roles'][1]]
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            if (User::isAprobateur()) {
+                                return  true;
+                            }
+                            return false;
+                        },
                     ],
                     [
                         'actions' => ['view', 'search', 'index','create'],
                         'allow' => true,
-                        'roles' => [Yii::$app->params['roles'][2]]
+                        'matchCallback' => function ($rule, $action) {
+                            if (User::isResponsableDeStation()) {
+                                return  true;
+                            }
+                            return false;
+                        },
                     ],
                 ],
             ],

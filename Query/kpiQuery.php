@@ -2,7 +2,6 @@
 
 namespace app\Query;
 
-use app\models\User;
 use app\models\AuthAssignment;
 use app\models\Decaissement;
 

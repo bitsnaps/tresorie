@@ -16,6 +16,47 @@ use Yii;
 
 class GradeController extends BaseController
 {
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['post'],
+                    'confirm' => ['post'],
+                    'block' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::class,
+                'ruleConfig' => [
+                    'class' => AccessRuleFilter::class,
+                ],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            if (User::isAdmin()) {
+                                return  true;
+                            }
+                            return false;
+                        },
+                    ],
+                    [
+                        'actions' => [''],
+                        'allow' => true,
+                        'roles' => [Yii::$app->params['roles'][1]]
+                    ],
+                    [
+                        'actions' => [''],
+                        'allow' => true,
+                        'roles' => [Yii::$app->params['roles'][2]]
+                    ],
+                ],
+            ],
+        ];
+    }
     /**
      * ALL Methodes Responsible On Palliers
      *

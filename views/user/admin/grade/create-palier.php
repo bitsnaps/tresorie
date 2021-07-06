@@ -98,7 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ]
                                 ); ?>
 
-                                <?= $this->render('_form-create', ['form' => $form, 'grade' => $grade]) ?>
+                                <?= $this->render('_form_create', ['form' => $form, 'grade' => $grade]) ?>
 
                                 <div class="form-group">
                                     <div class="col-lg-offset-3 col-lg-9">

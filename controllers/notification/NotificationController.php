@@ -1,6 +1,7 @@
 <?php
 
 namespace app\controllers\notification;
+
 use Yii;
 use webzop\notifications\controllers\DefaultController as BaseController;
 use yii\web\Controller;
@@ -9,11 +10,56 @@ use yii\data\Pagination;
 use yii\helpers\Url;
 use webzop\notifications\helpers\TimeElapsed;
 use app\widgets\Notifications;
+use app\models\User;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use Da\User\Filter\AccessRuleFilter;
 
 class NotificationController extends BaseController
 {
     public $layout = "@app/views/layouts/main";
 
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['post'],
+                    'confirm' => ['post'],
+                    'block' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::class,
+                'ruleConfig' => [
+                    'class' => AccessRuleFilter::class,
+                ],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            if (User::isAdmin()) {
+                                return  true;
+                            }
+                            return false;
+                        },
+                    ],
+                    [
+                        'actions' => [''],
+                        'allow' => true,
+                        'roles' => [Yii::$app->params['roles'][1]]
+                    ],
+                    [
+                        'actions' => [''],
+                        'allow' => true,
+                        'roles' => [Yii::$app->params['roles'][2]]
+                    ],
+                ],
+            ],
+        ];
+    }
     /**
      * Displays index page.
      *
@@ -21,41 +67,39 @@ class NotificationController extends BaseController
      */
     public function actionIndex()
     {
-       
+
         $userId = Yii::$app->getUser()->getId();
-        if(\app\models\User::isAdmin(\app\models\User::getCurrentUser()->id)){
+        if (\app\models\User::isAdmin(\app\models\User::getCurrentUser()->id)) {
             $query = (new Query())
-            ->from('{{%notifications}}');
-          //  ->andWhere(['or', 'user_id = $userId', 'user_id = :user_id'], [':user_id' => $userId])
-           // ->all();
+                ->from('{{%notifications}}');
+            //  ->andWhere(['or', 'user_id = $userId', 'user_id = :user_id'], [':user_id' => $userId])
+            // ->all();
 
         }
-           
-        if(\app\models\User::isAprobateur(\app\models\User::getCurrentUser()->id)){
+
+        if (\app\models\User::isAprobateur(\app\models\User::getCurrentUser()->id)) {
             $query = (new Query())
-            ->from('{{%notifications}}')
-            ->innerJoin('decaissementhistorique', 'decaissementhistorique.id = notifications.decaissementhistorique_id')
-           ->innerJoin('grade', 'grade.user_id = decaissementhistorique.reciever_user_id ')
-           ->andWhere(['>=','grade.montant','decaissementhistorique.montant'])
-            
-          ;
+                ->from('{{%notifications}}')
+                ->innerJoin('decaissementhistorique', 'decaissementhistorique.id = notifications.decaissementhistorique_id')
+                ->innerJoin('grade', 'grade.user_id = decaissementhistorique.reciever_user_id ')
+                ->andWhere(['>=', 'grade.montant', 'decaissementhistorique.montant']);
         }
- 
+
         $pagination = new Pagination([
             'pageSize' => 20,
             'totalCount' => $query->count(),
         ]);
-      
-        $list=[];
-        if($query->count()>0){
+
+        $list = [];
+        if ($query->count() > 0) {
             $list = $query
-            ->orderBy(['notifications.id' => SORT_DESC])
-            ->offset($pagination->offset)
-            ->limit($pagination->limit)
-            ->all();
+                ->orderBy(['notifications.id' => SORT_DESC])
+                ->offset($pagination->offset)
+                ->limit($pagination->limit)
+                ->all();
         }
-        
-       
+
+
 
         $notifs = $this->prepareNotifications($list);
 
@@ -68,24 +112,24 @@ class NotificationController extends BaseController
     public function actionList()
     {
         $userId = Yii::$app->getUser()->getId();
-        if(\app\models\User::isAdmin(\app\models\User::getCurrentUser()->id))
-        $list = (new Query())
-            ->from('{{%notifications}}')
-           // ->andWhere(['or', 'user_id = 13', 'user_id = :user_id'], [':user_id' => $userId])
-            ->orderBy(['id' => SORT_DESC])
-            ->limit(10)
-            ->all();
-        if(\app\models\User::isAprobateur(\app\models\User::getCurrentUser()->id)){
+        if (\app\models\User::isAdmin(\app\models\User::getCurrentUser()->id))
             $list = (new Query())
-            ->from('{{%notifications}}')
-            ->innerJoin('decaissementhistorique', 'decaissementhistorique.id = notifications.decaissementhistorique_id')
-            ->innerJoin('grade', 'grade.user_id = decaissementhistorique.reciever_user_id')
-            ->andWhere(['>=','grade.montant','decaissementhistorique.montant'])
-            ->limit(10)
-            ->all();
-        //    ->andWhere(['or', 'user_id = 0', 'user_id = :user_id'], [':user_id' => $userId])
-           
-           ;
+                ->from('{{%notifications}}')
+                // ->andWhere(['or', 'user_id = 13', 'user_id = :user_id'], [':user_id' => $userId])
+                ->orderBy(['id' => SORT_DESC])
+                ->limit(10)
+                ->all();
+        if (\app\models\User::isAprobateur(\app\models\User::getCurrentUser()->id)) {
+            $list = (new Query())
+                ->from('{{%notifications}}')
+                ->innerJoin('decaissementhistorique', 'decaissementhistorique.id = notifications.decaissementhistorique_id')
+                ->innerJoin('grade', 'grade.user_id = decaissementhistorique.reciever_user_id')
+                ->andWhere(['>=', 'grade.montant', 'decaissementhistorique.montant'])
+                ->limit(10)
+                ->all();
+                //    ->andWhere(['or', 'user_id = 0', 'user_id = :user_id'], [':user_id' => $userId])
+
+            ;
         }
         $notifs = $this->prepareNotifications($list);
         $this->ajaxResponse(['list' => $notifs]);
@@ -101,7 +145,7 @@ class NotificationController extends BaseController
     {
         Yii::$app->getDb()->createCommand()->update('{{%notifications}}', ['read' => true], ['id' => $id])->execute();
 
-        if(Yii::$app->getRequest()->getIsAjax()){
+        if (Yii::$app->getRequest()->getIsAjax()) {
             return $this->ajaxResponse(1);
         }
 
@@ -111,7 +155,7 @@ class NotificationController extends BaseController
     public function actionReadAll()
     {
         Yii::$app->getDb()->createCommand()->update('{{%notifications}}', ['read' => true])->execute();
-        if(Yii::$app->getRequest()->getIsAjax()){
+        if (Yii::$app->getRequest()->getIsAjax()) {
             return $this->ajaxResponse(1);
         }
 
@@ -124,7 +168,7 @@ class NotificationController extends BaseController
     {
         Yii::$app->getDb()->createCommand()->delete('{{%notifications}}')->execute();
 
-        if(Yii::$app->getRequest()->getIsAjax()){
+        if (Yii::$app->getRequest()->getIsAjax()) {
             return $this->ajaxResponse(1);
         }
 
@@ -133,20 +177,21 @@ class NotificationController extends BaseController
         return Yii::$app->getResponse()->redirect(['/notifications/default/index']);
     }
 
-    private function prepareNotifications($list){
+    private function prepareNotifications($list)
+    {
         $notifs = [];
         $seen = [];
-        foreach($list as $notif){
-            if(!$notif['seen']){
+        foreach ($list as $notif) {
+            if (!$notif['seen']) {
                 $seen[] = $notif['id'];
             }
             $route = @unserialize($notif['route']);
             $notif['url'] = !empty($route) ? Url::to($route) : '';
-           $notif['timeago'] = TimeElapsed::timeElapsed($notif['created_at']);
+            $notif['timeago'] = TimeElapsed::timeElapsed($notif['created_at']);
             $notifs[] = $notif;
         }
 
-        if(!empty($seen)){
+        if (!empty($seen)) {
             Yii::$app->getDb()->createCommand()->update('{{%notifications}}', ['seen' => true], ['id' => $seen])->execute();
         }
 
@@ -155,7 +200,7 @@ class NotificationController extends BaseController
 
     public function ajaxResponse($data = [])
     {
-        if(is_string($data)){
+        if (is_string($data)) {
             $data = ['html' => $data];
         }
 
@@ -169,5 +214,4 @@ class NotificationController extends BaseController
         }
         return $this->asJson($data);
     }
-
 }
