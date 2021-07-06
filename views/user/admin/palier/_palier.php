@@ -33,8 +33,8 @@ ArrayHelper::map(app\models\AuthItem::find()->where(['name'=>'Approbateur'])->al
 
 ['prompt' => 'Sélectionner Le Role']);
 ?>
-<?= $form->field($grade, 'niveau')->textInput([  'placeholder' => 'Entrer  un niveau...','maxlength' => 255]) ?>
-<?= $form->field($grade, 'montant')->textInput([  'placeholder' => 'Entrer  un Montant...','type' => 'number','min'=>0, 'options' => [
+<?= $form->field($grade, 'niveau')->textInput([  'placeholder' => 'Entrer un niveau...','maxlength' => 255]) ?>
+<?= $form->field($grade, 'montant')->textInput([  'placeholder' => 'Entrer un Montant...','type' => 'number','min'=>0, 'options' => [
       
         'min'=>0,
         'style' => 'width:300 px'

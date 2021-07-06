@@ -54,7 +54,7 @@ class ResponsableDeStationController extends BaseController
         ];
     }
     /**
-     * This function return all palliers assigned by the admin
+     * This function return all paliers assigned by the admin
      *
      * @return void
      */
@@ -75,24 +75,24 @@ class ResponsableDeStationController extends BaseController
 
 
     /**
-     * ALL Methodes Responsible On Palliers
+     * ALL Methodes Responsible On Paliers
      *
      *
      */
 
     /**
-     * This function return all palliers assigned by the admin
+     * This function return all paliers assigned by the admin
      *
      * @return void
      */
-    public function actionPalliers()
+    public function actionPaliers()
     {
 
         $searchModel = $this->make(GradeSearch::class);
         $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
         return $this->render(
-            '/user/admin/pallier/allPalliers',
+            '/user/admin/palier/allPaliers',
             [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
@@ -158,7 +158,7 @@ class ResponsableDeStationController extends BaseController
         }
     }
     /**
-     * This function create a pallier for a specific user assigned by an admin
+     * This function create a palier for a specific user assigned by an admin
      *
      * @return void
      */
@@ -207,7 +207,7 @@ class ResponsableDeStationController extends BaseController
      */
     public function actionView($id)
     {
-        return $this->render('/user/admin/pallier/view', [
+        return $this->render('/user/admin/palier/view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -224,10 +224,10 @@ class ResponsableDeStationController extends BaseController
         $model = $this->findModel($id);
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/user/admin/pallier/view', 'id' => $model->id]);
+            return $this->redirect(['/user/admin/palier/view', 'id' => $model->id]);
         }
 
-        return $this->render('/user/admin/pallier/update', [
+        return $this->render('/user/admin/palier/update', [
             'model' => $model,
         ]);
     }
@@ -243,7 +243,7 @@ class ResponsableDeStationController extends BaseController
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['/admin/pallier/palliers']);
+        return $this->redirect(['/admin/palier/paliers']);
     }
 
     /**

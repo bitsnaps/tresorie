@@ -118,7 +118,7 @@ class AdminController extends BaseController
         return $this->redirect(['/admin/decaissement']);
     }
     /**
-     * This function return all palliers assigned by the admin
+     * This function return all paliers assigned by the admin
      *
      * @return void
      */
@@ -210,24 +210,24 @@ class AdminController extends BaseController
     }
 
     /**
-     * ALL Methodes Responsible On Palliers
+     * ALL Methodes Responsible On Paliers
      *
      *
      */
 
     /**
-     * This function return all palliers assigned by the admin
+     * This function return all paliers assigned by the admin
      *
      * @return void
      */
-    public function actionPalliers()
+    public function actionPaliers()
     {
 
         $searchModel = $this->make(GradeSearch::class);
         $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
         return $this->render(
-            '/user/admin/pallier/allPalliers',
+            '/user/admin/palier/allPaliers',
             [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
@@ -235,13 +235,12 @@ class AdminController extends BaseController
         );
     }
     /**
-     * This function create a pallier for a specific user assigned by an admin
+     * This function create a palier for a specific user assigned by an admin
      *
      * @return void
      */
-    public function actionCreatePallier()
+    public function actionCreatePalier()
     {
-
         $model = new Grade();
         $role = new Role();
         $grade = $this->make(Grade::class, [], ['scenario' => 'create']);
@@ -253,9 +252,9 @@ class AdminController extends BaseController
             if ($role->save()) {
             } else {
 
-                throw new NotFoundHttpException(403, \Yii::t('app', 'Vous pouvez pas crée cette pallier'));
+                throw new NotFoundHttpException(403, \Yii::t('app', 'Vous pouvez pas crée cette palier'));
             }
-            //saving the grade with it specifique pallier
+            //saving the grade with it specifique palier
             $model->role_id = $role->id;
             if ($model->save()) {
             } else {
@@ -265,10 +264,10 @@ class AdminController extends BaseController
             \Yii::$app->session->setFlash('success', 'Grade  crée avec success');
 
 
-            return $this->redirect(['/admin/palliers']);
+            return $this->redirect(['/admin/paliers']);
         } else {
 
-            return $this->render('/user/admin/pallier/createpallier', ['grade' => $model]);
+            return $this->render('/user/admin/palier/createpalier', ['grade' => $model]);
         }
     }
 
@@ -280,7 +279,7 @@ class AdminController extends BaseController
      */
     public function actionView($id)
     {
-        return $this->render('/user/admin/pallier/view', [
+        return $this->render('/user/admin/palier/view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -309,7 +308,7 @@ class AdminController extends BaseController
             return $this->redirect(['/admin/view', 'id' => $model->id]);
         }
 
-        return $this->render('/user/admin/pallier/update', [
+        return $this->render('/user/admin/palier/update', [
             'model' => $model,
         ]);
     }
@@ -325,7 +324,7 @@ class AdminController extends BaseController
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['/admin/palliers']);
+        return $this->redirect(['/admin/paliers']);
     }
 
     /**

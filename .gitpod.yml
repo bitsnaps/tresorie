@@ -21,6 +21,9 @@ tasks:
       ./yii migrate --migrationPath=@yii/rbac/migrations --interactive=0
       ./yii migrate --migrationNamespaces=Da\\User\\Migration --interactive=0
       ./yii migrate --interactive=0
+      ./tests/bin/yii migrate --migrationPath=@yii/rbac/migrations --interactive=0
+      ./tests/bin/yii migrate --migrationNamespaces=Da\\User\\Migration --interactive=0
+      ./tests/bin/yii migrate --interactive=0
       chmod +x admin-create.bat
       ./admin-create.bat
     command: |
