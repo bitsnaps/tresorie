@@ -4,17 +4,23 @@ modules:
         # - DataFactory:
         #    factories: codeception/_support/factories
          #   depends: Yii2
+        # - PhpBrowser:
+            # url: http://localhost/yalitresore/web/ # doesn't work on gitpod
+            # url: http://localhost:8080
         - WebDriver:
-            url: http://127.0.0.1:8080/
+            url: http://localhost:8080/
             browser: chrome
+            capabilities:
+              chromeOptions:
+                w3c: false
         - Yii2:
-            part: [orm, fixtures,Db] # allow to use AR methods
+            part: [orm, fixtures] # allow to use AR methods
             entryScript: index-test.php
             cleanup: false
             class_name: AcceptanceTester
-       
 
-        
+
+
           #  populator: 'mysql -u $user -h $host $dbname < $dump'
         # - WebDriver:
             # url: http://localhost/yii2-gitpod/web/
@@ -30,7 +36,7 @@ modules:
             #   chromeOptions:
             #     w3c: false
 
-        
+
         #     cleanup: true # run populator before each test
         #     populate: true # run populator before all test
         #     populator: 'mysql -u $user -p$password $dbname < tests/_data/dump.sql'

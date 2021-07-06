@@ -32,16 +32,16 @@ class UserController extends BaseController
 
         if (Yii::$app->request->isAjax && $form->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            
+
             return ActiveForm::validate($form);
         }
 
         if ($form->load(Yii::$app->request->post())) {
             if ($this->module->enableTwoFactorAuthentication && $form->validate()) {
                 if ($form->getUser()->auth_tf_enabled) {
-                    
+
                     Yii::$app->session->set('credentials', ['login' => $form->login, 'pwd' => $form->password]);
-                    
+
                     return $this->redirect(['confirm']);
                 }
             }
@@ -51,7 +51,7 @@ class UserController extends BaseController
                 $form->getUser()->updateAttributes(['last_login_at' => time()]);
 
                 $this->trigger(FormEvent::EVENT_AFTER_LOGIN, $event);
-                //redirecting corresponding the role 
+                //redirecting corresponding the role
                 if(User::isAdmin()){
                     Yii::$app->homeUrl="/user/admin";
                     return $this->redirect(['/user/admin']);
@@ -64,9 +64,9 @@ class UserController extends BaseController
                     Yii::$app->homeUrl="/responsable-de-station/create-demande";
                     return $this->redirect(['/responsable-de-station/create-demande']);
                 }else{
-                    throw new \yii\web\NotFoundHttpException(403,\Yii::t('app', 'Attendez qu\'un admin vous affecte un grade'));
+                    throw new \yii\web\NotFoundHttpException(\Yii::t('app', 'Attendez qu\'un admin vous affecte un grade'));
                 }
-              
+
                 return $this->goBack();
             }
         }
@@ -114,7 +114,7 @@ class UserController extends BaseController
                 $form->getUser()->updateAttributes(['last_login_at' => time()]);
 
                 $this->trigger(FormEvent::EVENT_AFTER_LOGIN, $event);
-              
+
                 return $this->goBack();
             }
         }

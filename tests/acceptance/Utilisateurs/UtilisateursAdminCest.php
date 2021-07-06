@@ -8,14 +8,16 @@ class UtilisateursAdminCest
 {
     public function _before(AcceptanceTester $I)
     {
-        $I->amOnPage('user/security/login');
+        $I->amOnPage(Url::toRoute('/user/security/login'));
         $I->fillField('#loginform-login', 'admin');
-        $I->fillField('#loginform-password', '1234567');
-        $I->click('Sign in');
-        $I->wait(2); // wait for button to be clicked
+        $I->fillField('#loginform-password', 'admin123');
+        $I->click(['class' => 'btn-primary']);
+        try {
+          // $I->wait(2); // wait for button to be clicked
+        } catch (\Exception $e) {
+        }
         $I->saveSessionSnapshot('login');
     }
-    
 
     public function createNouveauUtilisateur(AcceptanceTester $I)
     {
@@ -30,12 +32,13 @@ class UtilisateursAdminCest
             $option = $I->grabTextFrom('select option:nth-child(3)');
             $I->selectOption("select", $option);
             $I->click('Save');
-            $I->wait(6); // wait for button to be clicked
+            try {
+              // $I->wait(2); // wait for button to be clicked
+            } catch (\Exception $e) {
+            }
             // $I->expectTo('see user info');
-            // $I->see('Logout');
+            $I->see('Logout');
         }
     }
-
-
 
 }

@@ -8,8 +8,8 @@ use Da\User\Model\User as BaseUser;
  * User ActiveRecord model.
  *
  * @property string $role
- * 
- * 
+ *
+ *
  */
 
 class User extends BaseUser
@@ -55,13 +55,7 @@ class User extends BaseUser
     }
     public static  function isAdmin()
     {
-
-        //$User = new self();  
-        if (User::userHasRole('Administrateur', User::getCurrentUser()->id)) {
-            return  true;
-        }
-
-        return  false;
+        return User::userHasRole('Administrateur', User::getCurrentUser()->id);
     }
 
     public static  function isAprobateur()
