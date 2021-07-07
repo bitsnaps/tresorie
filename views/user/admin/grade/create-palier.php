@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'items' => [
                                             [
                                                 'label' => Yii::t('usuario', 'Lister tous les Paliers'),
-                                                'url' => ['/admin/Paliers'],
+                                                'url' => ['/grade/index'],
                                                /* 'options' => [
                                                     'class' => 'disabled',
                                                     'onclick' => 'return false;',
@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             ],
                                             [
                                                 'label' => Yii::t('usuario', 'Création Palier'),
-                                                'url' => ['admin/create-Palier'],
+                                                'url' => ['grade/create'],
                                                   'options' => [
                                                   
                                                    

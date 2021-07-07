@@ -154,9 +154,9 @@ class AdminController extends BaseController
         if ($user->load(Yii::$app->request->post())) {
             $this->trigger(UserEvent::EVENT_BEFORE_CREATE, $event);
 
-            $mailService = MailFactory::makeWelcomeMailerService($user);
+        //    $mailService = MailFactory::makeWelcomeMailerService($user);
             
-            if ($this->make(UserCreateService::class, [$user, $mailService])->run()) {
+            if ($this->make(UserCreateService::class, [$user])->run()) {
                 Yii::$app->getSession()->setFlash('success', Yii::t('usuario', 'User has been created'));
                 $this->trigger(UserEvent::EVENT_AFTER_CREATE, $event);
                 $role_name = $user->role;
@@ -166,7 +166,7 @@ class AdminController extends BaseController
             }
             Yii::$app->session->setFlash('danger', Yii::t('usuario', 'User account could not be created.'));
         }
-        return $this->render('create', ['user' => $user]);
+        return $this->render('user/create', ['user' => $user]);
 
     }
     /**
