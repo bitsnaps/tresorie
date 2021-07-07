@@ -58,7 +58,7 @@ class UserController extends BaseController
                 }
                 if(User::isAprobateur()){
                     Yii::$app->homeUrl="/decaissement";
-                    return $this->redirect(['/decaissement']);
+                    return $this->redirect(['/decaissement/index']);
                 }
                 if(User::isResponsableDeStation()){
                     Yii::$app->homeUrl="/decaissement/create";

@@ -154,18 +154,19 @@ class AdminController extends BaseController
         if ($user->load(Yii::$app->request->post())) {
             $this->trigger(UserEvent::EVENT_BEFORE_CREATE, $event);
 
-        //    $mailService = MailFactory::makeWelcomeMailerService($user);
+          $mailService = MailFactory::makeWelcomeMailerService($user);
             
-            if ($this->make(UserCreateService::class, [$user])->run()) {
+            if ($this->make(UserCreateService::class, [$user,$mailService])->run()) {
                 Yii::$app->getSession()->setFlash('success', Yii::t('usuario', 'User has been created'));
                 $this->trigger(UserEvent::EVENT_AFTER_CREATE, $event);
                 $role_name = $user->role;
                 User::assignRoleToConfirmedUser($user->id, $role_name);
                 Yii::$app->session->setFlash('success', Yii::t('usuario', 'Vous avez crée un nouvelle utilisateur avec le role ' . $role_name));
-                return $this->redirect(['create', 'id' => $user->id]);
+                return $this->redirect(['/user/admin/index']);
             }
             Yii::$app->session->setFlash('danger', Yii::t('usuario', 'User account could not be created.'));
         }
+        
         return $this->render('user/create', ['user' => $user]);
 
     }
