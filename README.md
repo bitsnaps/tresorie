@@ -4,6 +4,7 @@
 
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/CorpoSense/tresorie/tree/dev)
 
+[![CircleCI](https://circleci.com/gh/bitsnaps/tresorie.svg?style=svg)](https://app.circleci.com/pipelines/github/bitsnaps/tresorie)
 
 This software is used to apply a simple Cash Management using a simple approval workflow business processes in your company's hierarchy.
 
